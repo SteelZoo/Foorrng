@@ -92,7 +92,7 @@
         <item name="android:textAppearance">@style/Foorrng.TEXT.B.16</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:backgroundTint">@color/foorrng_orange</item>
-        <item name="android:background">@drawable/round_corner</item>
+        <item name="android:background">@drawable/bg_round_corner</item>
     </style>
 
 
