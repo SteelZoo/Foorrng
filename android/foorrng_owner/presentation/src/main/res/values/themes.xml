@@ -1,88 +1,96 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.Foorrng_owner" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Foorrng" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/foorrng_orange</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="Theme.Foorrng_owner" parent="Base.Theme.Foorrng_owner">
+    <style name="Theme.Foorrng" parent="Base.Theme.Foorrng">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <!-- 텍스트 스타일 -->
     <!-- Base -->
-    <style name="Foorrng_owner.TEXT.M.16" parent="Theme.Foorrng_owner">
+    <style name="Foorrng.TEXT.M.16" parent="Theme.Foorrng">
         <item name="android:fontFamily">@font/font_suite_medium</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.16" parent="Theme.Foorrng_owner">
+    <style name="Foorrng.TEXT.SB.16" parent="Theme.Foorrng">
         <item name="android:fontFamily">@font/font_suite_semibold</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.B.16" parent="Theme.Foorrng_owner">
+    <style name="Foorrng.TEXT.B.16" parent="Theme.Foorrng">
         <item name="android:fontFamily">@font/font_suite_bold</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.EB.16" parent="Theme.Foorrng_owner">
+    <style name="Foorrng.TEXT.EB.16" parent="Theme.Foorrng">
         <item name="android:fontFamily">@font/font_suite_extrabold</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.H.16" parent="Theme.Foorrng_owner">
+    <style name="Foorrng.TEXT.H.16" parent="Theme.Foorrng">
         <item name="android:fontFamily">@font/font_suite_heavy</item>
     </style>
 
     <!-- Detail -->
-    <style name="Foorrng_owner.TEXT.SB.12" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.12" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.14" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.14" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.EB.14" parent="Foorrng_owner.TEXT.EB.16">
+    <style name="Foorrng.TEXT.EB.14" parent="Foorrng.TEXT.EB.16">
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.18" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.18" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.20" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.20" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.B.20" parent="Foorrng_owner.TEXT.B.16">
+    <style name="Foorrng.TEXT.B.20" parent="Foorrng.TEXT.B.16">
         <item name="android:textSize">20sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.M.22" parent="Foorrng_owner.TEXT.M.16">
+    <style name="Foorrng.TEXT.M.22" parent="Foorrng.TEXT.M.16">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.B.22" parent="Foorrng_owner.TEXT.B.16">
+    <style name="Foorrng.TEXT.B.22" parent="Foorrng.TEXT.B.16">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.22" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.22" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.EB.22" parent="Foorrng_owner.TEXT.EB.16">
+    <style name="Foorrng.TEXT.EB.22" parent="Foorrng.TEXT.EB.16">
         <item name="android:textSize">22sp</item>
     </style>
 
-    <style name="Foorrng_owner.TEXT.SB.24" parent="Foorrng_owner.TEXT.SB.16">
+    <style name="Foorrng.TEXT.SB.24" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">24sp</item>
     </style>
 
 
     <!-- View Style -->
-    <style name="Foorrng_owner.TextInputLayout" parent="Theme.Foorrng_owner">
-        <item name="android:textAppearance">@style/Foorrng_owner.TEXT.SB.16</item>
-        <item name="hintTextAppearance">@style/Foorrng_owner.TEXT.SB.16</item>
+    <style name="Foorrng.TextInputLayout" parent="Theme.Foorrng">
+        <item name="android:textAppearance">@style/Foorrng.TEXT.SB.16</item>
+        <item name="hintTextAppearance">@style/Foorrng.TEXT.SB.16</item>
         <item name="boxStrokeColor">@color/foorrng_orange</item>
     </style>
+
+    <style name="Foorrng.Button" parent ="Theme.Foorrng">
+        <item name="android:textAppearance">@style/Foorrng.TEXT.B.16</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">@color/foorrng_orange</item>
+        <item name="android:background">@drawable/round_corner</item>
+    </style>
+
 </resources>
