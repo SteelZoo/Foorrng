@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Foorrng_owner" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/foorrng_orange</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="Theme.Foorrng_owner" parent="Base.Theme.Foorrng_owner" >
@@ -11,7 +12,7 @@
     </style>
 
     <!-- 텍스트 스타일 -->
-        <!-- Base -->
+    <!-- Base -->
     <style name="Foorrng_owner.TEXT.M.16" parent="Theme.Foorrng_owner">
         <item name="android:fontFamily">@font/font_suite_semibold</item>
     </style>
@@ -35,6 +36,15 @@
         <!-- Detail -->
     <style name="Foorrng_owner.TEXT.SB.14" parent="Foorrng_owner.TEXT.SB.16">
         <item name="android:textSize">14sp</item>
+    </style>
+
+
+
+    <!-- View Style -->
+    <style name="Foorrng_owner.TextInputLayout" parent="Theme.Foorrng_owner">
+        <item name="android:textAppearance">@style/Foorrng_owner.TEXT.SB.16</item>
+        <item name="hintTextAppearance">@style/Foorrng_owner.TEXT.SB.16</item>
+        <item name="boxStrokeColor">@color/foorrng_orange</item>
     </style>
 
 </resources>
