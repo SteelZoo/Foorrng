@@ -4,11 +4,11 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.daggerHilt)
-    alias(libs.plugins.googleservice)
+//    alias(libs.plugins.googleservice)
 }
 
 android {
-    namespace = "com.tasteguys.presentation"
+    namespace = "com.tasteguys.foorrng_owner.presentation"
     compileSdk = 33
 
     defaultConfig {
@@ -62,15 +62,15 @@ dependencies {
     // UI
     implementation(libs.lottie) // Lottie
 
-    // Firebase
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.fcm)
+//    // Firebase
+//    implementation(platform(libs.firebase.bom))
+//    implementation(libs.fcm)
 
     //Glide
     implementation(libs.glide)
 
-    // Naver Map
-    implementation(libs.bundles.naverMap)
+//    // Naver Map
+//    implementation(libs.bundles.naverMap)
 
 
 }

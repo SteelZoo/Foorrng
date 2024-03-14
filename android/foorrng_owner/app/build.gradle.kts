@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.daggerHilt)
-    alias(libs.plugins.googleservice)
+//    alias(libs.plugins.googleservice)
 }
 
 android {
@@ -45,7 +45,9 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":presentation"))
+    implementation(project(":domain"))
+    implementation(project(":data"))
 
     // Android
     implementation(libs.bundles.androidx)
@@ -63,9 +65,9 @@ dependencies {
     // Retrofit
     implementation(libs.bundles.retrofit)
 
-    // Firebase
-    implementation(platform(libs.firebase.bom))
+//    // Firebase
+//    implementation(platform(libs.firebase.bom))
 
-    // Naver Map
-    implementation(libs.naver.mapsdk)
+//    // Naver Map
+//    implementation(libs.naver.mapsdk)
 }

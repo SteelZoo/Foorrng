@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tasteguys.data"
+    namespace = "com.tasteguys.foorrng_owner.data"
     compileSdk = 33
 
     defaultConfig {
