@@ -13,7 +13,7 @@
     <!-- 텍스트 스타일 -->
         <!-- Base -->
     <style name="Foorrng_owner.TEXT.M.16" parent="Theme.Foorrng_owner">
-        <item name="android:fontFamily">@font/font_suite_semibold</item>
+        <item name="android:fontFamily">@font/font_suite_medium</item>
     </style>
 
     <style name="Foorrng_owner.TEXT.SB.16" parent="Theme.Foorrng_owner">
@@ -21,20 +21,60 @@
     </style>
 
     <style name="Foorrng_owner.TEXT.B.16" parent="Theme.Foorrng_owner">
-        <item name="android:fontFamily">@font/font_suite_semibold</item>
+        <item name="android:fontFamily">@font/font_suite_bold</item>
     </style>
 
     <style name="Foorrng_owner.TEXT.EB.16" parent="Theme.Foorrng_owner">
-        <item name="android:fontFamily">@font/font_suite_semibold</item>
+        <item name="android:fontFamily">@font/font_suite_extrabold</item>
     </style>
 
     <style name="Foorrng_owner.TEXT.H.16" parent="Theme.Foorrng_owner">
-        <item name="android:fontFamily">@font/font_suite_semibold</item>
+        <item name="android:fontFamily">@font/font_suite_heavy</item>
     </style>
 
         <!-- Detail -->
+    <style name="Foorrng_owner.TEXT.SB.12" parent="Foorrng_owner.TEXT.SB.16">
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="Foorrng_owner.TEXT.SB.14" parent="Foorrng_owner.TEXT.SB.16">
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.EB.14" parent="Foorrng_owner.TEXT.EB.16">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.SB.18" parent="Foorrng_owner.TEXT.SB.16">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.SB.20" parent="Foorrng_owner.TEXT.SB.16">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.B.20" parent="Foorrng_owner.TEXT.B.16">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.M.22" parent="Foorrng_owner.TEXT.M.16">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.B.22" parent="Foorrng_owner.TEXT.B.16">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.SB.22" parent="Foorrng_owner.TEXT.SB.16">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.EB.22" parent="Foorrng_owner.TEXT.EB.16">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="Foorrng_owner.TEXT.SB.24" parent="Foorrng_owner.TEXT.SB.16">
+        <item name="android:textSize">24sp</item>
     </style>
 
 </resources>
