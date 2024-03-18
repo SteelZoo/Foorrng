@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_owner.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.tasteguys.foorrng_owner.presentation.base.BaseActivity
+import com.tasteguys.foorrng_owner.presentation.busi_number.BusiNumberFragment
 import com.tasteguys.foorrng_owner.presentation.databinding.ActivityLoginBinding
 import com.tasteguys.foorrng_owner.presentation.login.LoginFragment
 import dagger.hilt.android.AndroidEntryPoint
