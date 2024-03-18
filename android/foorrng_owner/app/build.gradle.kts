@@ -1,11 +1,15 @@
 @file:Suppress("DSL_SCOPE_VIOLATION")
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.daggerHilt)
-//    alias(libs.plugins.googleservice)
+    alias(libs.plugins.googleservice)
 }
+
+fun getProperty(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
 
 android {
     namespace = "com.tasteguys.foorrng_owner"
@@ -19,6 +23,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "NAVER_MAP_CLIENT_ID", getProperty("naverMapClientID"))
     }
 
     buildTypes {
@@ -65,9 +71,9 @@ dependencies {
     // Retrofit
     implementation(libs.bundles.retrofit)
 
-//    // Firebase
-//    implementation(platform(libs.firebase.bom))
+    // Firebase
+    implementation(platform(libs.firebase.bom))
 
-//    // Naver Map
-//    implementation(libs.naver.mapsdk)
+    // Naver Map
+    implementation(libs.naver.mapsdk)
 }
