@@ -11,5 +11,8 @@
     <color name="stroke_gray">#C4C4C4</color>
     <color name="text_gray">#A4A4A4</color>
 
+    <color name="review_background">#D7FBCA</color>
+    <color name="review_progress">#59C227</color>
+
 
 </resources>
