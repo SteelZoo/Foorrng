@@ -72,5 +72,7 @@ dependencies {
 //    // Naver Map
 //    implementation(libs.bundles.naverMap)
 
-
+    //Flexbox
+    implementation(libs.flexbox)
+    
 }
