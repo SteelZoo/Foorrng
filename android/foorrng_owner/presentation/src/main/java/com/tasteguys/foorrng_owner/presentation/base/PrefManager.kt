@@ -1,4 +1,4 @@
-package com.gdd.presentation.base
+package com.tasteguys.foorrng_owner.presentation.base
 
 import android.app.Activity
 import android.content.Context
