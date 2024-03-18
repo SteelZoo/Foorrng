@@ -1,12 +1,10 @@
-package com.gdd.presentation.base
+package com.tasteguys.foorrng_owner.presentation.base
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 
-private const val TAG = "PermissionHelper_Genseong"
 object PermissionHelper {
 
     private val PERMISSION_REQUEST_CODE = 20000
