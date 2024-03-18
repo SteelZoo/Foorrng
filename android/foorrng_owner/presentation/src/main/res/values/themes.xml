@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/foorrng_orange</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorBackground">@color/white</item>
     </style>
 
     <style name="Theme.Foorrng" parent="Base.Theme.Foorrng">
@@ -86,7 +87,7 @@
         <item name="boxStrokeColor">@color/foorrng_orange</item>
     </style>
 
-    <style name="Foorrng.Button" parent ="Theme.Foorrng">
+    <style name="Foorrng.Button" parent="Theme.Foorrng">
         <item name="android:textAppearance">@style/Foorrng.TEXT.B.16</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:backgroundTint">@color/foorrng_orange</item>
