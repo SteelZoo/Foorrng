@@ -14,7 +14,6 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
 abstract class BaseFragment<B : ViewBinding>(
     private val bind: (View) -> B,
     @LayoutRes layoutResId: Int
