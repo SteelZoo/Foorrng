@@ -1,7 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.login
 
 import android.os.Bundle
-import com.gdd.presentation.base.BaseActivity
+import com.tasteguys.foorrng_customer.presentation.base.BaseActivity
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.gdd.presentation.base
+package com.tasteguys.foorrng_customer.presentation.base
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,11 +10,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
-import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.jvm.jvmName
 
 
 abstract class BaseFragment<B : ViewBinding>(

@@ -1,4 +1,4 @@
-package com.gdd.presentation.base
+package com.tasteguys.foorrng_customer.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
