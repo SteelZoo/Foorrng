@@ -4,4 +4,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="all_title">푸르릉</string>
+    <string name="all_busi_number">사업자번호</string>
+    
+    <string name="busi_number_guide">점주님께서는 앱을 이용하기전\n사업자 번호를 인증해주셔야 합니다.</string>
+    <string name="busi_number_submit">인증하기</string>
 </resources>
