@@ -74,5 +74,7 @@ dependencies {
 
     //Flexbox
     implementation(libs.flexbox)
-    
+
+    //Circle Image View
+    implementation(libs.circleImageView)
 }

@@ -3,5 +3,6 @@
     <string name="favorite_title">내가 바로 맛잘알</string>
     <string name="favorite_description">음식 선택으로 맞춤 서비스를 이용할 수 있습니다</string>
     <string name="btn_confirm">확인</string>
+    <string name="btn_pathfinder">길찾기</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
