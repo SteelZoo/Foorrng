@@ -2,14 +2,10 @@ package com.tasteguys.foorrng_owner.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import com.tasteguys.foorrng_owner.presentation.LoginActivity
-import com.tasteguys.foorrng_owner.presentation.MainActivity
+import com.tasteguys.foorrng_owner.presentation.main.MainActivity
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.BaseFragment
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLoginBinding
