@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation
 
+import com.tasteguys.foorrng_customer.presentation.model.TruckInfo
+import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
 import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
 
 object Dummy{
@@ -21,6 +23,17 @@ object Dummy{
                 "치킨"
             )
         ),
+    )
+
+    val truckInfo = TruckInfo(
+        0, "야미족발", "", listOf("치킨"), "12가1234", "010-1234-1234",
+        "", "1234-1234-1234", mutableListOf(
+            TruckMenu("닭꼬치", 3000, ""),
+            TruckMenu("떡꼬치", 3000, ""),
+            TruckMenu("산적꼬치", 3000, ""),
+            TruckMenu("은행꼬치", 3000, ""),
+            TruckMenu("파꼬치", 3000, ""),
+        )
     )
 
 }

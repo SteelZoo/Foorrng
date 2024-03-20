@@ -71,6 +71,7 @@ class FavoriteTruckAdapter(
         viewType: Int
     ): BaseHolder<TruckWithFavorite> {
         return TruckListHolder(ItemFavoriteTruckBinding.inflate(LayoutInflater.from(parent.context), parent, false)).apply {
+            setOnItemClickListener(clickListener)
             setOnButtonClickListener(buttonClickListener)
         }
     }

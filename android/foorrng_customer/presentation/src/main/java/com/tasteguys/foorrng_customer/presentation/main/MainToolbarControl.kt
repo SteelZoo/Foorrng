@@ -3,7 +3,7 @@ package com.tasteguys.foorrng_customer.presentation.main
 import android.view.MenuItem
 
 class MainToolbarControl(
-    val visible: Boolean = true,
+    val visible: Boolean = false,
     val title: String = "",
     val menuRes: Int = 0,
 ) {

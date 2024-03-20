@@ -10,8 +10,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
+import com.tasteguys.foorrng_customer.presentation.main.MainViewModel
 
 
 abstract class BaseFragment<B : ViewBinding>(
@@ -45,7 +47,6 @@ abstract class BaseFragment<B : ViewBinding>(
         inputManager.hideSoftInputFromWindow(requireActivity().currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
     }
 
-
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
@@ -58,6 +59,5 @@ abstract class BaseFragment<B : ViewBinding>(
     fun showSnackBar(message: String){
         Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).show()
     }
-
 
 }

@@ -8,16 +8,18 @@ import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.tasteguys.foorrng_customer.presentation.Dummy
-import com.tasteguys.foorrng_customer.presentation.MainActivity
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentDailyFavoriteBinding
+import com.tasteguys.foorrng_customer.presentation.main.MainActivity
+import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
+import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DailyFavoriteFragment : BaseFragment<FragmentDailyFavoriteBinding>(
+class DailyFavoriteFragment : MainBaseFragment<FragmentDailyFavoriteBinding>(
     { FragmentDailyFavoriteBinding.bind(it)}, R.layout.fragment_daily_favorite
 ) {
     private val favoriteAdapter = DailyFavoriteListAdapter()

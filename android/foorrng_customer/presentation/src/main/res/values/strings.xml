@@ -7,4 +7,16 @@
     <string name="today_favorite">오늘 먹고 싶은 음식</string>
     <string name="my_favorite_truck">내가 찜한 푸드트럭</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_favorite_info">나의 선호 정보</string>
+    <string name="basic_info">기본 정보</string>
+    <string name="managing_info">운영 정보</string>
+    <string name="review">리뷰</string>
+    <string name="menu">메뉴</string>
+    <string name="car_number">차량 번호</string>
+    <string name="food_category">음식 품목</string>
+    <string name="call_number">전화 번호</string>
+    <string name="account_number">계좌 번호</string>
+    <string name="notice">공지 사항</string>
+    <string name="busi_number">사업자 번호</string>
+    <string name="more_menu">메뉴 더 보기</string>
 </resources>

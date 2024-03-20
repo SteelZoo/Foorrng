@@ -11,6 +11,7 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
 
 ): ViewModel() {
+
     private var _toolbarController = MutableLiveData<MainToolbarControl>()
     val toolbarController: LiveData<MainToolbarControl>
         get() = _toolbarController

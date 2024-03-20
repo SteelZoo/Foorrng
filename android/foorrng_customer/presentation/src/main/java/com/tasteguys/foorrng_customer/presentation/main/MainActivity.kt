@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import com.tasteguys.foorrng_customer.presentation.R
@@ -24,20 +25,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     private fun observeToolbarControl(){
-        mainViewModel.toolbarController.observe(this){ contoller ->
+        mainViewModel.toolbarController.observe(this){ controller ->
             with(binding.tbMain){
-                if(contoller.visible){
+                if(controller.visible){
                     binding.tbMain.visibility = View.VISIBLE
-                    title = contoller.title
-                    inflateMenu(contoller.menuRes)
+                    title = controller.title
+                    if(controller.menuRes!=0){
+                        menu.clear()
+                        inflateMenu(controller.menuRes)
+                    }
                     setOnMenuItemClickListener {
-                        contoller.menuItemClickListener(it)
+                        controller.menuItemClickListener(it)
                         true
                     }
                     setNavigationOnClickListener {
-                        contoller.navIconClickListener()
+                        controller.navIconClickListener()
                     }
-                } else {
+                }
+                else {
                     binding.tbMain.visibility = View.GONE
                 }
             }
