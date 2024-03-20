@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.BaseFragment
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoTabBinding
+import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
 
-class FoodtruckInfoTabFragment : BaseFragment<FragmentFoodtruckInfoTabBinding>(
+class FoodtruckInfoTabFragment(
+    private val foodTruckInfo: FoodTruckInfo
+) : BaseFragment<FragmentFoodtruckInfoTabBinding>(
     FragmentFoodtruckInfoTabBinding::bind, R.layout.fragment_foodtruck_info_tab
 ) {
 

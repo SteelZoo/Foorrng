@@ -5,6 +5,7 @@ import android.view.View
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentRegistFoodtruckBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,9 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
             menuRes = R.menu.menu_check
         ).addMenuItemClickListener {
             showToast("등록 메뉴!")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment,FoodtruckInfoFragment())
+                .commit()
         }.addNavIconClickListener {
             showToast("등록 뒤로가기")
         }.also {
