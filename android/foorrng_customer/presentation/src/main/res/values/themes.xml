@@ -101,5 +101,9 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="Foorrng.RoundButton" parent="Foorrng.Button">
+        <item name="android:background">@drawable/bg_round_corner_20</item>
+    </style>
+
 
 </resources>
