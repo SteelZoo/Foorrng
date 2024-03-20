@@ -45,13 +45,11 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_submit"
+        style="@style/Foorrng.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:background="@drawable/btn_default_orange"
         android:text="@string/busi_number_submit"
-        android:textAppearance="@style/Foorrng.TEXT.SB.16"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

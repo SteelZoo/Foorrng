@@ -1,10 +1,12 @@
 package com.tasteguys.foorrng_owner.presentation.foodtruck.info
 
+import android.content.res.Resources.Theme
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoBinding
@@ -27,6 +29,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
         binding.vpInfo.adapter = InfoTabPagerAdapter(this,dummyFoodtruck)
         TabLayoutMediator(binding.tlInfoTab,binding.vpInfo){  tab, position ->
             tab.text = if (position == 0) {"정보조회"} else {"리뷰조회"}
+            tab.view.background = AppCompatResources.getDrawable(_activity,R.drawable.bg_tab)
         }.attach()
     }
 

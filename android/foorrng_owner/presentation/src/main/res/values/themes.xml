@@ -82,16 +82,15 @@
 
     <!-- View Style -->
     <style name="Foorrng.TextInputLayout" parent="Theme.Foorrng">
-        <item name="android:textAppearance">@style/Foorrng.TEXT.SB.16</item>
-        <item name="hintTextAppearance">@style/Foorrng.TEXT.SB.16</item>
+        <item name="android:textAppearance">@style/Foorrng.TEXT.B.16</item>
+        <item name="hintTextAppearance">@style/Foorrng.TEXT.B.16</item>
         <item name="boxStrokeColor">@color/foorrng_orange</item>
     </style>
 
     <style name="Foorrng.Button" parent="Theme.Foorrng">
         <item name="android:textAppearance">@style/Foorrng.TEXT.B.16</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:backgroundTint">@color/foorrng_orange</item>
-        <item name="android:background">@drawable/round_corner</item>
+        <item name="android:background">@drawable/btn_default_orange</item>
     </style>
 
     <style name="Foorrng.Chip.Category" parent="Widget.MaterialComponents.Chip.Filter">

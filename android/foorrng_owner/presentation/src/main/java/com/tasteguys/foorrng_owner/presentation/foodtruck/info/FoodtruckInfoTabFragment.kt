@@ -15,5 +15,17 @@ class FoodtruckInfoTabFragment(
 ) : BaseFragment<FragmentFoodtruckInfoTabBinding>(
     FragmentFoodtruckInfoTabBinding::bind, R.layout.fragment_foodtruck_info_tab
 ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        with(binding){
+            tvTruckName.text = foodTruckInfo.name
+            tvBusinessNumber.text = foodTruckInfo.businessNumber
+            tvCarNumber.text = foodTruckInfo.carNumber
+            tvAccountNumber.text = "1234-1234-1234"
+            tvCallNumber.text = foodTruckInfo.callNumber
+            tvFoodCategory.text = foodTruckInfo.category
+            tvNotice.text = foodTruckInfo.notice
+        }
+    }
 }
