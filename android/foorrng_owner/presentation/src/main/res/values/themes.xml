@@ -94,4 +94,12 @@
         <item name="android:background">@drawable/round_corner</item>
     </style>
 
+    <style name="Foorrng.Chip.Category" parent="Widget.MaterialComponents.Chip.Filter">
+        <item name="checkedIconVisible">false</item>
+        <item name="chipStrokeColor">@color/foorrng_orange</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipBackgroundColor">@color/color_bg_catagory_chip</item>
+        <item name="android:textColor">@color/color_text_category_chip</item>
+    </style>
+
 </resources>

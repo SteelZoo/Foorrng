@@ -72,5 +72,8 @@ dependencies {
 //    // Naver Map
 //    implementation(libs.bundles.naverMap)
 
+    //FlexBoxLayoutManager
+    implementation(libs.flexbox)
+
 
 }
