@@ -16,4 +16,6 @@
 
     <string name="regist_foodtruck_title">푸드트럭 등록</string>
     <string name="regist_foodtruck_menu_category">메뉴 카테고리</string>
+
+    <string name="info_foodtruck_title">나의 푸드트럭</string>
 </resources>

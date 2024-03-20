@@ -36,6 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                 if(contoller.visible){
                     binding.tbMain.visibility = View.VISIBLE
                     title = contoller.title
+                    menu.clear()
                     inflateMenu(contoller.menuRes)
                     setOnMenuItemClickListener {
                         contoller.menuItemClickListener(it)
