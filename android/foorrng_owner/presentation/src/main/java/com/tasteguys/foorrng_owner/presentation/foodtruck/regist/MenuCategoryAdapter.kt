@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_owner.presentation.foodtruck
+package com.tasteguys.foorrng_owner.presentation.foodtruck.regist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
