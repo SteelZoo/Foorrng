@@ -46,7 +46,9 @@
                 android:layout_height="12dp"
                 android:src="@drawable/review"
                 android:layout_gravity="bottom"/>
+
             <TextView
+                android:id="@+id/tv_review_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
@@ -67,6 +69,7 @@
                 android:src="@drawable/near_me"
                 android:layout_gravity="bottom"/>
             <TextView
+                android:id="@+id/tv_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
@@ -89,16 +92,16 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="10dp">
 
-        <Button
+        <CheckBox
             android:id="@+id/btn_favorite"
-            style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
-            app:icon="@drawable/sl_favorite"
-            app:iconSize="32dp"
-            app:iconTint="@color/red" />
+            android:button="@drawable/sl_favorite"
+            app:buttonTint="@color/red"
+         />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_pathfinder"
             style="@style/Foorrng.RoundButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

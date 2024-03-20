@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_customer.presentation.login.adapter
+package com.tasteguys.foorrng_customer.presentation.profile.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,8 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemFavoriteCategoryBinding
 
-class DailyFavoriteListAdapter(clickListener: BaseHolder.ItemClickListener = object:BaseHolder.ItemClickListener{
+class DailyFavoriteListAdapter(
+    override var clickListener: BaseHolder.ItemClickListener = object:BaseHolder.ItemClickListener{
     // default 매개 변수
     override fun onClick(position: Int) {}}
 ): BaseAdapter<String>(clickListener) {
@@ -27,6 +28,6 @@ class DailyFavoriteListAdapter(clickListener: BaseHolder.ItemClickListener = obj
        }
     }
 
-    fun setOnItemClickListener(listener: BaseHolder.ItemClickListener){ clickListener = listener }
+
 
 }

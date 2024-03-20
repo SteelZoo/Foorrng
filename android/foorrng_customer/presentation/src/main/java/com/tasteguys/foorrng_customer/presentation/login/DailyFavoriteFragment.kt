@@ -1,20 +1,19 @@
 package com.tasteguys.foorrng_customer.presentation.login
 
-import android.content.ClipData.Item
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.tasteguys.foorrng_customer.presentation.Dummy
+import com.tasteguys.foorrng_customer.presentation.MainActivity
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentDailyFavoriteBinding
-import com.tasteguys.foorrng_customer.presentation.login.adapter.DailyFavoriteListAdapter
+import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -45,15 +44,16 @@ class DailyFavoriteFragment : BaseFragment<FragmentDailyFavoriteBinding>(
                 justifyContent = JustifyContent.CENTER
             }
         }
+
+        binding.btnConfirm.setOnClickListener {
+            startActivity(Intent(requireContext(), MainActivity::class.java).apply{
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK + Intent.FLAG_ACTIVITY_NEW_TASK
+            })
+        }
     }
 
     private fun registerObserve(){
-        favoriteAdapter.submitList(mutableListOf(
-            "햄버거", "아이스크림", "곱창 & 막창",
-            "치킨", "디저트 & 커피", "분식",
-            "케밥 & 타코", "닭꼬치", "핫도그",
-            "타코야끼", "츄러스", "스테이크"
-        ))
+        favoriteAdapter.submitList(Dummy.category)
     }
 
 }
