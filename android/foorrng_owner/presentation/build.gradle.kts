@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.kapt)
     alias(libs.plugins.daggerHilt)
-//    alias(libs.plugins.googleservice)
+    alias(libs.plugins.googleservice)
 }
 
 android {
@@ -69,8 +69,8 @@ dependencies {
     //Glide
     implementation(libs.glide)
 
-//    // Naver Map
-//    implementation(libs.bundles.naverMap)
+    // Naver Map
+    implementation(libs.bundles.naverMap)
 
     //FlexBoxLayoutManager
     implementation(libs.flexbox)
