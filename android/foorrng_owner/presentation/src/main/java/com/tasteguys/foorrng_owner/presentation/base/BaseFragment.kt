@@ -57,5 +57,4 @@ abstract class BaseFragment<B : ViewBinding>(
     fun showSnackBar(message: String){
         Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).show()
     }
-
 }
