@@ -20,5 +20,10 @@
 
     <string name="info_foodtruck_title">나의 푸드트럭</string>
     <string name="info_menu_manage">메뉴관리</string>
+    
+    <string name="home_recommend_location">영업 위치 추천 받기</string>
+    <string name="home_manage_location">영업 위치 관리</string>
+    <string name="home_manage_menu">메뉴 관리</string>
+    <string name="home_foodtruck_open">영업 시작하기</string>
 
 </resources>
