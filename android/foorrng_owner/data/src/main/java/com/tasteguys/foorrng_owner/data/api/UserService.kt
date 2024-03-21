@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 
 interface UserService {
-    @POST("user/register/owner")
+    @POST("user/regist/owner")
     suspend fun registerOwner(
         @Body userRequest: UserRequest
     ) : Result<DefaultResponse<Long>>

@@ -36,18 +36,21 @@ class ResultCall<T>(
                     }
                 } else {
                     val errorBodyString = response.errorBody()?.string()
-                    val message = try {
+                    val (message,code) = try {
                         if (!errorBodyString.isNullOrBlank()) {
-                            JSONObject(errorBodyString).getJSONObject("dataHeader").getString("resultMessage")
+                            listOf(
+                                JSONObject(errorBodyString).getJSONObject("dataHeader").getString("resultMessage"),
+                                JSONObject(errorBodyString).getJSONObject("dataHeader").getString("resultCode")
+                            )
                         } else {
-                            ""
+                            listOf("","")
                         }
                     } catch (e: Exception) {
-                        ""
+                        listOf("","")
                     }
                     callback.onResponse(
                         this@ResultCall,
-                        Response.success(Result.failure(FoorrngException(response.code(),message)))
+                        Response.success(Result.failure(FoorrngException(code,message)))
                     )
                 }
             }
