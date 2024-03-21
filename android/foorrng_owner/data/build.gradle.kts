@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":domain"))
 
     // Android
     implementation(libs.bundles.androidx)
