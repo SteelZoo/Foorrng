@@ -25,6 +25,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "NAVER_MAP_CLIENT_ID", getProperty("naverMapClientID"))
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", getProperty("kakao_app_key_cus"))
     }
 
     buildTypes {
@@ -57,6 +58,7 @@ dependencies {
 
     // Android
     implementation(libs.bundles.androidx)
+    implementation(project(mapOf("path" to ":util:retrofit_adapter")))
     testImplementation(libs.bundles.testing)
 
     // Hilt
@@ -76,4 +78,7 @@ dependencies {
 
     // Naver Map
     implementation(libs.naver.mapsdk)
+
+    // kakao oauth
+    implementation(libs.kakao.oauth)
 }

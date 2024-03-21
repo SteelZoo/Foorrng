@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -5,6 +7,8 @@ plugins {
     alias(libs.plugins.daggerHilt)
     alias(libs.plugins.kapt)
 }
+
+fun getBaseUrl(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
 
 android {
     namespace = "com.tasteguys.foorrng_owner.data"
@@ -15,6 +19,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "BASE_URL", getBaseUrl("baseUrl"))
     }
 
     buildTypes {
@@ -42,6 +48,7 @@ dependencies {
 
     // Android
     implementation(libs.bundles.androidx)
+    implementation(project(mapOf("path" to ":domain")))
     testImplementation(libs.bundles.testing)
 
     // Hilt

@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import org.jetbrains.kotlin.konan.properties.Properties
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidLibrary)
@@ -6,6 +9,8 @@ plugins {
     alias(libs.plugins.daggerHilt)
 //    alias(libs.plugins.googleservice)
 }
+
+fun getProperty(propertyKey: String): String = gradleLocalProperties(rootDir).getProperty(propertyKey)
 
 android {
     namespace = "com.tasteguys.foorrng_customer.presentation"
@@ -16,6 +21,18 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+
+        val nativeAppKey = localProperties.getProperty("kakao_app_key_cus") ?: ""
+        // 매니페스트 플레이스홀더 설정
+        manifestPlaceholders["NATIVE_APP_KEY"] = nativeAppKey
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", getProperty("kakao_app_key_cus"))
+
     }
 
     buildTypes {
@@ -45,6 +62,8 @@ dependencies {
 
     // Android
     implementation(libs.bundles.androidx)
+    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(mapOf("path" to ":util:retrofit_adapter")))
     testImplementation(libs.bundles.testing)
 
     // Hilt
@@ -69,8 +88,11 @@ dependencies {
     //Glide
     implementation(libs.glide)
 
-//    // Naver Map
-//    implementation(libs.bundles.naverMap)
+    // Naver Map
+    implementation(libs.bundles.naverMap)
+
+    // kakao oauth
+    implementation(libs.kakao.oauth)
 
     //Flexbox
     implementation(libs.flexbox)

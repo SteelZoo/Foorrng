@@ -83,7 +83,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 })
                 setOnButtonClickListener(object: FavoriteTruckAdapter.TruckListHolder.ButtonClickListener{
                     override fun onToggleClick(isChecked: Boolean) {
-                        showToast(isChecked.toString())
+
                     }
 
                     override fun onButtonClick() {

@@ -13,5 +13,6 @@ class LoginActivity: BaseActivity<ActivityLoginBinding>({ActivityLoginBinding.in
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportFragmentManager.beginTransaction().replace(R.id.fcv_container, LoginFragment()).commit()
+
     }
 }
