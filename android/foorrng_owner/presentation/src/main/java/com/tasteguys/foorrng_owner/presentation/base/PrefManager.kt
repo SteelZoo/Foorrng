@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 
-private const val TAG = "PrefManager_Genseong"
+private const val TAG = "PrefManager_poorrng"
 /**
  * Only Use By Hilt Injection
  *
@@ -13,7 +13,7 @@ private const val TAG = "PrefManager_Genseong"
  */
 class PrefManager(context: Context) {
     private var pref: SharedPreferences =
-        context.getSharedPreferences("relpl_preference", Activity.MODE_PRIVATE)
+        context.getSharedPreferences("taste_preference", Activity.MODE_PRIVATE)
 
     init {
         Log.d(TAG, "Preference: ${this.pref.all}")
@@ -62,17 +62,6 @@ class PrefManager(context: Context) {
         return pref.getString(PREF_REFRESHTOKEN, null)
     }
 
-    fun setAutoLoginState(flag: Boolean){
-        pref.edit().apply{
-            putBoolean(PREF_AUTOLOGIN,flag)
-            apply()
-        }
-    }
-
-    fun getAutoLoginState(): Boolean {
-        return pref.getBoolean(PREF_AUTOLOGIN,false)
-    }
-
     fun setFcmToken(fcmToken: String){
         pref.edit().apply {
             putString(FCM_TOKEN, fcmToken)
@@ -82,24 +71,6 @@ class PrefManager(context: Context) {
 
     fun getFcmToken(): String?{
         return pref.getString(FCM_TOKEN, null)
-    }
-    /**
-     * must use in RelayingFragment
-     */
-    fun setRelayingMode(mode: RELAYING_MODE) {
-        pref.edit().apply {
-            putInt(PREF_RELAYING_MODE,mode.ordinal)
-            apply()
-        }
-    }
-
-    fun getRelayingMode(): RELAYING_MODE {
-        return when(pref.getInt(PREF_RELAYING_MODE,-1)){
-            RELAYING_MODE.PATH.ordinal->RELAYING_MODE.PATH
-            RELAYING_MODE.DISTANCE.ordinal->RELAYING_MODE.DISTANCE
-            RELAYING_MODE.NONE.ordinal->RELAYING_MODE.NONE
-            else->RELAYING_MODE.NONE
-        }
     }
 
     fun deleteAll(){
@@ -111,17 +82,11 @@ class PrefManager(context: Context) {
         }
     }
 
-    enum class RELAYING_MODE{
-        DISTANCE, PATH, NONE
-    }
-
     companion object{
         private const val PREF_USERID = "user_id"
-        private const val PREF_AUTOLOGIN = "auto_login"
         private const val PREF_ACCESSTOKEN = "access_token"
         private const val PREF_REFRESHTOKEN = "refresh_token"
         private const val FCM_TOKEN = "fcm_token"
         private const val FCM_NEW_TOKEN = "fcm_new_token"
-        private const val PREF_RELAYING_MODE = "relaying_mode"
     }
 }

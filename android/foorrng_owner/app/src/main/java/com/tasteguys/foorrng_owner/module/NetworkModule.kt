@@ -4,6 +4,7 @@ package com.tasteguys.foorrng_owner.module
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tasteguys.foorrng_owner.data.api.ApiClient.BASE_URL
+import com.tasteguys.foorrng_owner.data.api.UserService
 import com.tasteguys.retrofit_adapter.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
@@ -79,4 +80,13 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun providesUserService(
+        retrofit: Retrofit
+    ): UserService {
+        return retrofit.create(UserService::class.java)
+    }
+
 }
