@@ -7,5 +7,5 @@ data class FoodTruckInfo(
     val callNumber: String,
     val category: String,
     val notice: String,
-    val reviewList: List<Review>,
+    val reviewSet: ReviewSet,
 )
