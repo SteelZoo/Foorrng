@@ -2,10 +2,11 @@ package com.tasteguys.foorrng_owner.presentation.foodtruck.regist
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentRegistFoodtruckBinding
-import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +21,11 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
         super.onViewCreated(view, savedInstanceState)
         initCategoryView()
         setCategoryViewAdapter(dummyCategory.sortedBy { it.length })
+
+
+        mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            checkBackStackDialog()
+        }
     }
 
     override fun setToolbar() {
@@ -28,15 +34,25 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
             title = resources.getString(R.string.regist_foodtruck_title),
             menuRes = R.menu.menu_check
         ).addMenuItemClickListener {
-            showToast("등록 메뉴!")
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.layout_main_fragment,FoodtruckInfoFragment())
-                .commit()
+            showToast("등록 완료")
         }.addNavIconClickListener {
-            showToast("등록 뒤로가기")
+            checkBackStackDialog()
         }.also {
-                mainViewModel.changeToolbar(it)
+            mainViewModel.changeToolbar(it)
         }
+    }
+
+    private fun checkBackStackDialog(){
+        MaterialAlertDialogBuilder(_activity)
+            .setTitle("등록을 취소하시겠습니까?")
+            .setMessage("작성 중인 내용이 모두 삭제됩니다.")
+            .setPositiveButton("확인") { _, _ ->
+                parentFragmentManager.popBackStack()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun initCategoryView(){

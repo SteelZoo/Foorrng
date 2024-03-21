@@ -6,6 +6,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
@@ -42,7 +43,10 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
         ).addNavIconClickListener {
             parentFragmentManager.popBackStack()
         }.addMenuItemClickListener {
-
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, RegistFoodtruckFragment())
+                .addToBackStack(null)
+                .commit()
         }.also {
             mainViewModel.changeToolbar(it)
         }
