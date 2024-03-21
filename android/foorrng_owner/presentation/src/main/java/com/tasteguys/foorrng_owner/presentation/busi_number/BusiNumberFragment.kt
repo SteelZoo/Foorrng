@@ -6,6 +6,7 @@ import android.view.View
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentBusiNumberBinding
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
+import com.tasteguys.foorrng_owner.presentation.home.HomeFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,7 @@ class BusiNumberFragment : MainBaseFragment<FragmentBusiNumberBinding>(
         super.onViewCreated(view, savedInstanceState)
         binding.btnSubmit.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.layout_main_fragment, RegistFoodtruckFragment())
+                .replace(R.id.layout_main_fragment, HomeFragment())
                 .commit()
         }
     }
