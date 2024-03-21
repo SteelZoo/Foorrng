@@ -3,6 +3,7 @@
     <string name="favorite_title">내가 바로 맛잘알</string>
     <string name="favorite_description">음식 선택으로 맞춤 서비스를 이용할 수 있습니다</string>
     <string name="btn_confirm">확인</string>
+    <string name="btn_register">등록</string>
     <string name="btn_pathfinder">길찾기</string>
     <string name="today_favorite">오늘 먹고 싶은 음식</string>
     <string name="my_favorite_truck">내가 찜한 푸드트럭</string>
@@ -19,4 +20,7 @@
     <string name="notice">공지 사항</string>
     <string name="busi_number">사업자 번호</string>
     <string name="more_menu">메뉴 더 보기</string>
+    <string name="write_review">리뷰 작성하기</string>
+
+
 </resources>

@@ -14,8 +14,10 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckBasicInfoBinding
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckInfoBinding
 import com.tasteguys.foorrng_customer.presentation.truck.adapter.TruckMenuAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 
+@AndroidEntryPoint
 class TruckBasicInfoFragment : BaseFragment<FragmentTruckBasicInfoBinding>(
     { FragmentTruckBasicInfoBinding.bind(it)}, R.layout.fragment_truck_basic_info
 ) {
@@ -35,8 +37,15 @@ class TruckBasicInfoFragment : BaseFragment<FragmentTruckBasicInfoBinding>(
             "$res, $it"
         }
 
+        binding.btnMoreMenu.setOnClickListener {
+            requireParentFragment().parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, TruckMenuFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
         binding.rvMenu.apply {
-            adapter = TruckMenuAdapter(isSimple = true).apply {
+            adapter = TruckMenuAdapter().apply {
                 submitList(truckInfo.menu.subList(0, min(3, truckInfo.menu.size)))
             }
             setHasFixedSize(true)

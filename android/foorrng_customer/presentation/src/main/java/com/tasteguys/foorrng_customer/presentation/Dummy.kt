@@ -1,7 +1,9 @@
 package com.tasteguys.foorrng_customer.presentation
 
+import com.tasteguys.foorrng_customer.presentation.model.Review
 import com.tasteguys.foorrng_customer.presentation.model.TruckInfo
 import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
+import com.tasteguys.foorrng_customer.presentation.model.TruckReview
 import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
 
 object Dummy{
@@ -33,6 +35,16 @@ object Dummy{
             TruckMenu("산적꼬치", 3000, ""),
             TruckMenu("은행꼬치", 3000, ""),
             TruckMenu("파꼬치", 3000, ""),
+        ), TruckReview(
+            35, mutableListOf(
+                Review("음식이 맛있어요", 5, 35),
+                Review("특별한 메뉴가 있어요", 5, 35),
+                Review("가성비가 좋아요", 5, 35),
+                Review("음식이 빨리 나와요", 5, 35),
+                Review("푸드트럭이 멋져요", 5, 35),
+                Review("매장이 청결해요", 5, 35),
+                Review("사장님이 친절해요", 5, 35)
+            )
         )
     )
 

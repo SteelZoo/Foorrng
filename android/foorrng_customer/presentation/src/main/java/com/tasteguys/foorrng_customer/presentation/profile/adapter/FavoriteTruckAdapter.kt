@@ -12,13 +12,7 @@ import com.tasteguys.foorrng_customer.presentation.databinding.ItemFavoriteTruck
 import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
 
 private const val TAG = "FavoriteTruckAdapter"
-class FavoriteTruckAdapter(
-    override var clickListener: BaseHolder.ItemClickListener = object :
-        BaseHolder.ItemClickListener {
-        // default 매개 변수
-        override fun onClick(position: Int) {}
-    }
-) : BaseAdapter<TruckWithFavorite>(clickListener) {
+class FavoriteTruckAdapter: BaseAdapter<TruckWithFavorite>() {
 
     class TruckListHolder(private val binding: ItemFavoriteTruckBinding) :
         BaseHolder<TruckWithFavorite>(binding) {

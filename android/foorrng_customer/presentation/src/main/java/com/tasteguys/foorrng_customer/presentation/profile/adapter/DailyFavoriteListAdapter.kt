@@ -6,11 +6,7 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemFavoriteCategoryBinding
 
-class DailyFavoriteListAdapter(
-    override var clickListener: BaseHolder.ItemClickListener = object:BaseHolder.ItemClickListener{
-    // default 매개 변수
-    override fun onClick(position: Int) {}}
-): BaseAdapter<String>(clickListener) {
+class DailyFavoriteListAdapter: BaseAdapter<String>() {
 
     class FavoriteHolder(private val binding: ItemFavoriteCategoryBinding) : BaseHolder<String>(binding) {
         override fun bindInfo(data: String) {
@@ -19,7 +15,6 @@ class DailyFavoriteListAdapter(
                 clickListener.onClick(layoutPosition)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder<String> {
@@ -27,7 +22,4 @@ class DailyFavoriteListAdapter(
            setOnItemClickListener(clickListener)
        }
     }
-
-
-
 }

@@ -11,11 +11,7 @@ import com.tasteguys.foorrng_customer.presentation.databinding.ItemMenuBinding
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemMenuSimpleBinding
 import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
 
-class TruckMenuAdapter(
-    override var clickListener: BaseHolder.ItemClickListener = object: BaseHolder.ItemClickListener{
-        // default 매개 변수
-        override fun onClick(position: Int) {}}, private var isSimple : Boolean = true
-) : BaseAdapter<TruckMenu>(clickListener) {
+class TruckMenuAdapter( private var isSimple : Boolean = true) : BaseAdapter<TruckMenu>() {
 
     class SimpleMenuHolder(private val binding: ItemMenuSimpleBinding) : BaseHolder<TruckMenu>(binding) {
         @SuppressLint("SetTextI18n")
