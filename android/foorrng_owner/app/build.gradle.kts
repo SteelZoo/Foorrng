@@ -25,6 +25,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "NAVER_MAP_CLIENT_ID", getProperty("naverMapClientID"))
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", getProperty("kakao_app_key"))
     }
 
     buildTypes {
@@ -77,6 +78,9 @@ dependencies {
 
     // Naver Map
     implementation(libs.naver.mapsdk)
+
+    // kakao oauth
+    implementation(libs.kakao.oauth)
 
 
     //안드로이드 인스트루먼테이션 테스트를 위한 종속성
