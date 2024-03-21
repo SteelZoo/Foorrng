@@ -101,6 +101,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
     private fun kakaologin(callback: (uId: Long, name: String, email: String) -> (Unit)) {
         UserApiClient.instance.loginWithKakaoTalk(_activity) { token, error ->
             if (error != null) {
+                Log.d(TAG, "kakaologin: ${error.message}")
                 showSnackBar("카카오 로그인 실패")
             } else if (token != null) {
                 UserApiClient.instance.me { user, error ->
