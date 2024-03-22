@@ -13,6 +13,8 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        mainActivity.onBackPressedDispatcher.addCallback(mainActivity.onBackPressedCallback)
+
 
         binding.cvMyFoodtruck.setOnClickListener {
             parentFragmentManager.beginTransaction()
