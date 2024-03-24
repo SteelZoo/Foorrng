@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tasteguys.foorrng_owner.domain.model.user.TokenData
+import com.tasteguys.foorrng_owner.domain.model.user.LoginData
 import com.tasteguys.foorrng_owner.domain.usecase.user.LoginUseCase
 import com.tasteguys.foorrng_owner.domain.usecase.user.SignUpUseCase
 import com.tasteguys.foorrng_owner.presentation.base.PrefManager
@@ -19,8 +19,8 @@ class LoginViewModel @Inject constructor(
     private val prefManager: PrefManager
 ) : ViewModel() {
 
-    private var _loginResult = MutableLiveData<Result<TokenData>>()
-    val loginResult: LiveData<Result<TokenData>>
+    private var _loginResult = MutableLiveData<Result<LoginData>>()
+    val loginResult: LiveData<Result<LoginData>>
         get() = _loginResult
 
 

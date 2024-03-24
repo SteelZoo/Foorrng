@@ -2,7 +2,7 @@ package com.tasteguys.foorrng_owner.data.repository.user
 
 import com.tasteguys.foorrng_owner.data.mapper.toDomain
 import com.tasteguys.foorrng_owner.data.repository.user.remote.UserRemoteDatasource
-import com.tasteguys.foorrng_owner.domain.model.user.TokenData
+import com.tasteguys.foorrng_owner.domain.model.user.LoginData
 import com.tasteguys.foorrng_owner.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -13,7 +13,7 @@ class UserRepositpryImpl @Inject constructor(
         return userRemoteDatasource.registerOwner(userUid, name, email)
     }
 
-    override suspend fun login(userUid: Long, name: String, email: String): Result<TokenData> {
+    override suspend fun login(userUid: Long, name: String, email: String): Result<LoginData> {
         return userRemoteDatasource.login(userUid, name, email).map {
             it.toDomain()
         }
