@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_customer.presentation.truck.adapter
+package com.tasteguys.foorrng_customer.presentation.truck.info.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemReviewBtnBinding
-import com.tasteguys.foorrng_customer.presentation.truck.ReviewMap
+import com.tasteguys.foorrng_customer.presentation.truck.info.ReviewMap
 
 class TruckReviewBtnAdapter: BaseAdapter<String>() {
 

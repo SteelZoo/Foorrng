@@ -1,16 +1,9 @@
-package com.tasteguys.foorrng_customer.presentation.truck
+package com.tasteguys.foorrng_customer.presentation.truck.info
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.google.android.material.tabs.TabLayout
 import com.tasteguys.foorrng_customer.presentation.R
-import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
-import com.tasteguys.foorrng_customer.presentation.base.IToolbarFragment
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckInfoBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl

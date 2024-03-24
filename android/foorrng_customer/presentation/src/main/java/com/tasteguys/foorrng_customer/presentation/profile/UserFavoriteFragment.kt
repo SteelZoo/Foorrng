@@ -1,13 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.profile
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -15,16 +9,13 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
-import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
-import com.tasteguys.foorrng_customer.presentation.base.IToolbarFragment
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_customer.presentation.main.MainViewModel
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.FavoriteTruckAdapter
-import com.tasteguys.foorrng_customer.presentation.truck.TruckInfoFragment
+import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "UserFavoriteFragment"

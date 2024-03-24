@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_customer.presentation.truck
+package com.tasteguys.foorrng_customer.presentation.truck.info
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,7 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckWriteReviewBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_customer.presentation.truck.adapter.TruckReviewBtnAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewBtnAdapter
 
 class TruckWriteReviewFragment : MainBaseFragment<FragmentTruckWriteReviewBinding>(
     { FragmentTruckWriteReviewBinding.bind(it)}, R.layout.fragment_truck_write_review

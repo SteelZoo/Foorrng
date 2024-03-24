@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_customer.presentation.truck.adapter
+package com.tasteguys.foorrng_customer.presentation.truck.info.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

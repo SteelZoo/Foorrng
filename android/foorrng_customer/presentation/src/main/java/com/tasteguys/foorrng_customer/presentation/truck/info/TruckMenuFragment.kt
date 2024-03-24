@@ -1,19 +1,15 @@
-package com.tasteguys.foorrng_customer.presentation.truck
+package com.tasteguys.foorrng_customer.presentation.truck.info
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
-import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckMenuBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_customer.presentation.truck.adapter.TruckMenuAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
 
 class TruckMenuFragment : MainBaseFragment<FragmentTruckMenuBinding>(
     { FragmentTruckMenuBinding.bind(it)}, R.layout.fragment_truck_menu

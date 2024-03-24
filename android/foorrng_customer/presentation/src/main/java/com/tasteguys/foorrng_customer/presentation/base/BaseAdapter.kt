@@ -1,12 +1,14 @@
 package com.tasteguys.foorrng_customer.presentation.base
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
+private const val TAG = "BaseAdapter"
 abstract class BaseHolder<T>(binding: ViewBinding): RecyclerView.ViewHolder(binding.root){
     abstract fun bindInfo(data: T)
 

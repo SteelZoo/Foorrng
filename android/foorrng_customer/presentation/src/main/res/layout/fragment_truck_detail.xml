@@ -3,14 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".truck.TruckDetailFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".truck.info.TruckDetailFragment"
     android:orientation="vertical"
-    android:background="@color/stroke_gray">
+    android:paddingHorizontal="20dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment"
-        android:textSize="50sp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_op_info"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_weight="1"/>
 
 </LinearLayout>

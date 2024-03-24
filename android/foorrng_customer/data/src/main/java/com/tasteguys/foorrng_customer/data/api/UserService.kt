@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_customer.data.model.DefaultResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.data.model.user.UserRequest
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface UserService {
@@ -16,4 +17,5 @@ interface UserService {
     suspend fun login(
         @Body userRequest: UserRequest
     ): Result<DefaultResponse<LoginResponse>>
+
 }

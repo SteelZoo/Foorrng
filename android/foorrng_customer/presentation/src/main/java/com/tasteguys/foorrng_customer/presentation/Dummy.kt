@@ -2,7 +2,9 @@ package com.tasteguys.foorrng_customer.presentation
 
 import com.tasteguys.foorrng_customer.presentation.model.Review
 import com.tasteguys.foorrng_customer.presentation.model.TruckInfo
+import com.tasteguys.foorrng_customer.presentation.model.TruckMark
 import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
+import com.tasteguys.foorrng_customer.presentation.model.TruckOperationInfo
 import com.tasteguys.foorrng_customer.presentation.model.TruckReview
 import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
 
@@ -46,6 +48,24 @@ object Dummy{
                 Review("사장님이 친절해요", 5, 35)
             )
         )
+    )
+
+    val markInfo = mutableListOf(
+        TruckMark(
+            0, 0, 0, 0, "대구광역시 중구 명륜로 23길 80", mutableListOf(
+                TruckOperationInfo(0, "화", 0, 0),
+                TruckOperationInfo(0, "금", 0, 0),
+            )
+
+        ),
+        TruckMark(
+            0, 0, 0, 0, "대구광역시 중구 명륜로 24길", mutableListOf(
+                TruckOperationInfo(0, "월", 0, 0),
+                TruckOperationInfo(0, "수", 0, 0),
+            )
+
+        )
+
     )
 
 }
