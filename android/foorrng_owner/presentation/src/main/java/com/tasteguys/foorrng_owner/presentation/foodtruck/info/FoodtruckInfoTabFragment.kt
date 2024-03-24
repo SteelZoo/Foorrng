@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.BaseFragment
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoTabBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.FoodtruckMenuFragment
 import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
 
 class FoodtruckInfoTabFragment(
@@ -26,6 +27,21 @@ class FoodtruckInfoTabFragment(
             tvCallNumber.text = foodTruckInfo.callNumber
             tvFoodCategory.text = foodTruckInfo.category
             tvNotice.text = foodTruckInfo.notice
+        }
+
+        registerListener()
+    }
+
+    private fun registerListener(){
+        binding.btnMenuManage.setOnClickListener {
+            parentFragment?.let {
+                it.parentFragmentManager.beginTransaction()
+                    .replace(R.id.layout_main_fragment, FoodtruckMenuFragment())
+                    .addToBackStack(null)
+                    .commit()
+            } ?: run{
+                showToast("알 수 없는 오류가 발생했습니다.")
+            }
         }
     }
 }
