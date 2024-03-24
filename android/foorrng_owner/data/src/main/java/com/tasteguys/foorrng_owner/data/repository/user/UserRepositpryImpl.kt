@@ -18,4 +18,8 @@ class UserRepositpryImpl @Inject constructor(
             it.toDomain()
         }
     }
+
+    override suspend fun registBusinessNumber(businessNumber: String): Result<String> {
+        return userRemoteDatasource.registBusinessNumber(businessNumber)
+    }
 }

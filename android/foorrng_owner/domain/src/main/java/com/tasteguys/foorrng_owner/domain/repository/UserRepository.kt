@@ -14,4 +14,8 @@ interface UserRepository {
         name: String,
         email: String
     ): Result<LoginData>
+
+    suspend fun registBusinessNumber(
+        businessNumber: String
+    ): Result<String>
 }
