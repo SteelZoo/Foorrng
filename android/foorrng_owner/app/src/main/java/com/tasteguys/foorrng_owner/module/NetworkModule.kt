@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_owner.module
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.tasteguys.foorrng_owner.AuthInterceptor
 import com.tasteguys.foorrng_owner.data.api.ApiClient.BASE_URL
 import com.tasteguys.foorrng_owner.data.api.UserService
 import com.tasteguys.retrofit_adapter.NetworkResponseAdapterFactory
@@ -39,7 +40,7 @@ object NetworkModule {
     @Singleton
     fun providesRetrofitClient(
         moshi: Moshi,
-//        authInterceptor: AuthInterceptor,
+        authInterceptor: AuthInterceptor,
 //        authenticator: AuthAuthenticator
     ): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -48,7 +49,7 @@ object NetworkModule {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-//            .addInterceptor(authInterceptor)
+            .addInterceptor(authInterceptor)
 //            .authenticator(authenticator)
             .build()
 
@@ -79,6 +80,15 @@ object NetworkModule {
             .client(client)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    @AuthUserService
+    fun providesAuthUserService(
+        @AuthRetrofit retrofit: Retrofit
+    ): UserService {
+        return retrofit.create(UserService::class.java)
     }
 
     @Provides
