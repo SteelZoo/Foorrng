@@ -81,4 +81,10 @@ dependencies {
 
     // kakao oauth
     implementation(libs.kakao.oauth)
+
+    //안드로이드 인스트루먼테이션 테스트를 위한 종속성
+    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+    androidTestImplementation ("androidx.test:runner:1.4.0")
+    androidTestImplementation ("androidx.test:rules:1.4.0")
 }

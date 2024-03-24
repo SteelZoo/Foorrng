@@ -21,7 +21,7 @@ abstract class BaseActivity<B : ViewBinding>(private val inflate: (LayoutInflate
                 finish()
             } else {
                 backPressedTime = System.currentTimeMillis()
-                showToast("한번 더 누르면 종료 된단다!")
+                showToast("한번 더 누르면 종료됩니다. ;)")
             }
         }
     }
