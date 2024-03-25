@@ -15,6 +15,7 @@ import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFrag
 import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.FoodtruckMenuFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.MenuEditFragment
 import com.tasteguys.foorrng_owner.presentation.location.manage.LocationManageFragment
+import com.tasteguys.foorrng_owner.presentation.location.recommend.LocationRecommendFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 
 class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
@@ -23,7 +24,7 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mainActivity.onBackPressedDispatcher.addCallback(mainActivity.onBackPressedCallback)
+        mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner,mainActivity.onBackPressedCallback)
 
         checkPermission()
 
@@ -49,6 +50,13 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
         binding.cvManageLocation.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, LocationManageFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvRecommendLocation.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, LocationRecommendFragment())
                 .addToBackStack(null)
                 .commit()
         }

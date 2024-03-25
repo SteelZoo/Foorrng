@@ -13,4 +13,7 @@
 
     <color name="review_background">#D7FBCA</color>
     <color name="review_progress">#59C227</color>
+
+    <color name="recommend_overlay_line_green">#59C227</color>
+    <color name="recommend_overlay_solid_green">#5559C227</color>
 </resources>
