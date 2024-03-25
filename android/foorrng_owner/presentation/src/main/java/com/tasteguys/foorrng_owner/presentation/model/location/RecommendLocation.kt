@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_owner.presentation.model
+package com.tasteguys.foorrng_owner.presentation.model.location
 
 import com.naver.maps.geometry.LatLng
 

@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tasteguys.foorrng_owner.presentation.model.RecommendLocation
+import com.naver.maps.geometry.LatLng
+import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,7 +35,7 @@ class LocationRecommendViewModel @Inject constructor(
                     RecommendLocation(
                         address = "대구광역시 중구 명륜로23길 80",
                         comment = "근처에 유사 업종의 가게가 적습니다.",
-                        latLng = com.naver.maps.geometry.LatLng(35.863585+(i/1000.0), 128.595737+(i/1000.0))
+                        latLng = LatLng(35.863585+(i/1000.0), 128.595737+(i/1000.0))
                     )
                 )
             }

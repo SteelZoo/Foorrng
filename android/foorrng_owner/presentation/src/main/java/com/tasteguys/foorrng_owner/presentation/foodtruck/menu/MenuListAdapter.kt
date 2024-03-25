@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tasteguys.foorrng_owner.presentation.databinding.ItemFoodtruckMenuBinding
-import com.tasteguys.foorrng_owner.presentation.model.Menu
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
 
 class MenuListAdapter(
     private val menuList: List<Menu>,
@@ -32,7 +32,7 @@ class MenuListAdapter(
     class MenuViewHolder(
         private val binding: ItemFoodtruckMenuBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(menu: Menu,menuClickListener: (Menu) -> Unit) {
+        fun bind(menu: Menu, menuClickListener: (Menu) -> Unit) {
             Glide.with(binding.root)
                 .load(menu.imageUrl)
                 .into(binding.ivMenuImage)

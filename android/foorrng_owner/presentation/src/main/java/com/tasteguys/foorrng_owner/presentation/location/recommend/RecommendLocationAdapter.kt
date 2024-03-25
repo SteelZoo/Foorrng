@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tasteguys.foorrng_owner.presentation.databinding.ItemRecommendLocationBinding
-import com.tasteguys.foorrng_owner.presentation.model.RecommendLocation
+import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 
 class RecommendLocationAdapter(
     private val recommendLocationList: List<RecommendLocation>

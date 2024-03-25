@@ -9,9 +9,9 @@ import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInf
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
-import com.tasteguys.foorrng_owner.presentation.model.Review
-import com.tasteguys.foorrng_owner.presentation.model.ReviewSet
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.ReviewSet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -15,7 +15,7 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRecommendBinding
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_owner.presentation.model.RecommendLocation
+import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

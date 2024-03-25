@@ -17,7 +17,7 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentMenuEditBinding
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_owner.presentation.model.Menu
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
 import java.io.File
 import java.text.SimpleDateFormat
 

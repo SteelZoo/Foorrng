@@ -5,7 +5,7 @@ import android.view.View
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.BaseFragment
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckReviewTabBinding
-import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
 
 class FoodtruckReviewTabFragment(
     private val foodTruckInfo: FoodTruckInfo
