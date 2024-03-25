@@ -1,11 +1,15 @@
 package com.tasteguys.foorrng_customer.presentation.truck.regist
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.tasteguys.foorrng_customer.presentation.base.toFile
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import javax.inject.Inject
 
 private const val TAG = "RegisterInputViewModel"
@@ -20,12 +24,12 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _name.postValue(input)
     }
 
-    private val _picture = MutableLiveData("")
-    val picture: LiveData<String>
+    private val _picture = MutableLiveData<File>()
+    val picture: LiveData<File>
         get() = _picture
 
-    fun inputPicture(input: String){
-        _picture.postValue(input)
+    fun inputPicture(input: Uri, context: Context){
+        _picture.postValue(input.toFile(context))
     }
 
     private val _carNumber = MutableLiveData("")
@@ -57,7 +61,7 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         get() = _category
 
     fun setCategory(list: MutableList<FavoriteCategory>){
-        _category.value = list
+        _category.value = list.toMutableList()
     }
 
     fun checkCategory(idx: Int){

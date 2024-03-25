@@ -10,5 +10,6 @@ data class TruckInfo(
     val notice: String,
     val bussNumber: String,
     val menu: List<TruckMenu>,
-    val review: TruckReview
+    val review: TruckReview,
+    val type: String = "Foodtruck"
 )

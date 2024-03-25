@@ -6,6 +6,7 @@ data class TruckMark(
     val latitude: Int,
     val longitude: Int,
     val address: String,
-    val operationInfo: List<TruckOperationInfo>
+    val operationInfo: List<TruckOperationInfo>,
+    val type: String = "Foodtruck"
 
 )

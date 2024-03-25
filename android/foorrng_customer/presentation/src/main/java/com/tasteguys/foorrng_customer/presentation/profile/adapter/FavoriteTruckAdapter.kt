@@ -1,7 +1,6 @@
 package com.tasteguys.foorrng_customer.presentation.profile.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
@@ -9,13 +8,13 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemFavoriteTruckBinding
-import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
+import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 
 private const val TAG = "FavoriteTruckAdapter"
-class FavoriteTruckAdapter: BaseAdapter<TruckWithFavorite>() {
+class FavoriteTruckAdapter: BaseAdapter<TruckDataWithAddress>() {
 
     class TruckListHolder(private val binding: ItemFavoriteTruckBinding) :
-        BaseHolder<TruckWithFavorite>(binding) {
+        BaseHolder<TruckDataWithAddress>(binding) {
 
         interface ButtonClickListener {
             fun onToggleClick(icChecked: Boolean)
@@ -30,7 +29,7 @@ class FavoriteTruckAdapter: BaseAdapter<TruckWithFavorite>() {
         }
 
         @SuppressLint("SetTextI18n")
-        override fun bindInfo(data: TruckWithFavorite) {
+        override fun bindInfo(data: TruckDataWithAddress) {
             binding.root.setOnClickListener {
                 clickListener.onClick(layoutPosition)
             }
@@ -63,7 +62,7 @@ class FavoriteTruckAdapter: BaseAdapter<TruckWithFavorite>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseHolder<TruckWithFavorite> {
+    ): BaseHolder<TruckDataWithAddress> {
         return TruckListHolder(ItemFavoriteTruckBinding.inflate(LayoutInflater.from(parent.context), parent, false)).apply {
             setOnItemClickListener(clickListener)
             setOnButtonClickListener(buttonClickListener)

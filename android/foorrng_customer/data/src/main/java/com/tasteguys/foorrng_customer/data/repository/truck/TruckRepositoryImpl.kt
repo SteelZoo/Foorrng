@@ -1,6 +1,10 @@
-package com.tasteguys.foorrng_customer.data.repository.truck.remote
+package com.tasteguys.foorrng_customer.data.repository.truck
 
+import com.tasteguys.foorrng_customer.data.mapper.toDomain
+import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDatasource
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
+import java.io.File
 import javax.inject.Inject
 
 class TruckRepositoryImpl @Inject constructor(
@@ -8,7 +12,7 @@ class TruckRepositoryImpl @Inject constructor(
 ): TruckRepository {
     override suspend fun reportFoodTruck(
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -22,7 +26,7 @@ class TruckRepositoryImpl @Inject constructor(
     override suspend fun updateFoodTruck(
         foodtruckId: Long,
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -32,4 +36,17 @@ class TruckRepositoryImpl @Inject constructor(
             foodtruckId, name, picture, carNumber, announcement, phoneNumber, category
         )
     }
+
+    override suspend fun getTruckList(
+        latLeft: Double,
+        lngLeft: Double,
+        latRight: Double,
+        lngRight: Double
+    ): Result<List<TruckData>> {
+        return truckRemoteDatasource.getTruckList(
+            latLeft, lngLeft, latRight, lngRight
+        ).map { it -> it.map{ it.toDomain()} }
+    }
+
+
 }

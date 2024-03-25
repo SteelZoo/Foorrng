@@ -1,6 +1,6 @@
 package com.tasteguys.foorrng_customer.module
 
-import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRepositoryImpl
+import com.tasteguys.foorrng_customer.data.repository.truck.TruckRepositoryImpl
 import com.tasteguys.foorrng_customer.data.repository.user.UserRepositoryImpl
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
 import com.tasteguys.foorrng_customer.domain.repository.UserRepository

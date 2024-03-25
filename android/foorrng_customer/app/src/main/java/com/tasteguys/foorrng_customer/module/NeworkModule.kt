@@ -2,7 +2,8 @@ package com.tasteguys.foorrng_customer.module
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.tasteguys.foorrng_customer.data.api.FoodTruckReportService
+import com.tasteguys.foorrng_customer.AuthInterceptor
+import com.tasteguys.foorrng_customer.data.api.FoodTruckService
 import com.tasteguys.foorrng_customer.data.api.UserService
 import com.tasteguys.foorrng_owner.data.BuildConfig.BASE_URL
 import com.tasteguys.retrofit_adapter.NetworkResponseAdapterFactory
@@ -39,7 +40,7 @@ object NetworkModule {
     @Singleton
     fun providesRetrofitClient(
         moshi: Moshi,
-//        authInterceptor: AuthInterceptor,
+        authInterceptor: AuthInterceptor,
 //        authenticator: AuthAuthenticator
     ): Retrofit {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -48,7 +49,7 @@ object NetworkModule {
 
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-//            .addInterceptor(authInterceptor)
+            .addInterceptor(authInterceptor)
 //            .authenticator(authenticator)
             .build()
 
@@ -93,8 +94,8 @@ object NetworkModule {
     @Singleton
     fun providesFoodTruckReportService(
         retrofit: Retrofit
-    ): FoodTruckReportService {
-        return retrofit.create(FoodTruckReportService::class.java)
+    ): FoodTruckService {
+        return retrofit.create(FoodTruckService::class.java)
     }
 
 }

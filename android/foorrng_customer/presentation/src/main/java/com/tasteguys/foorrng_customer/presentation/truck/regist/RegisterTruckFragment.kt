@@ -64,6 +64,7 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                     .load(data)
                     .fallback(R.drawable.logo_truck)
                     .into(binding.ivTruckPhoto)
+                registerInputViewModel.inputPicture(data, requireContext())
 //                lifecycleScope.launch {
 //                    accountViewModel.editProfileImg(data, requireContext())
 //                }
@@ -115,30 +116,24 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 galleryLauncher.openGallery()
             }
         }
+
+        truckViewModel.registerResult.observe(viewLifecycleOwner){
+            Log.d(TAG, "initViewResult: ${it.isSuccess}")
+        }
     }
 
     private fun register() {
         with(registerInputViewModel) {
             truckViewModel.registerTruck(
                 name.value!!,
-                "",
+                picture.value!!,
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
-                category.value!!.map { it.name }
+                category.value!!.filter { it.favorite }.map { it.name }
             )
         }
 
-        with(binding) {
-
-//                tilTruckName.editText!!.text.toString(),
-//                "",
-//                tilCarNumber.editText!!.text.toString(),
-//                tilNotice.editText!!.text.toString(),
-//                tilCallNumber.editText!!.text.toString(),
-//                listOf()
-
-        }
     }
 
     private fun checkBackStackDialog() {

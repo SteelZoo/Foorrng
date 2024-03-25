@@ -7,7 +7,7 @@ import com.tasteguys.foorrng_customer.presentation.model.TruckMark
 import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
 import com.tasteguys.foorrng_customer.presentation.model.TruckOperationInfo
 import com.tasteguys.foorrng_customer.presentation.model.TruckReview
-import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
+import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 
 object Dummy{
     val category = mutableListOf(
@@ -26,15 +26,15 @@ object Dummy{
     )
 
     val trucks = mutableListOf(
-        TruckWithFavorite(
+        TruckDataWithAddress(
             0, 0, "야미족발", "", true, 17, 17, listOf(
                 "족발"
-            )
+            ), isOperating = true
         ),
-        TruckWithFavorite(
+        TruckDataWithAddress(
             0, 0, "야미족발2", "", false, 18, 18, listOf(
                 "치킨"
-            )
+            ), isOperating = true, type = "FoodtruckReport"
         ),
     )
 

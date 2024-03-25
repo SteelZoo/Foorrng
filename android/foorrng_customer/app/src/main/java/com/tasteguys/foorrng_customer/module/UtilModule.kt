@@ -1,7 +1,7 @@
 package com.tasteguys.foorrng_customer.module
 
 import android.content.Context
-import com.gdd.presentation.base.PrefManager
+import com.tasteguys.foorrng_customer.presentation.base.PrefManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

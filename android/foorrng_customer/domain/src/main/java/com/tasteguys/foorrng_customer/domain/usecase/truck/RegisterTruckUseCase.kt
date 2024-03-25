@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.domain.usecase.truck
 
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
+import java.io.File
 import javax.inject.Inject
 
 class RegisterTruckUseCase @Inject constructor(
@@ -8,7 +9,7 @@ class RegisterTruckUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,

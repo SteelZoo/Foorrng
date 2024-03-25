@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.domain.usecase.truck
 
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
+import java.io.File
 import javax.inject.Inject
 
 class UpdateTruckUseCase @Inject constructor(
@@ -9,7 +10,7 @@ class UpdateTruckUseCase @Inject constructor(
     suspend operator fun invoke(
         foodtruckId: Long,
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,

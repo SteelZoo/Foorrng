@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdd.presentation.base.PrefManager
+import com.tasteguys.foorrng_customer.presentation.base.PrefManager
 import com.tasteguys.foorrng_customer.domain.model.user.TokenData
 import com.tasteguys.foorrng_customer.domain.usecase.user.LoginUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.user.SignUpUseCase

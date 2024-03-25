@@ -1,4 +1,4 @@
-package com.gdd.presentation.base
+package com.tasteguys.foorrng_customer.presentation.base
 
 import android.app.Activity
 import android.content.Context
@@ -95,10 +95,10 @@ class PrefManager(context: Context) {
 
     fun getRelayingMode(): RELAYING_MODE {
         return when(pref.getInt(PREF_RELAYING_MODE,-1)){
-            RELAYING_MODE.PATH.ordinal->RELAYING_MODE.PATH
-            RELAYING_MODE.DISTANCE.ordinal->RELAYING_MODE.DISTANCE
-            RELAYING_MODE.NONE.ordinal->RELAYING_MODE.NONE
-            else->RELAYING_MODE.NONE
+            RELAYING_MODE.PATH.ordinal-> RELAYING_MODE.PATH
+            RELAYING_MODE.DISTANCE.ordinal-> RELAYING_MODE.DISTANCE
+            RELAYING_MODE.NONE.ordinal-> RELAYING_MODE.NONE
+            else-> RELAYING_MODE.NONE
         }
     }
 

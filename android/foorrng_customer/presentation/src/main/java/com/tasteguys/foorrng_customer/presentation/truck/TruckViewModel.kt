@@ -4,17 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
+import com.tasteguys.foorrng_customer.domain.usecase.truck.GetTruckListUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.RegisterTruckUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.UpdateTruckUseCase
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
+import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
+import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckDataWithAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class TruckViewModel @Inject constructor(
     private val registerUseCase: RegisterTruckUseCase,
-    private val updateTruckUseCase: UpdateTruckUseCase
+    private val updateTruckUseCase: UpdateTruckUseCase,
+    private val getTruckListUseCase: GetTruckListUseCase
 ): ViewModel(){
 
     private val _registerResult = MutableLiveData<Result<Long>>()
@@ -25,9 +31,13 @@ class TruckViewModel @Inject constructor(
     val updateResult: LiveData<Result<Long>>
         get() = _updateResult
 
+    private val _truckListResult = MutableLiveData<Result<List<TruckDataWithAddress>>>()
+    val truckListResult: LiveData<Result<List<TruckDataWithAddress>>>
+        get() = _truckListResult
+
     fun registerTruck(
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -46,7 +56,7 @@ class TruckViewModel @Inject constructor(
     fun updateTruck(
         foodtruckId: Long,
         name: String,
-        picture: String,
+        picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -59,7 +69,22 @@ class TruckViewModel @Inject constructor(
                 _updateResult.postValue(it)
             }
         }
+    }
 
+    fun getTruckList(
+        latLeft: Double, lngLeft: Double, latRight: Double, lngRight: Double
+    ){
+        viewModelScope.launch {
+            getTruckListUseCase(
+                latLeft, lngLeft, latRight, lngRight
+            ).let{ result ->
+                _truckListResult.postValue(
+                    result.map { list->
+                        list.map { it.toTruckDataWithAddress() }
+                    }
+                )
+            }
+        }
     }
 
 
