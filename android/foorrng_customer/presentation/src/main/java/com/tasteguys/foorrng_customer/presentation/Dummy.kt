@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_customer.presentation
 
+import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
 import com.tasteguys.foorrng_customer.presentation.model.Review
 import com.tasteguys.foorrng_customer.presentation.model.TruckInfo
 import com.tasteguys.foorrng_customer.presentation.model.TruckMark
@@ -10,10 +11,18 @@ import com.tasteguys.foorrng_customer.presentation.model.TruckWithFavorite
 
 object Dummy{
     val category = mutableListOf(
-        "햄버거", "아이스크림", "곱창 & 막창",
-        "치킨", "디저트 & 커피", "분식",
-        "케밥 & 타코", "닭꼬치", "핫도그",
-        "타코야끼", "츄러스", "스테이크"
+        FavoriteCategory("햄버거", false),
+        FavoriteCategory("아이스크림", false),
+        FavoriteCategory("곱창 & 막창", false),
+        FavoriteCategory("치킨", false),
+        FavoriteCategory("디저트 & 커피", false),
+        FavoriteCategory("분식", false),
+        FavoriteCategory("케밥 & 타코", false),
+        FavoriteCategory("닭꼬치", false),
+        FavoriteCategory("핫도그", false),
+        FavoriteCategory("타코야끼", false),
+        FavoriteCategory("츄러스", false),
+        FavoriteCategory("스테이크", false)
     )
 
     val trucks = mutableListOf(

@@ -1,6 +1,8 @@
 package com.tasteguys.foorrng_customer.module
 
+import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRepositoryImpl
 import com.tasteguys.foorrng_customer.data.repository.user.UserRepositoryImpl
+import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
 import com.tasteguys.foorrng_customer.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -14,4 +16,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindTruckRepository(truckRepositoryImpl: TruckRepositoryImpl): TruckRepository
 }

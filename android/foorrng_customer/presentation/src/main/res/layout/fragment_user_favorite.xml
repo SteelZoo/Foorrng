@@ -7,6 +7,12 @@
     tools:context=".profile.UserFavoriteFragment"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
     <TextView
         style="@style/Foorrng.TEXT.EB.14"
         android:layout_width="wrap_content"

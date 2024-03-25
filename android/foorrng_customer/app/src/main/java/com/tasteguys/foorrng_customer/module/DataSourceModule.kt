@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.module
 
+import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDatasource
+import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDatasourceImpl
 import com.tasteguys.foorrng_customer.data.repository.user.remote.UserRemoteDatasource
 import com.tasteguys.foorrng_customer.data.repository.user.remote.UserRemoteDatasourceImpl
 import dagger.Binds
@@ -14,4 +16,8 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindUserRemoteDataSource(userRemoteDataSourceImpl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    abstract fun bindTruckRemoteDataSource(truckRemoteDataSourceImpl: TruckRemoteDatasourceImpl): TruckRemoteDatasource
 }

@@ -16,6 +16,7 @@ import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.FavoriteTruckAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
+import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "UserFavoriteFragment"
@@ -41,6 +42,12 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
     }
 
     private fun initView(){
+        binding.test.setOnClickListener{
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, RegisterTruckFragment())
+                .addToBackStack(null)
+                .commit()
+        }
         favoriteAdapter.submitList(Dummy.category)
         truckAdapter.submitList(Dummy.trucks)
     }
