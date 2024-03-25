@@ -14,6 +14,7 @@ import com.tasteguys.foorrng_owner.presentation.databinding.FragmentHomeBinding
 import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.FoodtruckMenuFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.MenuEditFragment
+import com.tasteguys.foorrng_owner.presentation.location.manage.LocationManageFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 
 class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
@@ -41,6 +42,13 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
         binding.cvManageMenu.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, FoodtruckMenuFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvManageLocation.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, LocationManageFragment())
                 .addToBackStack(null)
                 .commit()
         }

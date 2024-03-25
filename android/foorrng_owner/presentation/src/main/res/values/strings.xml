@@ -34,5 +34,8 @@
     <string name="foodtruck_menu_price">가격</string>
     <string name="foodtruck_menu_change_image">사진 변경</string>
     <string name="foodtruck_menu_save">저장하기</string>
+    
+    <string name="location_manage_title">영업 위치 관리</string>
+    <string name="location_manage_nav">길찾기</string>
 
 </resources>
