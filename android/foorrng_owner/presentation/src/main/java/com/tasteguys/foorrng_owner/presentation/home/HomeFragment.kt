@@ -12,6 +12,8 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.PermissionHelper
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentHomeBinding
 import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
+import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.FoodtruckMenuFragment
+import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.MenuEditFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 
 class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
@@ -24,9 +26,21 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
 
         checkPermission()
 
+        registerListener()
+
+    }
+
+    private fun registerListener() {
         binding.cvMyFoodtruck.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, FoodtruckInfoFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvManageMenu.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, FoodtruckMenuFragment())
                 .addToBackStack(null)
                 .commit()
         }
