@@ -43,7 +43,7 @@ fun TruckDetailResponse.toDomain() = TruckDetailData(
 )
 
 fun TruckMainInfoResponse.toDomain() = TruckMainData(
-    announcement, name, createdDay, picture, accountInfo, carNumber, phoneNumber, category
+    announcement, name, createdDay, picture, accountInfo, carNumber, phoneNumber, bussiNumber, category
 )
 
 fun TruckReviewResponse.toDomain() = TruckReviewData(
