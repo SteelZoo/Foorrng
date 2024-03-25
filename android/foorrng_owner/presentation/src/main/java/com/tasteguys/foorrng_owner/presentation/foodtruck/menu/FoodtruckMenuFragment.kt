@@ -23,7 +23,17 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
 
         foodtruckMenuViewModel.getMenuList()
 
+        registerListener()
         registerObserve()
+    }
+
+    private fun registerListener(){
+        binding.btnAddMenu.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, MenuEditFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun registerObserve() {
@@ -39,7 +49,12 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
 
     private fun setMenuList(list: List<Menu>) {
         if (menuAdapter == null) {
-            menuAdapter = MenuListAdapter(list)
+            menuAdapter = MenuListAdapter(list){
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.layout_main_fragment, MenuEditFragment(it))
+                    .addToBackStack(null)
+                    .commit()
+            }
         }
         binding.rvFoodtruckMenu.adapter = menuAdapter
     }
@@ -49,7 +64,6 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
             MainToolbarControl(
                 title = "메뉴 관리",
                 visible = true,
-                menuRes = R.menu.menu_edit
             )
         )
     }

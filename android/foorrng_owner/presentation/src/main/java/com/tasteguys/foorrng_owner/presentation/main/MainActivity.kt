@@ -38,13 +38,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             with(binding.tbMain) {
                 if (contoller.visible) {
                     binding.tbMain.visibility = View.VISIBLE
+
                     title = contoller.title
+
                     menu.clear()
-                    inflateMenu(contoller.menuRes)
-                    setOnMenuItemClickListener {
-                        contoller.menuItemClickListener(it)
-                        true
+                    if (contoller.menuRes != 0){
+                        inflateMenu(contoller.menuRes)
+                        setOnMenuItemClickListener {
+                            contoller.menuItemClickListener(it)
+                            true
+                        }
                     }
+
                     setNavigationOnClickListener {
                         contoller.navIconClickListener()
                     }
