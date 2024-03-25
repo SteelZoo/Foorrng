@@ -49,6 +49,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setListener() {
         binding.ivKakaoLogin.setOnClickListener {
+            showLoading()
             kakaologin { uId, name, email ->
                 loginViewModel.login(uId, name, email)
             }
@@ -57,6 +58,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setObserver() {
         loginViewModel.loginResult.observe(viewLifecycleOwner) {
+            hideLoading()
             if (it.isSuccess) {
                 startActivity(Intent(_activity, MainActivity::class.java).apply {
                     putExtra("is_regist",it.getOrNull()?.isBusiRegist ?: false)
