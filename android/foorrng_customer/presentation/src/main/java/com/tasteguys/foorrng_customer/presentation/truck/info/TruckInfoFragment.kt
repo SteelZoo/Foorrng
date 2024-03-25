@@ -2,18 +2,22 @@ package com.tasteguys.foorrng_customer.presentation.truck.info
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckInfoBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
+import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "TruckInfoFragment"
 @AndroidEntryPoint
-class TruckInfoFragment : MainBaseFragment<FragmentTruckInfoBinding>(
+class TruckInfoFragment(private val truckId: Long) : MainBaseFragment<FragmentTruckInfoBinding>(
     { FragmentTruckInfoBinding.bind(it)}, R.layout.fragment_truck_info
 ){
+    private val truckViewModel: TruckViewModel by activityViewModels()
+
     override fun setToolbar() {
         MainToolbarControl(
             true, "야미족발"
@@ -29,11 +33,13 @@ class TruckInfoFragment : MainBaseFragment<FragmentTruckInfoBinding>(
         initView()
     }
 
-    val tabs = listOf(TruckBasicInfoFragment(), TruckDetailFragment(), TruckReviewFragment())
+    val tabs = listOf(TruckBasicInfoFragment(truckId), TruckDetailFragment(truckId), TruckReviewFragment(truckId))
 
     private fun initView(){
+        truckViewModel.getTruckDetail(truckId)
+
         childFragmentManager.beginTransaction()
-            .replace(R.id.fcv_truck_container, TruckBasicInfoFragment())
+            .replace(R.id.fcv_truck_container, TruckBasicInfoFragment(truckId))
             .commit()
 
         binding.tblTruckInfo.addOnTabSelectedListener(

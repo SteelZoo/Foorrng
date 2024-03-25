@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.data.repository.truck
 import com.tasteguys.foorrng_customer.data.mapper.toDomain
 import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDatasource
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
 import java.io.File
 import javax.inject.Inject
@@ -48,5 +49,9 @@ class TruckRepositoryImpl @Inject constructor(
         ).map { it -> it.map{ it.toDomain()} }
     }
 
+    override suspend fun getTruckDetail(truckId: Long): Result<TruckDetailData> {
+        return truckRemoteDatasource.getTruckDetail(truckId)
+            .map { it.toDomain() }
+    }
 
 }

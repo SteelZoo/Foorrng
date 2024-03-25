@@ -8,7 +8,7 @@ import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewBtnAdapter
 
-class TruckWriteReviewFragment : MainBaseFragment<FragmentTruckWriteReviewBinding>(
+class TruckWriteReviewFragment(truckId: Long) : MainBaseFragment<FragmentTruckWriteReviewBinding>(
     { FragmentTruckWriteReviewBinding.bind(it)}, R.layout.fragment_truck_write_review
 )  {
 

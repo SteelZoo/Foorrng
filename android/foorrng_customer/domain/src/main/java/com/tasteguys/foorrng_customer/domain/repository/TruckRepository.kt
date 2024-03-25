@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.domain.repository
 
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import java.io.File
 
 interface TruckRepository {
@@ -30,5 +31,9 @@ interface TruckRepository {
         latRight: Double,
         lngRight: Double
     ): Result<List<TruckData>>
+
+    suspend fun getTruckDetail(
+        truckId: Long
+    ): Result<TruckDetailData>
 
 }

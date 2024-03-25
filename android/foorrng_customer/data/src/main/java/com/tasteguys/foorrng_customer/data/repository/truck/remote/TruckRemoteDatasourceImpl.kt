@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.data.repository.truck.remote
 import com.tasteguys.foorrng_customer.data.api.FoodTruckService
 import com.tasteguys.foorrng_customer.data.mapper.toNonDefault
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -58,5 +59,9 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         return truckService.getTrucks(
             LocationRequest(latLeft, lngLeft, latRight, lngRight)
         ).toNonDefault()
+    }
+
+    override suspend fun getTruckDetail(truckId: Long): Result<TruckDetailResponse> {
+        return truckService.getTruckDetail(truckId).toNonDefault()
     }
 }

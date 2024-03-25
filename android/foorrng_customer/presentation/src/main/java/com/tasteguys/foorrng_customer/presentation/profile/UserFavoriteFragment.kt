@@ -74,7 +74,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 setOnItemClickListener(object : BaseHolder.ItemClickListener{
                     override fun onClick(position: Int) {
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_container, TruckInfoFragment())
+                            .replace(R.id.fcv_container, TruckInfoFragment(currentList[position].truckId))
                             .addToBackStack(null)
                             .commit()
                     }

@@ -29,7 +29,7 @@ object ReviewMap{
     )
 }
 
-class TruckReviewFragment : BaseFragment<FragmentTruckReviewBinding>(
+class TruckReviewFragment(private val truckId: Long) : BaseFragment<FragmentTruckReviewBinding>(
     { FragmentTruckReviewBinding.bind(it)}, R.layout.fragment_truck_review
 ) {
 
@@ -48,7 +48,7 @@ class TruckReviewFragment : BaseFragment<FragmentTruckReviewBinding>(
             }
             btnWriteReview.setOnClickListener {
                 requireParentFragment().parentFragmentManager.beginTransaction()
-                    .replace(R.id.fcv_container, TruckWriteReviewFragment())
+                    .replace(R.id.fcv_container, TruckWriteReviewFragment(truckId))
                     .addToBackStack(null)
                     .commit()
             }
