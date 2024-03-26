@@ -16,4 +16,6 @@ public class FoodtruckCreateReqDto {
     private String accountInfo;
     private String phoneNumber;
     private List<String> category;
+
+
 }

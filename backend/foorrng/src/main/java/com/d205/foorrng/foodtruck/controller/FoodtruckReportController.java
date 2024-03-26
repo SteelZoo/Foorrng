@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class FoodtruckReportController {
     private final FoodtruckReportService foodtruckReportService;
 
-    @PostMapping("/regist")
+    @PostMapping(value = "/regist", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(responseCode = "201", description = "제보 푸드트럭 등록 완료")
     public ResponseEntity<? extends BaseResponseBody> createFoodtruckReport(
             @Valid @RequestPart(value = "foodtruckDto") FoodtruckCreateReqDto foodtruckDto,
@@ -34,7 +35,7 @@ public class FoodtruckReportController {
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0,foodtruckRepResDto));
     }
 
-    @PatchMapping("/update")
+    @PatchMapping(value = "/update", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(responseCode = "200", description = "제보 푸드트럭 수정 완료")
     public ResponseEntity<? extends BaseResponseBody> updateFoodtruckReport(
             @Valid @RequestPart(value = "foodtruckDto") FoodtruckUpdateReqDto foodtruckUpdateReqDto,
