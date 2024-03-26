@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_customer.data.api.FoodTruckService
 import com.tasteguys.foorrng_customer.data.mapper.toNonDefault
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -25,10 +26,10 @@ class TruckRemoteDatasourceImpl @Inject constructor(
     ): Result<Long> {
         val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
         return truckService.reportFoodTruck(
-            MultipartBody.Part.createFormData("file", picture.name, requestFile),
             TruckRequest(
                 name, carNumber, announcement, phoneNumber, category
-            )
+            ),
+            MultipartBody.Part.createFormData("picture", picture.name, requestFile),
         ).toNonDefault()
     }
 
@@ -43,10 +44,11 @@ class TruckRemoteDatasourceImpl @Inject constructor(
     ): Result<Long> {
         val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
         return truckService.updateFoodTruck(
-            MultipartBody.Part.createFormData("file", picture.name, requestFile),
             TruckRequest(
                 foodtruckId, name, carNumber, announcement, phoneNumber, category
-            )
+            ),
+            MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+
         ).toNonDefault()
     }
 
@@ -63,5 +65,13 @@ class TruckRemoteDatasourceImpl @Inject constructor(
 
     override suspend fun getTruckDetail(truckId: Long): Result<TruckDetailResponse> {
         return truckService.getTruckDetail(truckId).toNonDefault()
+    }
+
+    override suspend fun markFavoriteTruck(truckId: Long): Result<Long> {
+        return truckService.markFavoriteFoodTruck(truckId).toNonDefault()
+    }
+
+    override suspend fun getFavoriteTruckList(): Result<List<TruckFavoriteListResponse>> {
+        return truckService.getFavoriteTrucks().toNonDefault()
     }
 }

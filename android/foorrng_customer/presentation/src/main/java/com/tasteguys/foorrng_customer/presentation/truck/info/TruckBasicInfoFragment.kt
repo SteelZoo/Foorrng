@@ -25,26 +25,13 @@ class TruckBasicInfoFragment(private val truckId: Long) : BaseFragment<FragmentT
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        registerObserve()
     }
 
     private fun initView(){
-        val truckInfo = Dummy.truckInfo
+//        val truckInfo = Dummy.truckInfo
 
-        truckViewModel.truckDetailResult.observe(viewLifecycleOwner){result ->
-            if(result.isSuccess){
-                result.getOrNull()!!.mainData.let {
-                    with(binding){
-                        tvCallNumber.text = it.phoneNumber
-                        tvCarNumber.text = it.carNumber
-                        tvNotice.text = it.announcement
-                        tvFoodCategory.text = it.category.reduce{
-                            res, it -> "$res, $it"
-                        }
-                        tvBusiNumber.text = it.bussiNumber
-                    }
-                }
-            }
-        }
+        truckViewModel.getTruckDetail(truckId)
 
 //        binding.tvBusiNumber.text = truckInfo.bussNumber
 //        binding.tvCallNumber.text = truckInfo.phoneNumber
@@ -61,15 +48,34 @@ class TruckBasicInfoFragment(private val truckId: Long) : BaseFragment<FragmentT
                 .commit()
         }
 
-        binding.rvMenu.apply {
-            adapter = TruckMenuAdapter().apply {
-                submitList(truckInfo.menu.subList(0, min(3, truckInfo.menu.size)))
+//        binding.rvMenu.apply {
+//            adapter = TruckMenuAdapter().apply {
+//                submitList(truckInfo.menu.subList(0, min(3, truckInfo.menu.size)))
+//            }
+//            setHasFixedSize(true)
+//            layoutManager = LinearLayoutManager(context).apply {
+//                orientation = LinearLayoutManager.VERTICAL
+//            }
+//            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
+//        }
+
+    }
+
+    private fun registerObserve(){
+        truckViewModel.truckDetailResult.observe(viewLifecycleOwner){result ->
+            if(result.isSuccess){
+                result.getOrNull()!!.mainData.let {
+                    with(binding){
+                        tvCallNumber.text = it.phoneNumber
+                        tvCarNumber.text = it.carNumber
+                        tvNotice.text = it.announcement
+                        tvFoodCategory.text = it.category.reduce{
+                                res, it -> "$res, $it"
+                        }
+                        tvBusiNumber.text = it.bussiNumber
+                    }
+                }
             }
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
-            addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
     }
 

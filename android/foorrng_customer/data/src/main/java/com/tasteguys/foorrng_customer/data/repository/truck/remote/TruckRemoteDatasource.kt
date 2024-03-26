@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.repository.truck.remote
 
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import java.io.File
@@ -35,4 +36,10 @@ interface TruckRemoteDatasource {
     suspend fun getTruckDetail(
         truckId: Long
     ): Result<TruckDetailResponse>
+
+    suspend fun markFavoriteTruck(
+        truckId: Long
+    ): Result<Long>
+
+    suspend fun getFavoriteTruckList(): Result<List<TruckFavoriteListResponse>>
 }

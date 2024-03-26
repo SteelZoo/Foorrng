@@ -1,7 +1,9 @@
 package com.tasteguys.foorrng_customer.presentation.profile
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -14,7 +16,8 @@ import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavor
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
-import com.tasteguys.foorrng_customer.presentation.profile.adapter.FavoriteTruckAdapter
+import com.tasteguys.foorrng_customer.presentation.profile.adapter.TruckAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +29,9 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 ) {
 
     private val favoriteAdapter = DailyFavoriteListAdapter()
-    private val truckAdapter = FavoriteTruckAdapter()
+    private val truckAdapter = TruckAdapter()
+    private val truckViewModel: TruckViewModel by activityViewModels()
+
     override fun setToolbar() {
         MainToolbarControl(
             true, resources.getString(R.string.my_favorite_info)
@@ -39,17 +44,34 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         initView()
+        registerObserve()
     }
 
     private fun initView(){
-        binding.test.setOnClickListener{
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment())
-                .addToBackStack(null)
-                .commit()
-        }
+        truckViewModel.getFavoriteTruckList()
+
+//        binding.test.setOnClickListener{
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.fcv_container, RegisterTruckFragment())
+//                .addToBackStack(null)
+//                .commit()
+//        }
+
+//        binding.test2.setOnClickListener {
+//            truckViewModel.markFavoriteTruck(25)
+//        }
+
         favoriteAdapter.submitList(Dummy.category)
-        truckAdapter.submitList(Dummy.trucks)
+//        truckAdapter.submitList(Dummy.trucks)
+
+//        truckViewModel.markFavoriteCategory.observe(viewLifecycleOwner){
+//            if(it.isSuccess){
+//                showToast("찜 성공")
+//            }else{
+//                showToast("실패")
+//            }
+//        }
+
     }
 
     private fun initAdapter(){
@@ -79,7 +101,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                             .commit()
                     }
                 })
-                setOnButtonClickListener(object: FavoriteTruckAdapter.TruckListHolder.ButtonClickListener{
+                setOnButtonClickListener(object: TruckAdapter.TruckListHolder.ButtonClickListener{
                     override fun onToggleClick(isChecked: Boolean) {
 
                     }
@@ -94,6 +116,16 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
             }
         }
 
+    }
+
+    private fun registerObserve(){
+        truckViewModel.favoriteTruckListResult.observe(viewLifecycleOwner){ res->
+            if(res.isSuccess){
+                res.getOrNull()?.let {
+                    truckAdapter.submitList(it)
+                }
+            }
+        }
     }
 
 }

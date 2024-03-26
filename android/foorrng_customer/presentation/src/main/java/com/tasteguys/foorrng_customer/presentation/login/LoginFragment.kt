@@ -12,6 +12,7 @@ import com.tasteguys.foorrng_customer.presentation.databinding.FragmentLoginBind
 import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.AndroidEntryPoint
 
+private const val TAG = "LoginFragment"
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>({FragmentLoginBinding.bind(it)}, R.layout.fragment_login) {
 
@@ -82,6 +83,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>({FragmentLoginBinding.b
                             val uId = id
                             val name = kakaoAccount?.profile?.nickname
                             val email = kakaoAccount?.email
+//                            Log.d(TAG, "kakaologin: uid: $uId, name: $name, email:$email ")
                             if (uId != null && name != null && email != null) {
                                 callback(uId, name, email)
                             }

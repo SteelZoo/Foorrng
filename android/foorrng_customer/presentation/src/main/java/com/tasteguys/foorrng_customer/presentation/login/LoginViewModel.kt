@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_customer.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "LoginViewModel"
 @HiltViewModel
 class LoginViewModel @Inject  constructor(
     private val loginUseCase: LoginUseCase,
@@ -32,9 +34,10 @@ class LoginViewModel @Inject  constructor(
         viewModelScope.launch {
             loginUseCase(userUid, name, email).let{
                 it.getOrNull()?.let{ tk->
+                    Log.d(TAG, "login: $tk")
                     prefManager.setUserId(userUid)
                     prefManager.setAccessToken(tk.accessToken)
-                    prefManager.setFcmToken(tk.refreshToken)
+                    prefManager.setRefreshToken(tk.refreshToken)
                 }
                 _loginResult.postValue(it)
             }

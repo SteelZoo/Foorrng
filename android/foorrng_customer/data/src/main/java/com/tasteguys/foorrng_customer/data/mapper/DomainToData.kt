@@ -1,12 +1,14 @@
 package com.tasteguys.foorrng_customer.data.mapper
 
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMainInfoResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
+import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckMainData
@@ -56,4 +58,8 @@ fun TruckMenuResponse.toDomain() = TruckMenuData(
 
 fun TruckOperationResponse.toDomain() = TruckOperationData(
     id, day, startTime, endTime
+)
+
+fun TruckFavoriteListResponse.toDomain() = FavoriteTruckData(
+    id, name, picture, category, reviewCnt
 )

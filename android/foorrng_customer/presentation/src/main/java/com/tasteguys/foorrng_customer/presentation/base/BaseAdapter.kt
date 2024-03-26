@@ -26,8 +26,10 @@ abstract class BaseAdapter<T : Any>(protected open var clickListener: BaseHolder
 ) : ListAdapter<T, BaseHolder<T>>(
     object: DiffUtil.ItemCallback<T>(){
         override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
-            return System.identityHashCode(oldItem) == System.identityHashCode(newItem)
+//            return System.identityHashCode(oldItem) == System.identityHashCode(newItem)
+            return oldItem == newItem
         }
+
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
             return oldItem == newItem

@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.data.api
 import com.tasteguys.foorrng_customer.data.model.DefaultResponse
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import okhttp3.MultipartBody
@@ -18,15 +19,15 @@ interface FoodTruckService {
     @Multipart
     @POST("foodtruck-report/regist")
     suspend fun reportFoodTruck(
-        @Part picture: MultipartBody.Part,
-        @Part("foodtruckDto") truckRequest: TruckRequest
+        @Part("foodtruckDto") truckRequest: TruckRequest,
+        @Part picture: MultipartBody.Part
     ): Result<DefaultResponse<Long>>
 
     @Multipart
     @PATCH("foodtruck-report/update")
     suspend fun updateFoodTruck(
+        @Part("foodtruckDto") truckRequest: TruckRequest,
         @Part picture: MultipartBody.Part,
-        @Part("foodtruckDto") truckRequest: TruckRequest
     ): Result<DefaultResponse<Long>>
 
     @GET("foodtrucks")
@@ -38,5 +39,15 @@ interface FoodTruckService {
     suspend fun getTruckDetail(
         @Path("foodtruckId") truckId: Long
     ): Result<DefaultResponse<TruckDetailResponse>>
+
+    @POST("foodtrucks/like/{foodtruckId}")
+    suspend fun markFavoriteFoodTruck(
+        @Path("foodtruckId") truckId: Long
+    ): Result<DefaultResponse<Long>>
+
+    @GET("mypage/likes")
+    suspend fun getFavoriteTrucks(): Result<DefaultResponse<List<TruckFavoriteListResponse>>>
+
+
 
 }
