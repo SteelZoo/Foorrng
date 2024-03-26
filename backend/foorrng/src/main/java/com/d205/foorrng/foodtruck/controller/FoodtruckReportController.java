@@ -1,8 +1,6 @@
 package com.d205.foorrng.foodtruck.controller;
 
-import com.amazonaws.services.ec2.model.ResponseError;
 import com.d205.foorrng.common.model.BaseResponseBody;
-import com.d205.foorrng.foodtruck.entity.FoodtruckReportId;
 import com.d205.foorrng.foodtruck.request.FoodtruckCreateReqDto;
 import com.d205.foorrng.foodtruck.request.FoodtruckUpdateReqDto;
 import com.d205.foorrng.foodtruck.response.FoodtruckRepResDto;
@@ -30,9 +28,9 @@ public class FoodtruckReportController {
     @PostMapping("/regist")
     @ApiResponse(responseCode = "201", description = "제보 푸드트럭 등록 완료")
     public ResponseEntity<? extends BaseResponseBody> createFoodtruckReport(
-            @Valid @RequestPart(value = "foodtruckDto") FoodtruckCreateReqDto foodtruckCreateReqDto,
+            @Valid @RequestPart(value = "foodtruckDto") FoodtruckCreateReqDto foodtruckDto,
             @RequestPart(value = "picture", required = false) MultipartFile picture) throws IOException {
-        FoodtruckRepResDto foodtruckRepResDto = foodtruckReportService.createFoodtruck(foodtruckCreateReqDto, picture);
+        FoodtruckRepResDto foodtruckRepResDto = foodtruckReportService.createFoodtruck(foodtruckDto, picture);
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0,foodtruckRepResDto));
     }
 
