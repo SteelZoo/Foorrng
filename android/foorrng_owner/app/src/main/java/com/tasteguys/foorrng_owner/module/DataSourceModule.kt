@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_owner.module
 
+import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRemoteDatasource
+import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRemoteDatasourceImpl
 import com.tasteguys.foorrng_owner.data.repository.user.remote.UserRemoteDatasource
 import com.tasteguys.foorrng_owner.data.repository.user.remote.UserRemoteDatasourceImpl
 import dagger.Binds
@@ -14,4 +16,8 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindUserRemoteDataSource(userRemoteDataSourceImpl: UserRemoteDatasourceImpl): UserRemoteDatasource
+
+    @Singleton
+    @Binds
+    abstract fun bindFoodtruckRemoteDataSource(foodtruckRemoteDataSourceImpl: FoodtruckRemoteDatasourceImpl): FoodtruckRemoteDatasource
 }

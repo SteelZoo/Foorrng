@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tasteguys.foorrng_owner.AuthInterceptor
 import com.tasteguys.foorrng_owner.data.api.ApiClient.BASE_URL
+import com.tasteguys.foorrng_owner.data.api.FoodtruckService
 import com.tasteguys.foorrng_owner.data.api.UserService
 import com.tasteguys.retrofit_adapter.NetworkResponseAdapterFactory
 import dagger.Module
@@ -97,6 +98,14 @@ object NetworkModule {
         retrofit: Retrofit
     ): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesFoodtruckService(
+        retrofit: Retrofit
+    ): FoodtruckService {
+        return retrofit.create(FoodtruckService::class.java)
     }
 
 }
