@@ -63,8 +63,8 @@ public class FoodtrucksController {
     // 푸드트럭 좋아요
     @PostMapping(value="/like/{foodtruckId}")
     @ApiResponse(responseCode = "200", description = "찜 성공")
-    public ResponseEntity<String> like(Authentication authentication, @PathVariable("foodtruckId") Long foodtruckSeq){
+    public ResponseEntity<? extends BaseResponseBody> like(Authentication authentication, @PathVariable("foodtruckId") Long foodtruckSeq){
         LikeFoodtrucksDto likeFoodtrucksDto = likeFoodtruckService.LikeFoodtruck(foodtruckSeq);
-        return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, likeFoodtrucksDto).toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, likeFoodtrucksDto));
     }
 }
