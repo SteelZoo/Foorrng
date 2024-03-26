@@ -16,17 +16,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 
-<<<<<<< Updated upstream
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.TimeZone;
->>>>>>> Stashed changes
 
 @Getter @Setter
 @Service
