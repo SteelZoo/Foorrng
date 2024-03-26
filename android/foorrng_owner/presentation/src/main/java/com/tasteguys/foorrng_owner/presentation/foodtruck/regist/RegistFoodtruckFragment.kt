@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_owner.presentation.foodtruck.regist
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
+import androidx.fragment.app.viewModels
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
@@ -15,6 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>(
     FragmentRegistFoodtruckBinding::bind, R.layout.fragment_regist_foodtruck
 ) {
+    private val registFoodtruckViewModel: RegistFoodtruckViewModel by viewModels()
+
     private var menuCategoryAdapter: MenuCategoryAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,6 +29,16 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
         mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             checkBackStackDialog()
         }
+    }
+
+    private fun regist(){
+
+    }
+
+    private fun validateInput(): Result<String> {
+        val nameValidation = binding.tilFoodtruckName.editText!!.text.toString().isNotBlank()
+
+        return Result.failure(Exception("이름을 입력해주세요"))
     }
 
     override fun setToolbar() {
