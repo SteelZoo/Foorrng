@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_owner.presentation.location.manage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.tasteguys.foorrng_owner.presentation.databinding.ItemLocationDayBindi
 import com.tasteguys.foorrng_owner.presentation.model.location.RunInfo
 import java.time.DayOfWeek
 
+private const val TAG = "RunInfoAdapter_poorrng"
 class RunInfoAdapter(
     private val runInfoList: List<RunInfo>
 ) : RecyclerView.Adapter<RunInfoAdapter.RunInfoViewHolder>()  {
@@ -32,6 +34,7 @@ class RunInfoAdapter(
         private val binding: ItemLocationDayBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RunInfo) {
+            Log.d(TAG, "bind: $item")
             binding.tvWeekday.text = "${getDayOfWeekString(item.day)}요일"
             binding.tvTime.text = "${item.startTime} ~ ${item.endTime}"
         }

@@ -30,8 +30,11 @@
             android:padding="10dp">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_location_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_location_info" />
         </LinearLayout>

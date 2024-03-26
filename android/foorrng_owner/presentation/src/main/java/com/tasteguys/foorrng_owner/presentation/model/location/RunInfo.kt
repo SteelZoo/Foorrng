@@ -4,6 +4,6 @@ import java.time.DayOfWeek
 
 data class RunInfo(
     val day: DayOfWeek,
-    val startTime: Long,
-    val endTime: Long,
+    val startTime: String,
+    val endTime: String,
 )

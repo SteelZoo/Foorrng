@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
@@ -17,12 +18,17 @@ import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.MenuEditFragment
 import com.tasteguys.foorrng_owner.presentation.location.manage.LocationManageFragment
 import com.tasteguys.foorrng_owner.presentation.location.recommend.LocationRecommendFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
+import java.time.DayOfWeek
 
 class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::bind, R.layout.fragment_home
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        DayOfWeek.values().forEach {
+            Log.d("dayofweek", "onViewCreated: $it ${it.value}")
+        }
 
         mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner,mainActivity.onBackPressedCallback)
 
