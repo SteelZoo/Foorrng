@@ -34,7 +34,7 @@ public class ReviewController {
 
     @GetMapping("/{foodtruckId}/list")
     @ApiResponse(responseCode = "200", description = "리뷰 리스트 조회 성공")
-    public ReviewSummaryDto getReview(@PathVariable("foodtruckId") Long foodtruckSeq){
-     return reviewService.getReviews(foodtruckSeq);
+    public ResponseEntity<? extends BaseResponseBody> getReview(@PathVariable("foodtruckId") Long foodtruckSeq){
+     return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, reviewService.getReviews(foodtruckSeq)));
     }
 }

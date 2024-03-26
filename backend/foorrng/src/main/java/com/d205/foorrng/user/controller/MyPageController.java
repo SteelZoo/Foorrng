@@ -1,9 +1,12 @@
 package com.d205.foorrng.user.controller;
 
+import com.d205.foorrng.common.model.BaseResponseBody;
 import com.d205.foorrng.foodtruck.response.FoodtrucksUserResDto;
 import com.d205.foorrng.user.service.MyPageService;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +25,8 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping("/likes")
-    public ResponseEntity<List<FoodtrucksUserResDto>> getLikeFoodtrucks() {
+    public ResponseEntity<? extends BaseResponseBody> getLikeFoodtrucks() {
         List<FoodtrucksUserResDto> likedFoodtrucks = myPageService.getLikeFoodtrucks();
-        return ResponseEntity.ok().body(likedFoodtrucks);
+        return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, likedFoodtrucks));
     }
 }

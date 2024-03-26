@@ -9,6 +9,7 @@ import com.d205.foorrng.foodtruck.response.MenuResDto;
 import com.d205.foorrng.foodtruck.service.FoodtruckService;
 import com.d205.foorrng.foodtruck.service.MenuService;
 import com.d205.foorrng.util.SecurityUtil;
+import com.fasterxml.jackson.databind.ser.Serializers;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
@@ -59,29 +60,29 @@ public class MenuController {
     // 모든 메뉴 조회
     @GetMapping("")
     @ApiResponse(responseCode = "200", description = "전체 매뉴 조회 성공")
-    public ResponseEntity<List<MenuResDto>> menuList(){
-        return new ResponseEntity<>(menuService.findAllMenus(), HttpStatusCode.valueOf(HttpStatus.SC_OK));
+    public ResponseEntity<? extends BaseResponseBody> menuList(){
+        return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, menuService.findAllMenus()));
     }
 
     // 해당 푸드트럭의 메뉴 조회
     @GetMapping("/{foodtruckId}")
     @ApiResponse(responseCode = "200", description = "푸드트럭 매뉴 조회 성공")
-    public List<MenuResDto> getMenusByFoodTruck(@PathVariable("foodtruckId") Long foodtrucksSeq) {
-        return menuService.getMenus(foodtrucksSeq);
+    public ResponseEntity<? extends BaseResponseBody> getMenusByFoodTruck(@PathVariable("foodtruckId") Long foodtrucksSeq) {
+        return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, menuService.getMenus(foodtrucksSeq)));
     }
 
     // 메뉴 삭제
     @DeleteMapping("/{menuId}")
     @ApiResponse(responseCode = "204", description = "푸드트럭 메뉴 삭제 성공")
-    public ResponseEntity<String> deleteMenu(@PathVariable("menuId") Long menuSeq){
+    public ResponseEntity<? extends BaseResponseBody> deleteMenu(@Valid @PathVariable("menuId") Long menuSeq){
         menuService.deleteMenu(menuSeq);
-        return new ResponseEntity<>("Success", HttpStatusCode.valueOf(HttpStatus.SC_NO_CONTENT));
+        return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).body(BaseResponseBody.of(0, "success"));
     }
 
     // 메뉴 수정
     @PatchMapping("/{menuId}")
     @ApiResponse(responseCode = "200", description = "푸드트럭 메뉴 수정 성공")
-    public ResponseEntity<BaseResponseBody> modifyMenu(
+    public ResponseEntity<? extends BaseResponseBody> modifyMenu(
             @PathVariable("menuId") Long menuSeq,
             @Valid @RequestPart("menuRequestDto") MenuRequestDto menuRequestDto,
             @RequestPart(value = "picture", required=false) MultipartFile picture) throws IOException {
