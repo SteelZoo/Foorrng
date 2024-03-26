@@ -13,7 +13,7 @@ import java.time.DayOfWeek
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationManageVIewModel @Inject constructor(
+class LocationManageViewModel @Inject constructor(
 
 ) : ViewModel() {
     private var _runLocationInfoListResult = MutableLiveData<Result<List<RunLocationInfo>>>()
@@ -36,7 +36,7 @@ class LocationManageVIewModel @Inject constructor(
             for (i in 0..10) {
                 add(
                     RunLocationInfo(
-                        "대구광역시 중구 명륜로 23길 80",
+                        "대구광역시 중구 명륜로 23길 80 $i",
                         LatLng(35.863585 + (i / 1000.0), 128.595737 + (i / 1000.0)),
                         listOf(
                             RunInfo(

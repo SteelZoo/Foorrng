@@ -17,9 +17,12 @@ import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
 import java.time.DayOfWeek
 
 private const val TAG = "RunLocationAdapter_poorrng"
+
 class RunLocationAdapter(
-    private val runLocationList: List<RunLocationInfo>
-) : RecyclerView.Adapter<RunLocationAdapter.RunLocationViewHolder>()  {
+    private val runLocationList: List<RunLocationInfo>,
+    private val deleteListener: (RunLocationInfo) -> Unit,
+    private val naviListener: (RunLocationInfo) -> Unit
+) : RecyclerView.Adapter<RunLocationAdapter.RunLocationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunLocationViewHolder {
         return RunLocationViewHolder(
@@ -27,7 +30,8 @@ class RunLocationAdapter(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            deleteListener, naviListener
         )
     }
 
@@ -40,14 +44,16 @@ class RunLocationAdapter(
     }
 
     class RunLocationViewHolder(
-        private val binding: ItemLocationInfoBinding
+        private val binding: ItemLocationInfoBinding,
+        private val deleteListener: (RunLocationInfo) -> Unit,
+        private val naviListener: (RunLocationInfo) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var runInfoAdapter: RunInfoAdapter? = null
         private var isListVisible = false
 
         fun bind(item: RunLocationInfo) {
-            if (binding.rvLocationDays.adapter == null){
+            if (binding.rvLocationDays.adapter == null) {
                 Log.d(TAG, "bind: ")
                 setRunInfoAdapter(item.runInfoList)
             }
@@ -56,6 +62,12 @@ class RunLocationAdapter(
             binding.tvLocationDays.text = getSelectedDaySpannableString(
                 item.runInfoList.map { it.day }, binding.tvLocationDays.text.toString()
             )
+            binding.btnNavigation.setOnClickListener {
+                naviListener(item)
+            }
+            binding.ivLocationDelete.setOnClickListener {
+                deleteListener(item)
+            }
         }
 
 
@@ -75,7 +87,7 @@ class RunLocationAdapter(
                         ),
                         i, i + 1, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
                     )
-                } else{
+                } else {
                     spannableString.setSpan(
                         ForegroundColorSpan(
                             ContextCompat.getColor(
@@ -93,20 +105,20 @@ class RunLocationAdapter(
 
         // 리스트 토글 리스너
         private fun setListToggleListener() {
-            if (isListVisible){
+            if (isListVisible) {
                 binding.ivLocationTimeToggle.setImageResource(R.drawable.ic_dropup)
-                binding.layoutLocationDays.visibility = View.VISIBLE
+                binding.rvLocationDays.visibility = View.VISIBLE
             } else {
                 binding.ivLocationTimeToggle.setImageResource(R.drawable.ic_dropdown)
-                binding.layoutLocationDays.visibility = View.GONE
+                binding.rvLocationDays.visibility = View.GONE
             }
             binding.ivLocationTimeToggle.setOnClickListener {
-                if (isListVisible){
+                if (isListVisible) {
                     binding.ivLocationTimeToggle.setImageResource(R.drawable.ic_dropdown)
-                    binding.layoutLocationDays.collapse()
+                    binding.rvLocationDays.collapse()
                 } else {
                     binding.ivLocationTimeToggle.setImageResource(R.drawable.ic_dropup)
-                    binding.layoutLocationDays.expand()
+                    binding.rvLocationDays.expand()
                 }
                 isListVisible = !isListVisible
             }
@@ -114,7 +126,7 @@ class RunLocationAdapter(
 
         // 리스트 어댑터 설정
         private fun setRunInfoAdapter(runInfoList: List<RunInfo>) {
-            if (runInfoAdapter == null){
+            if (runInfoAdapter == null) {
                 runInfoAdapter = RunInfoAdapter(runInfoList)
                 Log.d(TAG, "setRunInfoAdapter: ")
             }

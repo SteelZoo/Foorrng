@@ -10,6 +10,7 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationManageBinding
+import com.tasteguys.foorrng_owner.presentation.location.NavDialog
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
@@ -19,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
     FragmentLocationManageBinding::bind, R.layout.fragment_location_manage
 ) {
-    private val locationManageVIewModel: LocationManageVIewModel by viewModels()
+    private val locationManageViewModel: LocationManageViewModel by viewModels()
 
     private var map: NaverMap? = null
 
@@ -42,11 +43,11 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
      */
     private fun init() {
         registerObserve()
-        locationManageVIewModel.getRunLocationInfoList()
+        locationManageViewModel.getRunLocationInfoList()
     }
 
     private fun registerObserve() {
-        locationManageVIewModel.runLocationInfoListResult.observe(viewLifecycleOwner) {
+        locationManageViewModel.runLocationInfoListResult.observe(viewLifecycleOwner) {
             it.onSuccess {
                 setAdapter(it)
             }.onFailure {
@@ -57,9 +58,17 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 
     private fun setAdapter(runLocationList: List<RunLocationInfo>) {
         if (runLocationAdapter == null) {
-            runLocationAdapter = RunLocationAdapter(runLocationList)
+            runLocationAdapter = RunLocationAdapter(runLocationList,deleteClickListener,naviClickListener)
         }
         binding.rvLocationInfo.adapter = runLocationAdapter
+    }
+
+    private val deleteClickListener: (RunLocationInfo) -> Unit = {
+        showToast(it.address)
+    }
+
+    private val naviClickListener: (RunLocationInfo) -> Unit = {
+        NavDialog(mainActivity,it).show()
     }
 
     private val mapCallback = OnMapReadyCallback { naverMap ->

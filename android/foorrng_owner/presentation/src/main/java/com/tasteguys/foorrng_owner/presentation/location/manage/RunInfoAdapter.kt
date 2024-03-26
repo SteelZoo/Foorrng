@@ -13,6 +13,7 @@ class RunInfoAdapter(
     private val runInfoList: List<RunInfo>
 ) : RecyclerView.Adapter<RunInfoAdapter.RunInfoViewHolder>()  {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunInfoViewHolder {
+        Log.d(TAG, "onCreateViewHolder: ")
         return RunInfoViewHolder(
             ItemLocationDayBinding.inflate(
                 LayoutInflater.from(parent.context),

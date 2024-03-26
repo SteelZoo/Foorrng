@@ -37,6 +37,8 @@
 
     <string name="location_manage_title">영업 위치 관리</string>
     <string name="location_manage_nav">길찾기</string>
+    <string name="location_manage_nav_naver">네이버</string>
+    <string name="location_manage_nav_tmap">길찾기</string>
 
     <string name="location_recommend_title">영업 위치 추천</string>
     <string name="location_recommend_add">위치 등록</string>
