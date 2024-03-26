@@ -28,7 +28,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Getter @Setter
@@ -82,7 +85,11 @@ public class UserController {
 
             Map<String, Object> userInfo = new HashMap<>();
             userInfo.put("userUid", SecurityUtil.getCurrentUsername());
-            userInfo.put("FavoriteFoodList", favoritefoodRepository.findAllByUser(user.get()));
+
+            userInfo.put("FavoriteFoodList", favoritefoodRepository.findAllByUserAndCreatedTime(user.get(), LocalDate.now(ZoneId.of("Asia/Seoul")).toString()).get()
+                    .stream()
+                    .map(favoriteFoods -> favoriteFoods.getMenu())
+                    .collect(Collectors.toList()));
             userInfo.put("FoodtruckLikeList", foodtruckLikeRepository.findAllByUser(user.get()));
 
             return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, userInfo));

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDateTime;
+
 // 선호하는 음식
 @Entity
 @Getter
@@ -25,4 +27,6 @@ public class FavoriteFood {
     @JoinColumn(name="user_seq")
     @JsonIgnore
     private User user;
+
+    private String createdTime;
 }
