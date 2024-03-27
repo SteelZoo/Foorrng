@@ -56,19 +56,20 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/tv_foodtruck_name"
                         style="@style/Foorrng.TEXT.SB.22"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:ellipsize="end"
+                        android:gravity="center"
                         android:maxLines="1"
-                        android:text="맛있는 녀석들"
                         android:textColor="@color/foorrng_orange_dark"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_profile"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:text="맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛맛" />
+                        tools:text="맛있는 녀석들" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

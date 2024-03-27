@@ -28,7 +28,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
 
     private fun registerObserve() {
         mainViewModel.foodtruckInfo.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { result ->
+            event.peekContent().let { result ->
                 result.onSuccess { foodTruckInfo ->
                     setInfoTab(foodTruckInfo)
                 }.onFailure {
