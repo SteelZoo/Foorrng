@@ -119,7 +119,6 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
 
         return new FoodtruckRepResDto(foodtruckReport, foodtrucks.getId(), foodtruckUpdateReqDto.getCategory());
     };
-
     @Override
     @Transactional
     public int deleteFoodtruck(Long foodtruckId) throws IOException{
