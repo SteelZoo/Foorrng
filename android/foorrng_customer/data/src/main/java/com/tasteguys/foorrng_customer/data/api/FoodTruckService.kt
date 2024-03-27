@@ -2,9 +2,11 @@ package com.tasteguys.foorrng_customer.data.api
 
 import com.tasteguys.foorrng_customer.data.model.DefaultResponse
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -21,14 +23,14 @@ interface FoodTruckService {
     suspend fun reportFoodTruck(
         @Part("foodtruckDto") truckRequest: TruckRequest,
         @Part picture: MultipartBody.Part
-    ): Result<DefaultResponse<Long>>
+    ): Result<DefaultResponse<TruckRegisterUpdateResponse>>
 
     @Multipart
     @PATCH("foodtruck-report/update")
     suspend fun updateFoodTruck(
         @Part("foodtruckDto") truckRequest: TruckRequest,
         @Part picture: MultipartBody.Part,
-    ): Result<DefaultResponse<Long>>
+    ): Result<DefaultResponse<TruckRegisterUpdateResponse>>
 
     @GET("foodtrucks")
     suspend fun getTrucks(
@@ -48,6 +50,10 @@ interface FoodTruckService {
     @GET("mypage/likes")
     suspend fun getFavoriteTrucks(): Result<DefaultResponse<List<TruckFavoriteListResponse>>>
 
-
+    @POST("mark/{foodtruck-id}/regist")
+    suspend fun registerMark(
+        @Path("foodtruck-id") truckId: Long,
+        @Body markInfo: TruckMarkRequest
+    ): Result<DefaultResponse<Long>>
 
 }

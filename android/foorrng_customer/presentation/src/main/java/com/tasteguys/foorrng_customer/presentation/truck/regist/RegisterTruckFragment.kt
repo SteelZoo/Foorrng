@@ -32,7 +32,7 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
 ) {
 
     private val truckViewModel: TruckViewModel by activityViewModels()
-    private val registerInputViewModel: RegisterInputViewModel by viewModels()
+    private val registerInputViewModel: RegisterInputViewModel by activityViewModels()
     private val favoriteListAdapter = DailyFavoriteListAdapter()
 
     private val galleryLauncher: GalleryLauncher by lazy{
@@ -65,9 +65,6 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                     .fallback(R.drawable.logo_truck)
                     .into(binding.ivTruckPhoto)
                 registerInputViewModel.inputPicture(data, requireContext())
-//                lifecycleScope.launch {
-//                    accountViewModel.editProfileImg(data, requireContext())
-//                }
             }
         }
     }
@@ -103,6 +100,13 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
             }
             tilNotice.editText!!.addTextChangedListener {
                 registerInputViewModel.inputAnnouncement(it.toString())
+            }
+
+            tilLocation.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fcv_container, TruckSelectLocationFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
 
             with(registerInputViewModel) {

@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.module
 
 import android.content.Context
+import com.tasteguys.foorrng_customer.presentation.base.GeoManager
 import com.tasteguys.foorrng_customer.presentation.base.PrefManager
 import dagger.Module
 import dagger.Provides
@@ -19,4 +20,14 @@ object UtilModule {
     ): PrefManager {
         return PrefManager(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideGeoManager(
+        @ApplicationContext context:Context
+    ): GeoManager{
+        return GeoManager(context)
+    }
+
+
 }

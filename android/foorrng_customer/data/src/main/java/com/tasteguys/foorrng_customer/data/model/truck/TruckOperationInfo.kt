@@ -1,7 +1,6 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
-data class TruckOperationResponse(
-    val id: Long,
+data class TruckOperationInfo(
     val day: String,
     val startTime: Long,
     val endTime: Long

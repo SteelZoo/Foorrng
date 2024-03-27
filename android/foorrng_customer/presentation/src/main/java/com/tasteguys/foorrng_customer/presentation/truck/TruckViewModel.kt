@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import com.tasteguys.foorrng_customer.domain.usecase.truck.GetTruckDetailUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.GetTruckListUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.MarkTruckDetailUseCase
@@ -16,6 +17,8 @@ import com.tasteguys.foorrng_customer.presentation.base.PrefManager
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteTruck
 import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
+import com.tasteguys.foorrng_customer.presentation.model.TruckOperationInfo
+import com.tasteguys.foorrng_customer.presentation.model.mapper.toDomain
 import com.tasteguys.foorrng_customer.presentation.model.mapper.toFavoriteTruck
 import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckDataWithAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,12 +36,12 @@ class TruckViewModel @Inject constructor(
     private val markTruckDetailUseCase: MarkTruckDetailUseCase,
 ) : ViewModel() {
 
-    private val _registerResult = MutableLiveData<Result<Long>>()
-    val registerResult: LiveData<Result<Long>>
+    private val _registerResult = MutableLiveData<Result<TruckRegisterUpdateData>>()
+    val registerResult: LiveData<Result<TruckRegisterUpdateData>>
         get() = _registerResult
 
-    private val _updateResult = MutableLiveData<Result<Long>>()
-    val updateResult: LiveData<Result<Long>>
+    private val _updateResult = MutableLiveData<Result<TruckRegisterUpdateData>>()
+    val updateResult: LiveData<Result<TruckRegisterUpdateData>>
         get() = _updateResult
 
     private val _truckListResult = MutableLiveData<Result<List<TruckDataWithAddress>>>()
@@ -63,13 +66,24 @@ class TruckViewModel @Inject constructor(
         carNumber: String,
         announcement: String,
         phoneNumber: String,
-        category: List<String>
+        category: List<String>,
+        address: String,
+        lat: Double,
+        lng: Double,
+        operationInfo: List<TruckOperationInfo>,
     ) {
         viewModelScope.launch {
             registerUseCase(
                 name, picture, carNumber, announcement, phoneNumber, category
-            ).let {
-                _registerResult.postValue(it)
+            ).let { res->
+                _registerResult.postValue(res)
+                if(res.isSuccess){
+                    val id = res.getOrNull()!!.id
+                    registerUseCase(
+                        id, address, lat, lng, operationInfo.map { it.toDomain() }
+                    )
+                }
+
             }
         }
 

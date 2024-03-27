@@ -1,9 +1,12 @@
 package com.tasteguys.foorrng_customer.data.repository.truck.remote
 
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
-import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import java.io.File
 
 interface TruckRemoteDatasource {
@@ -14,7 +17,7 @@ interface TruckRemoteDatasource {
         announcement: String,
         phoneNumber: String,
         category: List<String>
-    ): Result<Long>
+    ): Result<TruckRegisterUpdateResponse>
 
     suspend fun updateFoodTruck(
         foodtruckId: Long,
@@ -24,7 +27,7 @@ interface TruckRemoteDatasource {
         announcement: String,
         phoneNumber: String,
         category: List<String>
-    ): Result<Long>
+    ): Result<TruckRegisterUpdateResponse>
 
     suspend fun getTruckList(
         latLeft: Double,
@@ -42,4 +45,13 @@ interface TruckRemoteDatasource {
     ): Result<Long>
 
     suspend fun getFavoriteTruckList(): Result<List<TruckFavoriteListResponse>>
+
+    suspend fun reportFoodTruckOperationInfo(
+        truckId: Long,
+        address: String,
+        lat: Double,
+        lng: Double,
+        operationInfo: List<TruckOperationInfo>
+    ):Result<Long>
+
 }

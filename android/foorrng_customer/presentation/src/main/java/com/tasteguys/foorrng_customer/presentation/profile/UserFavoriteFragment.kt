@@ -13,6 +13,8 @@ import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
+import com.tasteguys.foorrng_customer.presentation.festival.regist.FestivalSelectLocationFragment
+import com.tasteguys.foorrng_customer.presentation.festival.regist.RegisterFestivalFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
@@ -57,9 +59,13 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 //                .commit()
 //        }
 
-//        binding.test2.setOnClickListener {
+        binding.test2.setOnClickListener {
 //            truckViewModel.markFavoriteTruck(25)
-//        }
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, RegisterFestivalFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
         favoriteAdapter.submitList(Dummy.category)
 //        truckAdapter.submitList(Dummy.trucks)

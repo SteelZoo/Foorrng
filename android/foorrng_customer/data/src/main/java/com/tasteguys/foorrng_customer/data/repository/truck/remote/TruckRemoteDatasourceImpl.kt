@@ -1,12 +1,19 @@
 package com.tasteguys.foorrng_customer.data.repository.truck.remote
 
 import com.tasteguys.foorrng_customer.data.api.FoodTruckService
+import com.tasteguys.foorrng_customer.data.mapper.toData
 import com.tasteguys.foorrng_customer.data.mapper.toNonDefault
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkDto
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -23,7 +30,7 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         announcement: String,
         phoneNumber: String,
         category: List<String>
-    ): Result<Long> {
+    ): Result<TruckRegisterUpdateResponse> {
         val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
         return truckService.reportFoodTruck(
             TruckRequest(
@@ -41,7 +48,7 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         announcement: String,
         phoneNumber: String,
         category: List<String>
-    ): Result<Long> {
+    ): Result<TruckRegisterUpdateResponse> {
         val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
         return truckService.updateFoodTruck(
             TruckRequest(
@@ -73,5 +80,20 @@ class TruckRemoteDatasourceImpl @Inject constructor(
 
     override suspend fun getFavoriteTruckList(): Result<List<TruckFavoriteListResponse>> {
         return truckService.getFavoriteTrucks().toNonDefault()
+    }
+
+    override suspend fun reportFoodTruckOperationInfo(
+        truckId: Long,
+        address: String,
+        lat: Double,
+        lng: Double,
+        operationInfo: List<TruckOperationInfo>
+    ): Result<Long> {
+        return truckService.registerMark(
+            truckId, TruckMarkRequest(
+                TruckMarkDto(address, lat, lng),
+                TruckOperationInfoDto(operationInfo)
+            )
+        ).toNonDefault()
     }
 }

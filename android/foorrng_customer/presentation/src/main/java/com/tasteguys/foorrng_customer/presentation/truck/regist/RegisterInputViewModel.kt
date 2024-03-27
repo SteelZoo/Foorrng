@@ -24,8 +24,8 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _name.postValue(input)
     }
 
-    private val _picture = MutableLiveData<File>()
-    val picture: LiveData<File>
+    private val _picture = MutableLiveData<File?>(null)
+    val picture: LiveData<File?>
         get() = _picture
 
     fun inputPicture(input: Uri, context: Context){
@@ -67,6 +67,32 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
     fun checkCategory(idx: Int){
         val isChecked = _category.value?.get(idx)?.favorite
         _category.value?.set(idx, _category.value!![idx].copy(favorite = !isChecked!!))
+    }
+
+    private val _markAddress = MutableLiveData<String>()
+    val markAddress: LiveData<String>
+        get() = _markAddress
+
+    private val _markLat = MutableLiveData<Double>()
+    val markLat: LiveData<Double>
+        get() = _markLat
+
+    private val _markLng = MutableLiveData<Double>()
+    val markLng: LiveData<Double>
+        get() = _markLng
+
+    fun setMark(name: String, lat: Double, lng: Double){
+        _markAddress.postValue(name)
+        _markLat.postValue(lat)
+        _markLng.postValue(lng)
+    }
+
+    fun initData(){
+        _name.value = ""
+        _picture.value = null
+        _carNumber.value=""
+        _announcement.value=""
+        _phoneNumber.value=""
     }
 
 }

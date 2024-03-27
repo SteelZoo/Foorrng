@@ -5,7 +5,6 @@ import retrofit2.http.Multipart
 data class TruckRequest(
     val foodtruckId: Long,
     val name: String,
-//    val picture: Multipart,
     val carNumber: String,
     val announcement: String,
     val accountInfo:String = "",
@@ -14,7 +13,6 @@ data class TruckRequest(
 ){
     constructor(
         name: String,
-//        picture: Multipart,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -22,7 +20,6 @@ data class TruckRequest(
     ):this(
         foodtruckId = -1,
         name = name,
-//        picture = picture,
         carNumber = carNumber,
         announcement = announcement,
         phoneNumber = phoneNumber,
@@ -32,7 +29,6 @@ data class TruckRequest(
     constructor(
         truckId: Long,
         name: String,
-//        picture: String,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -40,7 +36,6 @@ data class TruckRequest(
     ):this(
         foodtruckId = truckId,
         name = name,
-//        picture = picture,
         carNumber = carNumber,
         announcement = announcement,
         phoneNumber = phoneNumber,

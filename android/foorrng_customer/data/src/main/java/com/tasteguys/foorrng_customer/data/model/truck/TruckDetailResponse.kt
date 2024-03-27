@@ -12,6 +12,6 @@ data class TruckDetailResponse(
     @Json(name="menus")
     val menus: List<TruckMenuResponse>,
     @Json(name="operation")
-    val operation: List<TruckOperationResponse>
+    val operation: List<TruckOperationInfo>
 
 )
