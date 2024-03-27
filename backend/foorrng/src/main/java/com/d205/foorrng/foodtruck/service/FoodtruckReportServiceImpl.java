@@ -82,7 +82,7 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
         foodService.saveFoodtruckFood(foodtrucks.getId(), foodtruckCreateReqDto.getCategory());
 
         foodtruckReportRepository.save(foodtruckReport);
-        return new FoodtruckRepResDto(foodtruckReport, foodtrucks.getId(), foodtruckCreateReqDto.getCategory());
+        return new FoodtruckRepResDto(foodtruckReport, foodtrucks.getId(), foodtruckCreateReqDto.getCategory(), "");
     };
     @Override
     @Transactional
@@ -117,7 +117,7 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
         // 수정된 푸드트럭 저장
         foodtruckReportRepository.save(foodtruckReport);
 
-        return new FoodtruckRepResDto(foodtruckReport, foodtrucks.getId(), foodtruckUpdateReqDto.getCategory());
+        return new FoodtruckRepResDto(foodtruckReport, foodtrucks.getId(), foodtruckUpdateReqDto.getCategory(), "");
     };
     @Override
     @Transactional
