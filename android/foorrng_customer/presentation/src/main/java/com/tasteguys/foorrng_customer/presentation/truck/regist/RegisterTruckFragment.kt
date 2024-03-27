@@ -102,7 +102,7 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 registerInputViewModel.inputAnnouncement(it.toString())
             }
 
-            tilLocation.setOnClickListener {
+            tiLocation.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fcv_container, TruckSelectLocationFragment())
                     .addToBackStack(null)
@@ -114,11 +114,16 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 tilCallNumber.editText!!.setText(phoneNumber.value)
                 tilCarNumber.editText!!.setText(carNumber.value)
                 tilNotice.editText!!.setText(announcement.value)
+                tilLocation.editText!!.setText(markAddress.value)
             }
 
             ivTruckPhoto.setOnClickListener {
                 galleryLauncher.openGallery()
             }
+        }
+
+        registerInputViewModel.markAddress.observe(viewLifecycleOwner){
+            binding.tilLocation.editText!!.setText(it)
         }
 
         truckViewModel.registerResult.observe(viewLifecycleOwner){
@@ -134,7 +139,11 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
-                category.value!!.filter { it.favorite }.map { it.name }
+                category.value!!.filter { it.favorite }.map { it.name },
+                markAddress.value!!,
+                markLat.value!!,
+                markLng.value!!,
+                listOf()
             )
         }
 

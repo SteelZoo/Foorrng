@@ -69,7 +69,7 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _category.value?.set(idx, _category.value!![idx].copy(favorite = !isChecked!!))
     }
 
-    private val _markAddress = MutableLiveData<String>()
+    private val _markAddress = MutableLiveData("")
     val markAddress: LiveData<String>
         get() = _markAddress
 

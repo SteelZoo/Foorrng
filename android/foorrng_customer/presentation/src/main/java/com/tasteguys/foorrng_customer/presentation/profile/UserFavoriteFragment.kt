@@ -52,20 +52,20 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
     private fun initView(){
         truckViewModel.getFavoriteTruckList()
 
-//        binding.test.setOnClickListener{
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.fcv_container, RegisterTruckFragment())
-//                .addToBackStack(null)
-//                .commit()
-//        }
-
-        binding.test2.setOnClickListener {
-//            truckViewModel.markFavoriteTruck(25)
+        binding.test.setOnClickListener{
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterFestivalFragment())
+                .replace(R.id.fcv_container, RegisterTruckFragment())
                 .addToBackStack(null)
                 .commit()
         }
+
+//        binding.test2.setOnClickListener {
+////            truckViewModel.markFavoriteTruck(25)
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.fcv_container, RegisterFestivalFragment())
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
         favoriteAdapter.submitList(Dummy.category)
 //        truckAdapter.submitList(Dummy.trucks)
