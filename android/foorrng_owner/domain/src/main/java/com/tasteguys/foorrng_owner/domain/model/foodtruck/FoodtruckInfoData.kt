@@ -1,6 +1,6 @@
-package com.tasteguys.foorrng_owner.data.model.foodtruck
+package com.tasteguys.foorrng_owner.domain.model.foodtruck
 
-data class FoodtruckRegistResponse(
+data class FoodtruckInfoData(
     val foodtruckId: Long,
     val announcement: String,
     val createdDay: Long,
@@ -9,5 +9,6 @@ data class FoodtruckRegistResponse(
     val carNumber: String,
     val phoneNumber: String,
     val category: String,
-    val picture: String
+    val picture: String,
+    val reviews: List<ReviewData>
 )

@@ -2,6 +2,7 @@ package com.tasteguys.foorrng_owner.data.repository.foodtruck.remote
 
 import com.tasteguys.foorrng_owner.data.api.FoodtruckService
 import com.tasteguys.foorrng_owner.data.mapper.toNonDefault
+import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -38,7 +39,11 @@ class FoodtruckRemoteDatasourceImpl @Inject constructor(
         return foodtruckService.registFoodtruck(multipartImage, request)
             .toNonDefault()
             .map {
-                it.foodtruckId.isNotBlank()
+                it.foodtruckId >= 0L
             }
+    }
+
+    override suspend fun getFoodtruck(): Result<FoodtruckDetailResponse> {
+        return foodtruckService.getFoodtruck().toNonDefault()
     }
 }

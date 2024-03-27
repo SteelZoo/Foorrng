@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_owner.data.api
 
 import com.tasteguys.foorrng_owner.data.model.DefaultResponse
+import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistResponse
 import okhttp3.MultipartBody
@@ -14,4 +15,7 @@ interface FoodtruckService {
         @Part picture: MultipartBody.Part?,
         @Part("foodtruckCreateDto") foodtruckCreateDto: FoodtruckRegistRequest
     ) : Result<DefaultResponse<FoodtruckRegistResponse>>
+
+    @POST("foodtrucks/owner")
+    suspend fun getFoodtruck() : Result<DefaultResponse<FoodtruckDetailResponse>>
 }
