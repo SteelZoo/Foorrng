@@ -9,8 +9,8 @@ import java.util.Map;
 
 public interface FoodtrucksService {
     List<FoodtrucksResDto> foodtrucklist(FoodtrucksReqDto foodtrucksReqDto);
-    Map<String, Object> foodtruckdetail(Long foodtrucksId, Long markId) throws IOException;
-    Map<String, Object> myfoodtruck(Long foodtruckId) throws IOException;
-    List<Map<String, Object>> myfoodtruckOper(Long foodtruckId) throws IOException;
+    Map<String, Object> foodtruckdetail(Long foodtrucksId) throws IOException;
+    Map<String, Object> myfoodtruck();
+    List<Map<String, Object>> myfoodtruckOper();
 
 }
