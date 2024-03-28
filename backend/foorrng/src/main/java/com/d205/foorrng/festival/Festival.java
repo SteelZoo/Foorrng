@@ -12,9 +12,8 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "festival_seq")
-    private Long id;
+    @Column(name = "festival_id")
+    private Long festivalId;
     private String country;
     private String period;
     private String festivalName;
