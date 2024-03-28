@@ -12,6 +12,13 @@
     <string name="all_notice">공지사항</string>
     <string name="all_food_category">음식분류</string>
     <string name="all_modify">수정</string>
+    <string name="all_sunday_one">일</string>
+    <string name="all_monday_one">월</string>
+    <string name="all_tuesday_one">화</string>
+    <string name="all_wednesday_one">수</string>
+    <string name="all_thursday_one">목</string>
+    <string name="all_friday_one">금</string>
+    <string name="all_saturday_one">토</string>
 
     <string name="busi_number_guide">점주님께서는 앱을 이용하기전\n사업자 번호를 인증해주셔야 합니다.</string>
     <string name="busi_number_submit">인증하기</string>
