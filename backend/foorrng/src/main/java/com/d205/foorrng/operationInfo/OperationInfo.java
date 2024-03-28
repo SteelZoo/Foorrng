@@ -43,10 +43,10 @@ public class OperationInfo {
         this.day = operationInfoDto.getOperationInfoList().get(0).get("day").toString();
         this.startTime = LocalTime.ofInstant(
                 Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("startTime").toString())),
-                ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("HH:mm"));
+                ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm"));
         this.endTime = LocalTime.ofInstant(
                 Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("endTime").toString())),
-                ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("HH:mm"));
+                ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm"));
 
 
     }

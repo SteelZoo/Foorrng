@@ -12,11 +12,14 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Festival {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "festival_seq")
-    private Long id;
-    private String festivalName;
-    private Long startDay;
-    private Long finishDay;
+    @Column(name = "festival_id")
+    private Long festivalId;
     private String country;
+    private String period;
+    private String festivalName;
+    private String location;
+    private String organization;
+    private String agency;
+    private String contact_number;
+
 }

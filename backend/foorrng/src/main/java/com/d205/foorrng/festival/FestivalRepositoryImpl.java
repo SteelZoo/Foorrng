@@ -2,25 +2,34 @@ package com.d205.foorrng.festival;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import static com.d205.foorrng.festival.QFestival.festival;
+import java.util.Optional;
 
-@Repository
-public class FestivalRepositoryImpl extends QuerydslRepositorySupport implements FestivalRepository{
-    private final JPAQueryFactory jpaQueryFactory;
-    public FestivalRepositoryImpl(EntityManager em){
-        super(Festival.class);
-        this.jpaQueryFactory = new JPAQueryFactory(em);
+public class FestivalRepositoryImpl implements FestivalRepositoryCustom{
+
+    private final JPAQueryFactory queryFactory;
+
+    public FestivalRepositoryImpl(EntityManager entityManager) {
+        this.queryFactory = new JPAQueryFactory(entityManager);
     }
+
     @Override
-    public List<Festival> findFutureFestivals() {
-        Long currentDateTime = System.currentTimeMillis();
-        return jpaQueryFactory
-                .selectFrom(festival)
-                .where(festival.startDay.gt(currentDateTime))
+    public List<Festival> findAllByPeriod(String period) {
+        QFestival festival = QFestival.festival;
+
+        return queryFactory.select(festival)
+                .from(festival)
+                .where(festival.period.like(period.toString() + ".%")
+                        .or(festival.period.like("%" + period.toString() + "월%"))
+                        .or(festival.period.like("0" + period.toString() + ".%")))
                 .fetch();
+
+
+        //return new HashSet<>(queryFactory.select(operationInfo.day)
+        //                .from(operationInfo)
+        //                .where(operationInfo.mark.foodtrucks.id.eq(foodTruckId))
+        //                .fetch());
+
     }
 }
