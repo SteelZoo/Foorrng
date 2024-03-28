@@ -3,6 +3,7 @@ package com.d205.foorrng.food.service;
 import com.d205.foorrng.common.exception.ErrorCode;
 import com.d205.foorrng.common.exception.Exceptions;
 import com.d205.foorrng.food.Food;
+import com.d205.foorrng.food.dto.FavoritefoodDto;
 import com.d205.foorrng.food.repository.FavoritefoodRepository;
 import com.d205.foorrng.food.repository.FoodRepository;
 import com.d205.foorrng.foodtruck.entity.Foodtrucks;
@@ -35,21 +36,21 @@ public class FoodService {
     private final FoodtrucksRepository foodtrucksRepository;
     private final FoodRepository foodRepository;
 
-    public void saveFavoriteFood(List<String> FavoriteFoodList) {
+    public void saveFavoriteFood(FavoritefoodDto favoritefoodDto) {
 
         User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
+        List<String> FavoriteFoodList = favoritefoodDto.getFavoriteFoods();
 
         for (String food: FavoriteFoodList) {
             FavoriteFood favoriteFood = FavoriteFood.builder()
                     .user(user)
                     .menu(food)
+                    .latitude(favoritefoodDto.getLatitude())
+                    .longitude(favoritefoodDto.getLongitude())
                     .createdTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString())
                     .build();
             favoritefoodRepository.save(favoriteFood);
         }
-        // 테스트용
-        // List<FavoriteFood> favoriteFoodList = favoritefoodRepository.findAllByUser(user)
-        //          .orElseThrow(() -> new Exceptions(ErrorCode.FOODLIST_NOT_EXIST));
     }
 
     public void saveFoodtruckFood(Long Id, List<String> FoodtruckFoodList){
