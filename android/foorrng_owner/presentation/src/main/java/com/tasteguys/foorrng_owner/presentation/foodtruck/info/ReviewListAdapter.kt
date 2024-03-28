@@ -31,5 +31,22 @@ class ReviewListAdapter(
                 progressBar.max = totalCount
              }
         }
+
+        fun reviewIdToString(reviewId: String){
+
+        }
+
+        private val idToKoreanMap = hashMapOf(
+            "rvIsDelicious" to "음식이 맛있어요",
+            "rvIdSpecial" to "특별한 메뉴가 있어요",
+            "rvIsChip" to "가성비가 좋아요",
+            "rvIsFast" to "음식이 빨리 나와요",
+            "isClean" to "매장이 청결해요",
+            "isCool" to "푸드트럭이 멋져요",
+            "isKind" to "사장님이 친절해요"
+        )
+
+
+
     }
 }

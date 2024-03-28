@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.PermissionHelper
@@ -53,6 +54,11 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
             it.getContentIfNotHandled()?.let { result ->
                 result.onSuccess { foodTruckInfo ->
                     binding.tvFoodtruckName.text = foodTruckInfo.name
+                    Glide.with(binding.root)
+                        .load(foodTruckInfo.pictureUrl)
+                        .fitCenter()
+                        .circleCrop()
+                        .into(binding.ivProfile)
                 }.onFailure {
                     if (it is FoorrngException && it.code == "F-001"){
                         showNonFoodtruckDialog()

@@ -23,7 +23,8 @@ fun FoodtruckDetailResponse.toFoodtruckInfoData() = FoodtruckInfoData(
     phoneNumber = foodtruck.phoneNumber,
     category = foodtruck.category,
     picture = foodtruck.picture,
-    reviews = reviews.map { it.toReviewData() }
+    totalReview = totalReview,
+    reviews = review.map { it.toReviewData() }
 )
 
 fun ReviewResponse.toReviewData() = ReviewData(

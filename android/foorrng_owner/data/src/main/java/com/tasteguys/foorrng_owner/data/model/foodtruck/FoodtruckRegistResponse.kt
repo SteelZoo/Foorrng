@@ -8,6 +8,6 @@ data class FoodtruckRegistResponse(
     val accountInfo: String,
     val carNumber: String,
     val phoneNumber: String,
-    val category: String,
+    val category: List<String>,
     val picture: String
 )

@@ -14,13 +14,15 @@ fun FoodtruckInfoData.toFoodtruckInfo(): FoodTruckInfo{
         callNumber = phoneNumber,
         category = category,
         notice = announcement,
-        reviewSet = reviews.toReviewSet()
+        pictureUrl = picture,
+        accountInfo = accountInfo,
+        reviewSet = reviews.toReviewSet(totalReview)
     )
 }
 
-fun List<ReviewData>.toReviewSet(): ReviewSet {
+fun List<ReviewData>.toReviewSet(totalReview: Int = -1): ReviewSet {
     return ReviewSet(
-        totalCount = maxOf { it.count },
+        totalCount = if(totalReview < 0) maxOf { it.count } else totalReview,
         reviewList = map {
             Review(it.id, it.count)
         }

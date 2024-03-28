@@ -11,10 +11,11 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface FoodtruckService {
+    @Multipart
     @POST("foodtruck/regist")
     suspend fun registFoodtruck(
         @Part picture: MultipartBody.Part?,
-        @Part("foodtruckCreateDto") foodtruckCreateDto: FoodtruckRegistRequest
+        @Part("foodtruckDto") foodtruckCreateDto: FoodtruckRegistRequest
     ) : Result<DefaultResponse<FoodtruckRegistResponse>>
 
     @GET("foodtrucks/owner")
