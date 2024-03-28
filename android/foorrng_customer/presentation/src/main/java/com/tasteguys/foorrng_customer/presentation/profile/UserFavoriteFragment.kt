@@ -54,7 +54,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
         binding.test.setOnClickListener{
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment())
+                .replace(R.id.fcv_container, RegisterTruckFragment(isNew = true, -1))
                 .addToBackStack(null)
                 .commit()
         }
@@ -101,8 +101,9 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
             adapter = truckAdapter.apply {
                 setOnItemClickListener(object : BaseHolder.ItemClickListener{
                     override fun onClick(position: Int) {
+                        val curTruck = currentList[position]
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_container, TruckInfoFragment(currentList[position].truckId))
+                            .replace(R.id.fcv_container, TruckInfoFragment(curTruck.truckId, curTruck.name, curTruck.type))
                             .addToBackStack(null)
                             .commit()
                     }

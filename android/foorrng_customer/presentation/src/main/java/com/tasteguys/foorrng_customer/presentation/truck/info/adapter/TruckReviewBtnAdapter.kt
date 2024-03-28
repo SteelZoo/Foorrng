@@ -6,7 +6,7 @@ import com.bumptech.glide.Glide
 import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemReviewBtnBinding
-import com.tasteguys.foorrng_customer.presentation.truck.info.ReviewMap
+import com.tasteguys.foorrng_customer.presentation.model.mapper.ReviewMap
 
 class TruckReviewBtnAdapter: BaseAdapter<String>() {
 

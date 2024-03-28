@@ -11,7 +11,7 @@ class UpdateTruckUseCase @Inject constructor(
     suspend operator fun invoke(
         foodtruckId: Long,
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,

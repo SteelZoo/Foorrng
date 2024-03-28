@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_customer.domain.usecase.truck
 
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
@@ -28,7 +29,7 @@ class RegisterTruckUseCase @Inject constructor(
         lat: Double,
         lng: Double,
         operationInfo: List<TruckOperationData>
-    ): Result<Long>{
+    ): Result<TruckDetailMarkData>{
         return truckRepository.registerTruckInfo(
             truckId, address ,lat, lng, operationInfo
         )

@@ -7,6 +7,7 @@ import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDa
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
@@ -20,7 +21,7 @@ class TruckRepositoryImpl @Inject constructor(
 ) : TruckRepository {
     override suspend fun reportFoodTruck(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -34,7 +35,7 @@ class TruckRepositoryImpl @Inject constructor(
     override suspend fun updateFoodTruck(
         foodtruckId: Long,
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -77,10 +78,10 @@ class TruckRepositoryImpl @Inject constructor(
         lat: Double,
         lng: Double,
         operationInfo: List<TruckOperationData>
-    ): Result<Long> {
+    ): Result<TruckDetailMarkData> {
         return truckRemoteDatasource.reportFoodTruckOperationInfo(truckId, address, lat, lng,
             operationInfo.map { it.toData() }
-        )
+        ).map { it.toDomain() }
     }
 
 }

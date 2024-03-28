@@ -22,6 +22,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TruckSelectLocationFragment @Inject constructor(
+    val isNew:Boolean
 ) : MainBaseFragment<FragmentSelectLocationBinding>(
     { FragmentSelectLocationBinding.bind(it) }, R.layout.fragment_select_location
 ) {
@@ -79,6 +80,7 @@ class TruckSelectLocationFragment @Inject constructor(
             parentFragmentManager.popBackStack()
         }
 
+
         mapView.getMapAsync {
             nMap = it.apply {
                 locationSource = FusedLocationSource(
@@ -86,6 +88,14 @@ class TruckSelectLocationFragment @Inject constructor(
                 )
                 uiSettings.isLocationButtonEnabled = true
                 locationTrackingMode = LocationTrackingMode.Follow
+
+                registerInputViewModel.markInfo.observe(viewLifecycleOwner) { res ->
+                    if(res.address.isNotEmpty()){
+                        marker.position = LatLng(res.lat, res.lng)
+                        marker.map = this
+                    }
+                }
+
                 setOnMapClickListener { _, coord ->
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this

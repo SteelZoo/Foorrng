@@ -3,7 +3,9 @@ package com.tasteguys.foorrng_customer.presentation.model.mapper
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckMenuData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckReviewData
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteTruck
+import com.tasteguys.foorrng_customer.presentation.model.Review
 import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
 
@@ -50,4 +52,8 @@ fun FavoriteTruckData.toFavoriteTruck(): FavoriteTruck{
 
 fun TruckMenuData.toTruckMenu(): TruckMenu{
     return TruckMenu(name, price.toInt(), picture)
+}
+
+fun TruckReviewData.toReview(total: Int): Review {
+    return Review(ReviewMap.domainReviewMap[id]!!, cnt, total)
 }

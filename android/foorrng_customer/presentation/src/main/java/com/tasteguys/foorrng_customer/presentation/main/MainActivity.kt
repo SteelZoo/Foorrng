@@ -30,8 +30,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                 if(controller.visible){
                     binding.tbMain.visibility = View.VISIBLE
                     title = controller.title
+                    menu.clear()
                     if(controller.menuRes!=0){
-                        menu.clear()
                         inflateMenu(controller.menuRes)
                     }
                     setOnMenuItemClickListener {

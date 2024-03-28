@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tasteguys.foorrng_customer.presentation.base.toFile
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
+import com.tasteguys.foorrng_customer.presentation.model.MapMark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
 import javax.inject.Inject
@@ -24,12 +25,12 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _name.postValue(input)
     }
 
-    private val _picture = MutableLiveData<File?>(null)
-    val picture: LiveData<File?>
+    private val _picture = MutableLiveData<Uri?>(null)
+    val picture: LiveData<Uri?>
         get() = _picture
 
-    fun inputPicture(input: Uri, context: Context){
-        _picture.postValue(input.toFile(context))
+    fun inputPicture(input: Uri){
+        _picture.postValue(input)
     }
 
     private val _carNumber = MutableLiveData("")
@@ -81,11 +82,18 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
     val markLng: LiveData<Double>
         get() = _markLng
 
+    private val _markInfo = MutableLiveData<MapMark>()
+    val markInfo: LiveData<MapMark>
+        get() =_markInfo
+
     fun setMark(name: String, lat: Double, lng: Double){
         _markAddress.postValue(name)
         _markLat.postValue(lat)
         _markLng.postValue(lng)
+        _markInfo.postValue(MapMark(name, lat, lng))
     }
+
+
 
     fun initData(){
         _name.value = ""
@@ -93,6 +101,12 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _carNumber.value=""
         _announcement.value=""
         _phoneNumber.value=""
+        _markAddress.value=""
+        _category.value = _category.value!!.map { FavoriteCategory(it.name, false) }.toMutableList()
+
     }
+
+    var inputState: Boolean = false
+    var imageChanged: Boolean = false
 
 }

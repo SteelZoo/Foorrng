@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
+import com.squareup.moshi.Json
+
 data class TruckMainInfoResponse(
     val announcement: String,
     val name: String,
@@ -9,6 +11,7 @@ data class TruckMainInfoResponse(
     val carNumber: String,
     val phoneNumber: String,
 
+    @Json(name="businessNumber")
     val bussiNumber: String,
     val category: List<String>
 

@@ -12,6 +12,7 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -25,38 +26,57 @@ class TruckRemoteDatasourceImpl @Inject constructor(
 ) : TruckRemoteDatasource {
     override suspend fun reportFoodTruck(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
         category: List<String>
     ): Result<TruckRegisterUpdateResponse> {
-        val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
-        return truckService.reportFoodTruck(
-            TruckRequest(
-                name, carNumber, announcement, phoneNumber, category
-            ),
-            MultipartBody.Part.createFormData("picture", picture.name, requestFile),
-        ).toNonDefault()
+        if (picture != null) {
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            return truckService.reportFoodTruck(
+                TruckRequest(
+                    name, carNumber, announcement, phoneNumber, category
+                ),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+            ).toNonDefault()
+        } else {
+            return truckService.reportFoodTruck(
+                TruckRequest(
+                    name, carNumber, announcement, phoneNumber, category
+                ), null,
+            ).toNonDefault()
+        }
+
     }
 
     override suspend fun updateFoodTruck(
         foodtruckId: Long,
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
         category: List<String>
     ): Result<TruckRegisterUpdateResponse> {
-        val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
-        return truckService.updateFoodTruck(
-            TruckRequest(
-                foodtruckId, name, carNumber, announcement, phoneNumber, category
-            ),
-            MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+        if (picture != null) {
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            return truckService.updateFoodTruck(
+                TruckRequest(
+                    foodtruckId, name, carNumber, announcement, phoneNumber, category
+                ),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
 
-        ).toNonDefault()
+                ).toNonDefault()
+        } else {
+            return truckService.updateFoodTruck(
+                TruckRequest(
+                    foodtruckId, name, carNumber, announcement, phoneNumber, category
+                ), null,
+
+                ).toNonDefault()
+        }
+
     }
 
     override suspend fun getTruckList(
@@ -88,7 +108,7 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         lat: Double,
         lng: Double,
         operationInfo: List<TruckOperationInfo>
-    ): Result<Long> {
+    ): Result<TruckRegisterOperationResponse> {
         return truckService.registerMark(
             truckId, TruckMarkRequest(
                 TruckMarkDto(address, lat, lng),

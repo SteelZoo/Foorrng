@@ -6,13 +6,14 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import java.io.File
 
 interface TruckRemoteDatasource {
     suspend fun reportFoodTruck(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -22,7 +23,7 @@ interface TruckRemoteDatasource {
     suspend fun updateFoodTruck(
         foodtruckId: Long,
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -52,6 +53,6 @@ interface TruckRemoteDatasource {
         lat: Double,
         lng: Double,
         operationInfo: List<TruckOperationInfo>
-    ):Result<Long>
+    ):Result<TruckRegisterOperationResponse>
 
 }

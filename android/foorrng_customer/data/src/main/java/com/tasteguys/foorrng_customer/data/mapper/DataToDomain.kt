@@ -1,17 +1,20 @@
 package com.tasteguys.foorrng_customer.data.mapper
 
+import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMarkResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMainInfoResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckMainData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckMenuData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
@@ -43,6 +46,7 @@ fun TruckDetailResponse.toDomain() = TruckDetailData(
     mainInfo.toDomain(),
     reviews.map { it.toDomain() },
     menus.map { it.toDomain() },
+    totalReview,
     operation.map { it.toDomain() }
 )
 
@@ -51,7 +55,7 @@ fun TruckMainInfoResponse.toDomain() = TruckMainData(
 )
 
 fun TruckReviewResponse.toDomain() = TruckReviewData(
-    id, isDelicious, isCool, isClean, isSpecial, isChip, isFast, createdDate
+    id, cnt
 )
 
 fun TruckMenuResponse.toDomain() = TruckMenuData(
@@ -69,3 +73,12 @@ fun TruckFavoriteListResponse.toDomain() = FavoriteTruckData(
 fun TruckRegisterUpdateResponse.toDomain() = TruckRegisterUpdateData(
     id, announcement, createdDay, picture, name, accountInfo, carNumber, phoneNumber, category
 )
+
+fun TruckDetailMarkResponse.toDomain() = TruckDetailMarkData(
+    id, lat, lng, address, isOpen, operationInfoList.map { it.toDomain() }
+)
+
+fun TruckRegisterOperationResponse.toDomain() = TruckDetailMarkData(
+    id, lat, lng, "", false, operationInfo.map { it.toDomain() }
+)
+

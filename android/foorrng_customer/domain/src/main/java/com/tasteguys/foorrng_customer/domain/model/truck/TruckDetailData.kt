@@ -5,5 +5,6 @@ data class TruckDetailData(
     val mainData: TruckMainData,
     val reviews: List<TruckReviewData>,
     val menus: List<TruckMenuData>,
-    val operation: List<TruckOperationData>
+    val totalReview: Int,
+    val operation: List<TruckDetailMarkData>
 )

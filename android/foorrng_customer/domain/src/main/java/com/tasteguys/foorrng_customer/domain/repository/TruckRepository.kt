@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.domain.repository
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import java.io.File
@@ -11,7 +12,7 @@ interface TruckRepository {
 
     suspend fun reportFoodTruck(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -21,7 +22,7 @@ interface TruckRepository {
     suspend fun updateFoodTruck(
         foodtruckId: Long,
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
@@ -51,6 +52,6 @@ interface TruckRepository {
         lat: Double,
         lng: Double,
         operationInfo: List<TruckOperationData>
-    ): Result<Long>
+    ): Result<TruckDetailMarkData>
 
 }

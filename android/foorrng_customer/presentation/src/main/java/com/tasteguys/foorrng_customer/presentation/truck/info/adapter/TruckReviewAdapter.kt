@@ -8,7 +8,7 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemTruckReviewBinding
 import com.tasteguys.foorrng_customer.presentation.model.Review
-import com.tasteguys.foorrng_customer.presentation.truck.info.ReviewMap
+import com.tasteguys.foorrng_customer.presentation.model.mapper.ReviewMap
 
 private const val TAG = "TruckReviewAdapter"
 class TruckReviewAdapter : BaseAdapter<Review>() {

@@ -6,6 +6,7 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckWriteReviewBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
+import com.tasteguys.foorrng_customer.presentation.model.mapper.ReviewMap
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewBtnAdapter
 
 class TruckWriteReviewFragment(truckId: Long) : MainBaseFragment<FragmentTruckWriteReviewBinding>(

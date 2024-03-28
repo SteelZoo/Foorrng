@@ -16,9 +16,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 
 @AndroidEntryPoint
-class TruckBasicInfoFragment(private val truckId: Long) : BaseFragment<FragmentTruckBasicInfoBinding>(
-    { FragmentTruckBasicInfoBinding.bind(it)}, R.layout.fragment_truck_basic_info
-) {
+class TruckBasicInfoFragment(private val truckId: Long) :
+    BaseFragment<FragmentTruckBasicInfoBinding>(
+        { FragmentTruckBasicInfoBinding.bind(it) }, R.layout.fragment_truck_basic_info
+    ) {
 
     private val truckViewModel: TruckViewModel by activityViewModels()
 
@@ -28,10 +29,10 @@ class TruckBasicInfoFragment(private val truckId: Long) : BaseFragment<FragmentT
         registerObserve()
     }
 
-    private fun initView(){
+    private fun initView() {
 //        val truckInfo = Dummy.truckInfo
 
-        truckViewModel.getTruckDetail(truckId)
+//        truckViewModel.getTruckDetail(truckId)
 
 //        binding.tvBusiNumber.text = truckInfo.bussNumber
 //        binding.tvCallNumber.text = truckInfo.phoneNumber
@@ -61,17 +62,20 @@ class TruckBasicInfoFragment(private val truckId: Long) : BaseFragment<FragmentT
 
     }
 
-    private fun registerObserve(){
-        truckViewModel.truckDetailResult.observe(viewLifecycleOwner){result ->
-            if(result.isSuccess){
+    private fun registerObserve() {
+        truckViewModel.truckDetailResult.observe(viewLifecycleOwner) { result ->
+            if (result.isSuccess) {
                 result.getOrNull()!!.mainData.let {
-                    with(binding){
+                    with(binding) {
                         tvCallNumber.text = it.phoneNumber
                         tvCarNumber.text = it.carNumber
                         tvNotice.text = it.announcement
-                        tvFoodCategory.text = it.category.reduce{
-                                res, it -> "$res, $it"
+                        if (it.category.isNotEmpty()) {
+                            tvFoodCategory.text = it.category.reduce { res, it ->
+                                "$res, $it"
+                            }
                         }
+
                         tvBusiNumber.text = it.bussiNumber
                     }
                 }
