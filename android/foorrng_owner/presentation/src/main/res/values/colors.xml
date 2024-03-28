@@ -16,4 +16,7 @@
 
     <color name="recommend_overlay_line_green">#59C227</color>
     <color name="recommend_overlay_solid_green">#5559C227</color>
+
+    <color name="calendar_red">#F44336</color>
+    <color name="calendar_blue">#2196F3</color>
 </resources>

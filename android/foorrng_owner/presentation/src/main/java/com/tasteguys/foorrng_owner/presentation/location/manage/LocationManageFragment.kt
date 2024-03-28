@@ -11,6 +11,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationManageBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
+import com.tasteguys.foorrng_owner.presentation.location.regist.LocationRegistFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
@@ -92,7 +93,10 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
             ).addNavIconClickListener {
                 parentFragmentManager.popBackStack()
             }.addMenuItemClickListener {
-                showToast("영업 위치 추가")
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.layout_main_fragment, LocationRegistFragment())
+                    .addToBackStack(null)
+                    .commit()
             }
         )
     }
