@@ -51,10 +51,10 @@ public class OperationInfoService {
                     .day(day.get("day").toString())
                     .startTime(LocalTime.ofInstant(
                             Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("startTime").toString())),
-                            ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("HH:mm")))
+                            ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm")))
                     .endTime(LocalTime.ofInstant(
                             Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("endTime").toString())),
-                            ZoneOffset.UTC).format(DateTimeFormatter.ofPattern("HH:mm")))
+                            ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm")))
                     .build();
 
             operationInfoRepository.save(operationInfo);

@@ -43,7 +43,11 @@ public enum ErrorCode {
     MENU_NOT_FOUND(HttpStatus.BAD_REQUEST, "M-001", "존재하지 않는 메뉴입니다."),
 
     // 리뷰
-    REVIEW_TODAY_EXIST(HttpStatus.BAD_REQUEST, "R-001", "이미 작성한 리뷰입니다")
+    REVIEW_TODAY_EXIST(HttpStatus.BAD_REQUEST, "R-001", "이미 작성한 리뷰입니다"),
+
+    // 축제
+    FESTIVAL_NOT_EXIST(HttpStatus.BAD_REQUEST, "FV-001", "축제가 존재하지 않습니다.")
+
     ;
 
     // 상태, 에러 코드, 메시지
