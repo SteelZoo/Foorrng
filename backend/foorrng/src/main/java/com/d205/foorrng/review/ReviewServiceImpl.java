@@ -82,7 +82,7 @@ public class ReviewServiceImpl implements ReviewService {
         // 총 리뷰 개수 설정
         summary.setTotalReviews((long) reviews.size());
 
-        // 각 항목별 리뷰 개수를 집계
+        // 각 항목별 리뷰 개수를 집계fgfeat
         summary.setRvIsDelicious(reviews.stream().filter(Review::getRvIsDelicious).count());
         summary.setIsCool(reviews.stream().filter(Review::getIsCool).count());
         summary.setIsClean(reviews.stream().filter(Review::getIsClean).count());
