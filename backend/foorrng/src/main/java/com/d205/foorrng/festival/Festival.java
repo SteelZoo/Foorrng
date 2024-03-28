@@ -15,8 +15,12 @@ public class Festival {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "festival_seq")
     private Long id;
-    private String festivalName;
-    private Long startDay;
-    private Long finishDay;
     private String country;
+    private String period;
+    private String festivalName;
+    private String location;
+    private String organization;
+    private String agency;
+    private String contact_number;
+
 }
