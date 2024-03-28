@@ -67,6 +67,7 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 registerInputViewModel.inputPicture(data, requireContext())
             }
         }
+        registerObserve()
     }
 
     private fun initView() {
@@ -122,12 +123,27 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
             }
         }
 
+
+    }
+
+    private fun registerObserve(){
         registerInputViewModel.markAddress.observe(viewLifecycleOwner){
             binding.tilLocation.editText!!.setText(it)
         }
 
+
         truckViewModel.registerResult.observe(viewLifecycleOwner){
             Log.d(TAG, "initViewResult: ${it.isSuccess}")
+            if(it.isSuccess){
+                registerOperationInfo(it.getOrNull()!!.id)
+            }
+        }
+
+        truckViewModel.markRegisterResult.observe(viewLifecycleOwner){
+            if(it.isSuccess){
+                showToast("등록 성공")
+                parentFragmentManager.popBackStack()
+            }
         }
     }
 
@@ -139,15 +155,23 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
-                category.value!!.filter { it.favorite }.map { it.name },
+                category.value!!.filter { it.favorite }.map { it.name }
+            )
+        }
+    }
+
+    private fun registerOperationInfo(id: Long){
+        with(registerInputViewModel) {
+            truckViewModel.registerOperationInfo(
+                id,
                 markAddress.value!!,
                 markLat.value!!,
                 markLng.value!!,
                 listOf()
             )
         }
-
     }
+
 
     private fun checkBackStackDialog() {
         MaterialAlertDialogBuilder(requireContext())
@@ -168,7 +192,7 @@ class RegisterTruckFragment : MainBaseFragment<FragmentRegisterTruckBinding>(
             .setMessage("제보시 3회이상의 신고가 있을 시에만 삭제가 가능합니다.")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
                 register()
-                parentFragmentManager.popBackStack()
+
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()

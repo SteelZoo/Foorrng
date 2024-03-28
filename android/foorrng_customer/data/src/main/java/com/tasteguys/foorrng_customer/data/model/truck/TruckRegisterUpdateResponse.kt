@@ -12,5 +12,5 @@ data class TruckRegisterUpdateResponse(
     val accountInfo: String,
     val carNumber: String,
     val phoneNumber: String,
-    val category: String
+    val category: List<String>
 )

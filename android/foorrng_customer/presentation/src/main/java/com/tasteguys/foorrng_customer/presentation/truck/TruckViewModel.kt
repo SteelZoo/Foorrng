@@ -60,33 +60,41 @@ class TruckViewModel @Inject constructor(
     val favoriteTruckListResult: LiveData<Result<List<TruckDataWithAddress>>>
         get() = _favoriteTruckListResult
 
+    private val _markRegisterResult = MutableLiveData<Result<Long>>()
+    val markRegisterResult: LiveData<Result<Long>>
+        get()=_markRegisterResult
+
     fun registerTruck(
         name: String,
         picture: File,
         carNumber: String,
         announcement: String,
         phoneNumber: String,
-        category: List<String>,
-        address: String,
-        lat: Double,
-        lng: Double,
-        operationInfo: List<TruckOperationInfo>,
+        category: List<String>
     ) {
         viewModelScope.launch {
             registerUseCase(
                 name, picture, carNumber, announcement, phoneNumber, category
             ).let { res->
                 _registerResult.postValue(res)
-                if(res.isSuccess){
-                    val id = res.getOrNull()!!.id
-                    registerUseCase(
-                        id, address, lat, lng, operationInfo.map { it.toDomain() }
-                    )
-                }
-
             }
         }
+    }
 
+    fun registerOperationInfo(
+        id: Long,
+        address: String,
+        lat: Double,
+        lng: Double,
+        operationInfo: List<TruckOperationInfo>,
+    ){
+        viewModelScope.launch {
+            registerUseCase(
+                id, address, lat, lng, operationInfo.map { it.toDomain() }
+            ).let{
+                _markRegisterResult.postValue(it)
+            }
+        }
     }
 
     fun updateTruck(
