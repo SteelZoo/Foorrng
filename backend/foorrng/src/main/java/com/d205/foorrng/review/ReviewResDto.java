@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReviewResDto {
     private Boolean rvIsDelicious;
-    private Boolean isCool;
-    private Boolean isClean;
-    private Boolean isKind;
-    private Boolean rvIdSpecial;
+    private Boolean rvIsCool;
+    private Boolean rvIsClean;
+    private Boolean rvIsKind;
+    private Boolean rvIsSpecial;
     private Boolean rvIsCheap;
     private Boolean rvIsFast;
     private Long createdDate;
