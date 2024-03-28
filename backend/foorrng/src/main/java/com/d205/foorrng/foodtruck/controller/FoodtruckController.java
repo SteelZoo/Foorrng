@@ -36,9 +36,9 @@ public class FoodtruckController {
     @PatchMapping(value = "/update", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiResponse(responseCode = "200", description = "점주 푸드트럭 수정 완료")
     public ResponseEntity<? extends BaseResponseBody> updateFoodtruck(
-            @Valid @RequestPart(value = "foodtruckDto") FoodtruckUpdateReqDto foodtruckUpdateReqDto,
+            @Valid @RequestPart(value = "foodtruckDto") FoodtruckUpdateReqDto foodtruckDto,
             @RequestPart(value = "picture", required = false) MultipartFile picture) throws IOException{
-        FoodtruckResDto foodtruckResDto = foodtruckService.updateFoodtruck(foodtruckUpdateReqDto, picture);
+        FoodtruckResDto foodtruckResDto = foodtruckService.updateFoodtruck(foodtruckDto, picture);
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, foodtruckResDto));
     }
 

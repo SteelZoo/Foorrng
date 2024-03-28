@@ -28,5 +28,9 @@ public class FavoriteFood {
     @JsonIgnore
     private User user;
 
+    private Double latitude;
+
+    private Double longitude;
+
     private String createdTime;
 }

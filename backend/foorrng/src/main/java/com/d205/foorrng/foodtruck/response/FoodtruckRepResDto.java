@@ -15,9 +15,10 @@ public class FoodtruckRepResDto {
     private String carNumber;              // 차량 번호
     private String phoneNumber;            // 연락처
     private List<String> category;
+    private String businessNumber;
 
 
-    public FoodtruckRepResDto(FoodtruckReport foodtruckReport, Long id, List<String> category){
+    public FoodtruckRepResDto(FoodtruckReport foodtruckReport, Long id, List<String> category, String businessNumber){
         this.foodtruckId = id;
         this.announcement = foodtruckReport.getAnnouncement();
         this.createdDay = foodtruckReport.getCreatedDay();
@@ -27,6 +28,7 @@ public class FoodtruckRepResDto {
         this.carNumber = foodtruckReport.getCarNumber();
         this.phoneNumber = foodtruckReport.getPhoneNumber();
         this.category = category;
+        this.businessNumber = businessNumber;
     }
 
     public FoodtruckRepResDto(FoodtruckReport foodtruck) {

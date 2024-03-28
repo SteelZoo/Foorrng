@@ -81,13 +81,13 @@ public class FoodtruckServiceImpl implements FoodtruckService{
         foodService.saveFoodtruckFood(foodtrucks.getId(), foodtruckCreateReqDto.getCategory());
         // 푸드트럭 저장
         foodtruckRepository.save(foodtruck);
-        return new FoodtruckResDto(foodtruck, foodtrucks.getId(), foodtruckCreateReqDto.getCategory());
+        return new FoodtruckResDto(foodtruck, foodtrucks.getId(), foodtruckCreateReqDto.getCategory(), user.getBusinessNumber());
     };
 
     @Override
     @Transactional
     public FoodtruckResDto updateFoodtruck(FoodtruckUpdateReqDto foodtruckUpdateReqDto, MultipartFile picture) throws IOException{
-
+        User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
         Foodtrucks foodtrucks = foodtrucksRepository.findById(foodtruckUpdateReqDto.getFoodtruckId())
                 .orElseThrow(() -> new Exceptions(ErrorCode.FOODTRUCK_NOT_EXIST));
         Foodtruck foodtruck = foodtruckRepository.findByFoodtruckId(new FoodtruckId(foodtrucks.getId()))
@@ -114,7 +114,7 @@ public class FoodtruckServiceImpl implements FoodtruckService{
         foodService.saveFoodtruckFood(foodtrucks.getId(), foodtruckUpdateReqDto.getCategory());
         foodtruckRepository.save(foodtruck);
 
-        return new FoodtruckResDto(foodtruck, foodtruckUpdateReqDto.getFoodtruckId(), foodtruckUpdateReqDto.getCategory());
+        return new FoodtruckResDto(foodtruck, foodtruckUpdateReqDto.getFoodtruckId(), foodtruckUpdateReqDto.getCategory(), user.getBusinessNumber());
     };
 
     @Override
