@@ -98,31 +98,31 @@ public class ReviewServiceImpl implements ReviewService {
         List<Map<String,Object>> reviews = new ArrayList<>();
 
         Map<String, Object> review1 = new HashMap<>();
-        review1.put("Id", "rvIsDelicious");
+        review1.put("id", "rvIsDelicious");
         review1.put("cnt", reviewRepository.countDeliciousReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review2 = new HashMap<>();
-        review2.put("Id", "rvIdSpecial");
+        review2.put("id", "rvIsSpecial");
         review2.put("cnt", reviewRepository.countSpecialReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review3 = new HashMap<>();
-        review3.put("Id", "rvIsChip");
+        review3.put("id", "rvIsCheap");
         review3.put("cnt", reviewRepository.countChipReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review4 = new HashMap<>();
-        review4.put("Id", "rvIsFast");
+        review4.put("id", "rvIsFast");
         review4.put("cnt", reviewRepository.countFastReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review5 = new HashMap<>();
-        review5.put("Id", "isClean");
+        review5.put("id", "rvIsClean");
         review5.put("cnt", reviewRepository.countCleanReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review6 = new HashMap<>();
-        review6.put("Id", "isCool");
+        review6.put("id", "rvIsCool");
         review6.put("cnt", reviewRepository.countCoolReviewsByFoodtruckId(foodtruckId));
 
         Map<String, Object> review7 = new HashMap<>();
-        review7.put("Id", "isKind");
+        review7.put("id", "rvIsKind");
         review7.put("cnt", reviewRepository.countKindReviewsByFoodtruckId(foodtruckId));
 
         reviews.add(review1);
