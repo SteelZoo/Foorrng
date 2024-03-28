@@ -58,10 +58,10 @@ public class ReviewServiceImpl implements ReviewService {
         // 리뷰 저장하기
         Review review = Review.builder()
                 .rvIsDelicious(reviewReqDto.getRvIsDelicious())
-                .isCool(reviewReqDto.getIsCool())
-                .isClean(reviewReqDto.getIsClean())
-                .isKind(reviewReqDto.getIsKind())
-                .rvIdSpecial(reviewReqDto.getRvIdSpecial())
+                .rvIsCool(reviewReqDto.getRvIsCool())
+                .rvIsClean(reviewReqDto.getRvIsClean())
+                .rvIsKind(reviewReqDto.getRvIsKind())
+                .rvIsSpecial(reviewReqDto.getRvIsSpecial())
                 .rvIsCheap(reviewReqDto.getRvIsCheap())
                 .rvIsFast(reviewReqDto.getRvIsFast())
                 .createdDate(createdDate)
@@ -84,10 +84,10 @@ public class ReviewServiceImpl implements ReviewService {
 
         // 각 항목별 리뷰 개수를 집계fgfeat
         summary.setRvIsDelicious(reviews.stream().filter(Review::getRvIsDelicious).count());
-        summary.setIsCool(reviews.stream().filter(Review::getIsCool).count());
-        summary.setIsClean(reviews.stream().filter(Review::getIsClean).count());
-        summary.setIsKind(reviews.stream().filter(Review::getIsKind).count());
-        summary.setRvIdSpecial(reviews.stream().filter(Review::getRvIdSpecial).count());
+        summary.setIsCool(reviews.stream().filter(Review::getRvIsCool).count());
+        summary.setIsClean(reviews.stream().filter(Review::getRvIsClean).count());
+        summary.setIsKind(reviews.stream().filter(Review::getRvIsKind).count());
+        summary.setRvIdSpecial(reviews.stream().filter(Review::getRvIsSpecial).count());
         summary.setRvIsCheap(reviews.stream().filter(Review::getRvIsCheap).count());
         summary.setRvIsFast(reviews.stream().filter(Review::getRvIsFast).count());
         return summary;

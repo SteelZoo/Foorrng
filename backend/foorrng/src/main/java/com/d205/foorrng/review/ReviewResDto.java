@@ -23,10 +23,10 @@ public class ReviewResDto {
     public static ReviewResDto fromEntity (Review review){
         return new ReviewResDto(
                 review.getRvIsDelicious(),
-                review.getIsCool(),
-                review.getIsClean(),
-                review.getIsKind(),
-                review.getRvIdSpecial(),
+                review.getRvIsCool(),
+                review.getRvIsClean(),
+                review.getRvIsKind(),
+                review.getRvIsSpecial(),
                 review.getRvIsCheap(),
                 review.getRvIsFast(),
                 review.getCreatedDate(),

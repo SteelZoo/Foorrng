@@ -27,7 +27,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(review)
                 .from(review)
                 .where(review.foodtrucks.id.eq(foodtruckSeq)
-                        .and(review.rvIdSpecial.isTrue()))
+                        .and(review.rvIsSpecial.isTrue()))
                 .fetchCount();
     }
     @Override
@@ -54,7 +54,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(review)
                 .from(review)
                 .where(review.foodtrucks.id.eq(foodtruckSeq)
-                        .and(review.isClean.isTrue()))
+                        .and(review.rvIsClean.isTrue()))
                 .fetchCount();
     }
     @Override
@@ -63,7 +63,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(review)
                 .from(review)
                 .where(review.foodtrucks.id.eq(foodtruckSeq)
-                        .and(review.isCool.isTrue()))
+                        .and(review.rvIsCool.isTrue()))
                 .fetchCount();
     }
     @Override
@@ -72,7 +72,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(review)
                 .from(review)
                 .where(review.foodtrucks.id.eq(foodtruckSeq)
-                        .and(review.isKind.isTrue()))
+                        .and(review.rvIsKind.isTrue()))
                 .fetchCount();
     }
 }

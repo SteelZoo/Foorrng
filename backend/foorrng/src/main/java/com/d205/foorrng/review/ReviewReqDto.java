@@ -13,13 +13,13 @@ public class ReviewReqDto {
     @NotNull
     private Boolean rvIsDelicious;
     @NotNull
-    private Boolean isCool;
+    private Boolean rvIsCool;
     @NotNull
-    private Boolean isClean;
+    private Boolean rvIsClean;
     @NotNull
-    private Boolean isKind;
+    private Boolean rvIsKind;
     @NotNull
-    private Boolean rvIdSpecial;
+    private Boolean rvIsSpecial;
     @NotNull
     private Boolean rvIsCheap;
     @NotNull
