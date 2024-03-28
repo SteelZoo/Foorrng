@@ -29,8 +29,7 @@ public class FestivalService {
 
     @Transactional
     public List<Festival> searchFestivalInThisMonth() {
-        String thisMonth = String.valueOf(Integer.parseInt(LocalDate.now(ZoneId.of("Asia/Seoul")).toString().substring(5, 7)));
-        System.out.println(thisMonth);
+        String thisMonth = String.valueOf(Integer.parseInt(LocalDate.now(ZoneId.of("Asia/Seoul")).toString().substring(5, 7)) + 1);
 
         List<Festival> festivalList = festivalRepository.findAllByPeriod(thisMonth);
 
@@ -40,7 +39,7 @@ public class FestivalService {
 
     @Transactional
     public Festival searchFestival(Long festivalId) {
-        return festivalRepository.findById(festivalId)
+        return festivalRepository.findByFestivalId(festivalId)
                 .orElseThrow(() -> new Exceptions(ErrorCode.FESTIVAL_NOT_EXIST));
     }
 
