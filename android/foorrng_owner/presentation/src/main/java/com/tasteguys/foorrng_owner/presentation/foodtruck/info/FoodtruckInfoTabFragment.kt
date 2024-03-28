@@ -19,9 +19,9 @@ class FoodtruckInfoTabFragment(
         with(binding){
             tvTruckName.text = foodTruckInfo.name
             tvCarNumber.text = foodTruckInfo.carNumber
-            tvAccountNumber.text = "1234-1234-1234"
+            tvAccountNumber.text = foodTruckInfo.accountInfo
             tvCallNumber.text = foodTruckInfo.callNumber
-            tvFoodCategory.text = foodTruckInfo.category
+            tvFoodCategory.text = foodTruckInfo.category.joinToString()
             tvNotice.text = foodTruckInfo.notice
         }
 

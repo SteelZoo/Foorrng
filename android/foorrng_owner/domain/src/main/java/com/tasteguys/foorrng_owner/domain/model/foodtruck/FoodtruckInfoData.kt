@@ -8,7 +8,8 @@ data class FoodtruckInfoData(
     val accountInfo: String,
     val carNumber: String,
     val phoneNumber: String,
-    val category: String,
+    val category: List<String>,
     val picture: String,
+    val totalReview: Int,
     val reviews: List<ReviewData>
 )

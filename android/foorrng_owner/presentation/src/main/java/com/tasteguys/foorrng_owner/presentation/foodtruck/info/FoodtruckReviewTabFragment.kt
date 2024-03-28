@@ -15,7 +15,7 @@ class FoodtruckReviewTabFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.tvReviewTotalCount.text = foodTruckInfo.reviewSet.totalCount.toString()
         binding.rvReviewList.adapter = ReviewListAdapter(foodTruckInfo.reviewSet)
     }
 }

@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_owner.presentation.foodtruck.info
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoBinding
@@ -28,8 +29,13 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
 
     private fun registerObserve() {
         mainViewModel.foodtruckInfo.observe(viewLifecycleOwner) { event ->
-            event.getContentIfNotHandled()?.let { result ->
+            event.peekContent().let { result ->
                 result.onSuccess { foodTruckInfo ->
+                    Glide.with(this)
+                        .load(foodTruckInfo.pictureUrl)
+                        .fitCenter()
+                        .circleCrop()
+                        .into(binding.ivTruckPhoto)
                     setInfoTab(foodTruckInfo)
                 }.onFailure {
                     if (it is FoorrngException && it.code == "F-001"){
@@ -73,7 +79,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
     }
 
     private val dummyFoodtruck = FoodTruckInfo(
-        1, "맛있는 녀석들", "123가1234", "010-1234-1234", "치킨", "공지합니다",
+        1, "맛있는 녀석들", "123가1234", "010-1234-1234","화긴",listOf("치킨"), "공지합니다","",
         ReviewSet(
             10, listOf(
                 Review("음식이 맛있어요", 9),
