@@ -13,7 +13,7 @@ public class ReviewSummaryDto {
     private Long isClean;
     private Long isKind;
     private Long rvIdSpecial;
-    private Long rvIsChip;
+    private Long rvIsCheap;
     private Long rvIsFast;
 }
 

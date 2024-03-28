@@ -21,7 +21,7 @@ public class ReviewReqDto {
     @NotNull
     private Boolean rvIdSpecial;
     @NotNull
-    private Boolean rvIsChip;
+    private Boolean rvIsCheap;
     @NotNull
     private Boolean rvIsFast;
 }

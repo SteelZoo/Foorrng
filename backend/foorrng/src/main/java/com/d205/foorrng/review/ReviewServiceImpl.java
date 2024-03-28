@@ -62,7 +62,7 @@ public class ReviewServiceImpl implements ReviewService {
                 .isClean(reviewReqDto.getIsClean())
                 .isKind(reviewReqDto.getIsKind())
                 .rvIdSpecial(reviewReqDto.getRvIdSpecial())
-                .rvIsChip(reviewReqDto.getRvIsChip())
+                .rvIsCheap(reviewReqDto.getRvIsCheap())
                 .rvIsFast(reviewReqDto.getRvIsFast())
                 .createdDate(createdDate)
                 .user(user)
@@ -88,7 +88,7 @@ public class ReviewServiceImpl implements ReviewService {
         summary.setIsClean(reviews.stream().filter(Review::getIsClean).count());
         summary.setIsKind(reviews.stream().filter(Review::getIsKind).count());
         summary.setRvIdSpecial(reviews.stream().filter(Review::getRvIdSpecial).count());
-        summary.setRvIsChip(reviews.stream().filter(Review::getRvIsChip).count());
+        summary.setRvIsCheap(reviews.stream().filter(Review::getRvIsCheap).count());
         summary.setRvIsFast(reviews.stream().filter(Review::getRvIsFast).count());
         return summary;
     }

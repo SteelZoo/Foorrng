@@ -14,7 +14,7 @@ public class ReviewResDto {
     private Boolean isClean;
     private Boolean isKind;
     private Boolean rvIdSpecial;
-    private Boolean rvIsChip;
+    private Boolean rvIsCheap;
     private Boolean rvIsFast;
     private Long createdDate;
     private String username;
@@ -27,7 +27,7 @@ public class ReviewResDto {
                 review.getIsClean(),
                 review.getIsKind(),
                 review.getRvIdSpecial(),
-                review.getRvIsChip(),
+                review.getRvIsCheap(),
                 review.getRvIsFast(),
                 review.getCreatedDate(),
                 review.getUser().getName(),

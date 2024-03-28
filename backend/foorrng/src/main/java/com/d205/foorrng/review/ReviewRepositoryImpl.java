@@ -36,7 +36,7 @@ public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
                 .select(review)
                 .from(review)
                 .where(review.foodtrucks.id.eq(foodtruckSeq)
-                        .and(review.rvIsChip.isTrue()))
+                        .and(review.rvIsCheap.isTrue()))
                 .fetchCount();
     }
     @Override
