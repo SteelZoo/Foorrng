@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final FoodtrucksRepository foodtrucksRepository;
 
-    @PostMapping("/{foodtruckId}/regist")
+    @PostMapping(value = "/{foodtruckId}/regist", consumes = {MediaType.APPLICATION_JSON_VALUE})
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공")
     public ResponseEntity<? extends BaseResponseBody> createReview(
             @PathVariable("foodtruckId") Long foodtrucksSeq,
