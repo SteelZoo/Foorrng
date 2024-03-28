@@ -71,7 +71,7 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
                 .foodtrucks(foodtrucks)
                 .build();
 
-        String imgUrl = "";
+        String imgUrl = foodtruckReport.getPicture();
         if(picture!=null){
             String imgName = foodtruckCreateReqDto.getName() + foodtrucks.getId() + ".png";
             String dir = "/foodtruckIMG";
@@ -100,8 +100,8 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
         foodtruckReport.updatePhoneNumber(foodtruckUpdateReqDto.getPhoneNumber());
 
         // 이미지 수정
-        String imgUrl = foodtruckReport.getPicture();
         if(picture!=null){
+            String imgUrl = foodtruckReport.getPicture();
             System.out.println(foodtruckReport.getName());
             String imgName = foodtruckReport.getName() + foodtrucks.getId() + ".png";
             String dir = "/foodtruckIMG";

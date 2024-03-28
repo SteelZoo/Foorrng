@@ -99,13 +99,15 @@ public class FoodtruckServiceImpl implements FoodtruckService{
         foodtruck.updateCarNumber(foodtruckUpdateReqDto.getCarNumber());
         foodtruck.updatePhoneNumber(foodtruckUpdateReqDto.getPhoneNumber());
 
-        String imgUrl = "";
+
         if(picture!=null){
+            String imgUrl = foodtruck.getPicture();
             String imgName = foodtruck.getName() + foodtrucks.getId().toString() + ".png";
             String dir = "/foodtruckIMG";
             imgUrl = s3Image.saveImageS3(picture, imgName, dir);
             foodtruck.updatePicture(imgUrl);
         }
+
 
         // 수정 API 들어오면 음식카테고리는 삭제 및 생성
         // 더 나은 방법이 있을까
