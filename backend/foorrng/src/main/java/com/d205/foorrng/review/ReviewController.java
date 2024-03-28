@@ -23,11 +23,11 @@ public class ReviewController {
     private final ReviewService reviewService;
     private final FoodtrucksRepository foodtrucksRepository;
 
-    @PostMapping(value = "/{foodtruckId}/regist", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/{foodtruckId}/regist")
     @ApiResponse(responseCode = "201", description = "리뷰 생성 성공")
     public ResponseEntity<? extends BaseResponseBody> createReview(
             @PathVariable("foodtruckId") Long foodtrucksSeq,
-            @Valid @RequestPart("reviewReqDto") @Parameter(name ="reviewReqDto", description = "리뷰 정보") ReviewReqDto reviewReqDto){
+            @Valid @Parameter(name ="reviewReqDto", description = "리뷰 정보") @RequestPart(value = "reviewReqDto") ReviewReqDto reviewReqDto){
 
         ReviewResDto reviewId = reviewService.createReview(foodtrucksSeq, reviewReqDto);
         return ResponseEntity.status(HttpStatus.SC_CREATED).body(BaseResponseBody.of(0, reviewId));
