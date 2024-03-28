@@ -5,17 +5,19 @@ import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistResponse
 import okhttp3.MultipartBody
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 
 interface FoodtruckService {
+    @Multipart
     @POST("foodtruck/regist")
     suspend fun registFoodtruck(
         @Part picture: MultipartBody.Part?,
-        @Part("foodtruckCreateDto") foodtruckCreateDto: FoodtruckRegistRequest
+        @Part("foodtruckDto") foodtruckCreateDto: FoodtruckRegistRequest
     ) : Result<DefaultResponse<FoodtruckRegistResponse>>
 
-    @POST("foodtrucks/owner")
+    @GET("foodtrucks/owner")
     suspend fun getFoodtruck() : Result<DefaultResponse<FoodtruckDetailResponse>>
 }

@@ -2,5 +2,6 @@ package com.tasteguys.foorrng_owner.data.model.foodtruck
 
 data class FoodtruckDetailResponse(
     val foodtruck: FoodtruckRegistResponse,
-    val reviews: List<ReviewResponse>
+    val review: List<ReviewResponse>,
+    val totalReview: Int
 )

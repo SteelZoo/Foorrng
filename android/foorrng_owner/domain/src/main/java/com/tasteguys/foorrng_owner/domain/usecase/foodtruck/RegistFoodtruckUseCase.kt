@@ -14,7 +14,7 @@ class RegistFoodtruckUseCase @Inject constructor(
         phoneNumber: String,
         announcement: String,
         category: List<String>,
-        picture: File
+        picture: File?
     ) = foodtruckRepository.registFoodtruck(
         name = name,
         carNumber = carNumber,
