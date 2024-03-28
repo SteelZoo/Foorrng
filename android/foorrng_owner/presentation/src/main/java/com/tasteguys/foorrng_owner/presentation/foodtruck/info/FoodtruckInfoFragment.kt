@@ -9,9 +9,10 @@ import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInf
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
-import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
-import com.tasteguys.foorrng_owner.presentation.model.Review
-import com.tasteguys.foorrng_owner.presentation.model.ReviewSet
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.ReviewSet
+import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,11 +21,30 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
 ) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setInfoTab()
+        registerObserve()
+        mainViewModel.getFoodtruckInfo()
     }
 
-    private fun setInfoTab() {
-        binding.vpInfo.adapter = InfoTabPagerAdapter(this, dummyFoodtruck)
+
+    private fun registerObserve() {
+        mainViewModel.foodtruckInfo.observe(viewLifecycleOwner) { event ->
+            event.getContentIfNotHandled()?.let { result ->
+                result.onSuccess { foodTruckInfo ->
+                    setInfoTab(foodTruckInfo)
+                }.onFailure {
+                    if (it is FoorrngException && it.code == "F-001"){
+                        showToast("푸드트럭 정보가 없습니다.")
+                    } else {
+                        showToast(it.message ?: "네트워크 에러")
+                    }
+                    parentFragmentManager.popBackStack()
+                }
+            }
+        }
+    }
+
+    private fun setInfoTab(foodTruckInfo: FoodTruckInfo) {
+        binding.vpInfo.adapter = InfoTabPagerAdapter(this, foodTruckInfo)
         TabLayoutMediator(binding.tlInfoTab, binding.vpInfo) { tab, position ->
             tab.text = if (position == 0) {
                 "정보조회"
@@ -53,7 +73,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
     }
 
     private val dummyFoodtruck = FoodTruckInfo(
-        "맛있는 녀석들", "1234123478", "123가1234", "010-1234-1234", "치킨", "공지합니다",
+        1, "맛있는 녀석들", "123가1234", "010-1234-1234", "치킨", "공지합니다",
         ReviewSet(
             10, listOf(
                 Review("음식이 맛있어요", 9),

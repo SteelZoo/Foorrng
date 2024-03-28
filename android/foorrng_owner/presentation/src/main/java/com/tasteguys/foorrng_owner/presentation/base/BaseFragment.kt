@@ -21,10 +21,13 @@ abstract class BaseFragment<B : ViewBinding>(
     private var _binding: B? = null
     protected val binding get() = _binding!!
     protected lateinit var _activity: Context
+    private lateinit var loadingDialog: LoadingDialog
+
     @SuppressLint("ResourceType")
     override fun onAttach(context: Context) {
         super.onAttach(context)
         _activity = context
+        loadingDialog = LoadingDialog(context)
     }
 
     override fun onCreateView(
@@ -47,6 +50,7 @@ abstract class BaseFragment<B : ViewBinding>(
 
     override fun onDestroyView() {
         _binding = null
+        hideLoading()
         super.onDestroyView()
     }
 
@@ -56,6 +60,14 @@ abstract class BaseFragment<B : ViewBinding>(
 
     fun showSnackBar(message: String){
         Snackbar.make(binding.root,message,Snackbar.LENGTH_SHORT).show()
+    }
+
+    protected fun showLoading() {
+        loadingDialog.showLoadingDialog()
+    }
+
+    protected fun hideLoading() {
+        loadingDialog.hideLoadingDialog()
     }
 
 }

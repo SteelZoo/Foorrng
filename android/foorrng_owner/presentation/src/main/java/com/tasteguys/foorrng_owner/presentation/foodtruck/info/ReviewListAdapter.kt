@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tasteguys.foorrng_owner.presentation.databinding.ItemReviewBinding
-import com.tasteguys.foorrng_owner.presentation.model.Review
-import com.tasteguys.foorrng_owner.presentation.model.ReviewSet
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.ReviewSet
 
 class ReviewListAdapter(
     private val review: ReviewSet

@@ -24,7 +24,7 @@ class PrefManager(context: Context) {
      *
      * id is not idInput but server user index id
      *
-     * 유저의 입력값이 아닌 서버의 유저 인덱스 입니다.
+     * 유저의 입력값이 아닌 카카오의 유저 인덱스 입니다.
      */
     fun setUserId(id: Long){
         pref.edit().apply {
@@ -34,7 +34,7 @@ class PrefManager(context: Context) {
     }
 
     /**
-     * @return if there is no id return -1
+     * @return if there is no id, return -1
      */
     fun getUserId(): Long{
         return pref.getLong(PREF_USERID,-1)

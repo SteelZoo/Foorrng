@@ -49,6 +49,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setListener() {
         binding.ivKakaoLogin.setOnClickListener {
+            showLoading()
             kakaologin { uId, name, email ->
                 loginViewModel.login(uId, name, email)
             }
@@ -57,8 +58,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
     private fun setObserver() {
         loginViewModel.loginResult.observe(viewLifecycleOwner) {
+            hideLoading()
             if (it.isSuccess) {
                 startActivity(Intent(_activity, MainActivity::class.java).apply {
+                    putExtra("is_regist",it.getOrNull()?.isBusiRegist ?: false)
                     flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 })
             } else {
@@ -74,7 +77,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
         loginViewModel.signUpResult.observe(viewLifecycleOwner) {
             if (it.isSuccess) {
-                showSnackBar("회원가입이 완료되었습니다. :)")
+                showSnackBar("회원가입이 완료되었습니다. :)\n다시 로그인 해주세요.")
             } else {
                 showSnackBar(it.exceptionOrNull()?.message ?: "회원가입에 실패했습니다. :(")
             }

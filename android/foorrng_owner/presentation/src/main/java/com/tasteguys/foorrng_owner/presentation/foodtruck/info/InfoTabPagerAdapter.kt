@@ -2,7 +2,7 @@ package com.tasteguys.foorrng_owner.presentation.foodtruck.info
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.tasteguys.foorrng_owner.presentation.model.FoodTruckInfo
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
 
 class InfoTabPagerAdapter(
     fragment: Fragment,

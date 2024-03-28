@@ -14,4 +14,8 @@ interface UserRemoteDatasource {
         name: String,
         email: String
     ): Result<LoginResponse>
+
+    suspend fun registBusinessNumber(
+        businessNumber: String
+    ): Result<String>
 }

@@ -28,12 +28,13 @@
                 android:background="@drawable/bg_profile_photo" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_business_number"
+                android:id="@+id/til_foodtruck_name"
                 style="@style/Foorrng.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="20dp"
+                app:helperText="*필수"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="10dp"
+                app:helperText="*필수"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,8 +86,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/all_account_number"
-                    android:inputType="number"
-                    android:maxLength="20" />
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -124,7 +127,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/all_notice"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:maxLength="140" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

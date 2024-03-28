@@ -1,6 +1,6 @@
 package com.tasteguys.foorrng_owner.domain.repository
 
-import com.tasteguys.foorrng_owner.domain.model.user.TokenData
+import com.tasteguys.foorrng_owner.domain.model.user.LoginData
 
 interface UserRepository {
     suspend fun registerOwner(
@@ -13,5 +13,9 @@ interface UserRepository {
         userUid: Long,
         name: String,
         email: String
-    ): Result<TokenData>
+    ): Result<LoginData>
+
+    suspend fun registBusinessNumber(
+        businessNumber: String
+    ): Result<String>
 }
