@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
     List<Review> findByFoodtrucksId(Long foodtrucksSeq);
-
     Optional<Review> findTopByUserAndFoodtrucksOrderByCreatedDateDesc(User user, Foodtrucks foodtrucks);
     Optional<Review> findTopByUserOrderByCreatedDateDesc(User user);
 }

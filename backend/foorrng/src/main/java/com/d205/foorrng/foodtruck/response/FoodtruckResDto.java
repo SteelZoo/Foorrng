@@ -15,11 +15,12 @@ public class FoodtruckResDto {
     private String carNumber;
     private String phoneNumber;
     private List<String> category;
+    private String businessNumber;
 
 //    private List<FoodtrucksResDto> foodtrucksResDtoList; // 추가 하는부분..
 
     // 생성
-    public FoodtruckResDto(Foodtruck foodtruck, Long id, List<String> category){
+    public FoodtruckResDto(Foodtruck foodtruck, Long id, List<String> category, String businessNumber){
         this.foodtruckId = id;
         this.announcement = foodtruck.getAnnouncement();
         this.createdDay = foodtruck.getCreatedDay();
@@ -29,6 +30,7 @@ public class FoodtruckResDto {
         this.carNumber = foodtruck.getCarNumber();
         this.phoneNumber = foodtruck.getPhoneNumber();
         this.category = category;
+        this.businessNumber = businessNumber;
     }
 
 

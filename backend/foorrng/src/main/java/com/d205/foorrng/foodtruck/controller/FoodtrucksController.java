@@ -36,26 +36,26 @@ public class FoodtrucksController {
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0,foodtrucksResDtos));
     }
 
-    @GetMapping("/detail/{foodtrucksId}/{markId}")
+    @GetMapping("/detail/{foodtrucksId}")
     @ApiResponse(responseCode = "200", description = "소비자 푸드트럭 상세 조회")
-    public ResponseEntity<? extends BaseResponseBody> findByFoodtrucksToCustomer(@PathVariable("foodtrucksId") Long foodtrucksId, @PathVariable("markId") Long markId) throws IOException {
-        Map<String, Object> response = foodtrucksService.foodtruckdetail(foodtrucksId, markId);
+    public ResponseEntity<? extends BaseResponseBody> findByFoodtrucksToCustomer(@PathVariable("foodtrucksId") Long foodtrucksId) throws IOException {
+        Map<String, Object> response = foodtrucksService.foodtruckdetail(foodtrucksId);
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0,response));
     }
 
 
     @ApiResponse(responseCode = "200", description = "점주 푸드트럭 조회")
-    @GetMapping("/owner/{foodtruckId}")
-    public ResponseEntity<? extends BaseResponseBody> findByFoodtrucksToOwner(@PathVariable("foodtruckId") Long foodtruckId) throws IOException{
-        Map<String, Object> response = foodtrucksService.myfoodtruck(foodtruckId);
+    @GetMapping("/owner")
+    public ResponseEntity<? extends BaseResponseBody> findByFoodtrucksToOwner(){
+        Map<String, Object> response = foodtrucksService.myfoodtruck();
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0,response));
     }
 
 
     @ApiResponse(responseCode = "200", description = "점주 푸드트럭 운영관리")
-    @GetMapping("/owner/operinfo/{foodtruckId}")
-    public ResponseEntity<? extends BaseResponseBody> findOperByFoodtrucksToOwner(@PathVariable("foodtruckId") Long foodtruckId) throws IOException{
-        List<Map<String, Object>> response = foodtrucksService.myfoodtruckOper(foodtruckId);
+    @GetMapping("/owner/operinfo")
+    public ResponseEntity<? extends BaseResponseBody> findOperByFoodtrucksToOwner(){
+        List<Map<String, Object>> response = foodtrucksService.myfoodtruckOper();
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0,response));
     }
 
