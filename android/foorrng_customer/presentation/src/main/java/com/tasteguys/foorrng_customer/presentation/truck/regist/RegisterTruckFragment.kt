@@ -175,6 +175,9 @@ class RegisterTruckFragment @Inject constructor(
             registerResult.observe(viewLifecycleOwner){
                 if (it.isSuccess) {
                     registerOperationInfo(it.getOrNull()!!.id)
+
+                    // 시나리오용. register하면 무조건 즐겨찾기에 들어간다
+                    truckViewModel.markFavoriteTruck(it.getOrNull()!!.id)
                 }
             }
             markRegisterResult.observe(viewLifecycleOwner) {
@@ -187,6 +190,7 @@ class RegisterTruckFragment @Inject constructor(
                 if(it.isSuccess){
                     showToast("업데이트 성공")
                     parentFragmentManager.popBackStack()
+
                 }
             }
         }
@@ -287,6 +291,7 @@ class RegisterTruckFragment @Inject constructor(
                 inputState = false
             }
             imageChanged = false
+            initData()
         }
 
         super.onDestroy()

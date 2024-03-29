@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
 class SelectLocationViewModel @Inject constructor() : ViewModel(){
-    private val _markAddress = MutableLiveData<String>()
+    private val _markAddress = MutableLiveData("")
     val markAddress: LiveData<String>
         get() = _markAddress
 

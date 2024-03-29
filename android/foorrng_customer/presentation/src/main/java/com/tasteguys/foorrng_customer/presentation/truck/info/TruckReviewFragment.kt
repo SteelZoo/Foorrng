@@ -17,7 +17,7 @@ import kotlin.math.log
 
 private const val TAG = "TruckReviewFragment"
 @AndroidEntryPoint
-class TruckReviewFragment(private val truckId: Long) : BaseFragment<FragmentTruckReviewBinding>(
+class TruckReviewFragment(private val truckId: Long, private val truckName: String) : BaseFragment<FragmentTruckReviewBinding>(
     { FragmentTruckReviewBinding.bind(it)}, R.layout.fragment_truck_review
 ) {
 
@@ -38,7 +38,7 @@ class TruckReviewFragment(private val truckId: Long) : BaseFragment<FragmentTruc
             }
             btnWriteReview.setOnClickListener {
                 requireParentFragment().parentFragmentManager.beginTransaction()
-                    .replace(R.id.fcv_container, TruckWriteReviewFragment(truckId))
+                    .replace(R.id.fcv_container, TruckWriteReviewFragment(truckId, truckName))
                     .addToBackStack(null)
                     .commit()
             }
