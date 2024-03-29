@@ -53,7 +53,7 @@ public class User {
     private List<FavoriteFood> favoriteFoods;
 
     @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<FoodtruckLike> foodtruckLikes;
 
     @Nullable
@@ -61,12 +61,12 @@ public class User {
     private List<RequestDelete> requestDeleteList;
 
     @Nullable
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Article> articles;
 
 
     @Nullable
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Foodtrucks> foodtrucks;
 
     public void addBusinessNumber(String businessNumber) {
