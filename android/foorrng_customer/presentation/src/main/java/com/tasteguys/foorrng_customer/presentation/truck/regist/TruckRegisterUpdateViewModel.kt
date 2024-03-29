@@ -35,7 +35,7 @@ class TruckRegisterUpdateViewModel @Inject constructor(
 
     fun registerTruck(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,

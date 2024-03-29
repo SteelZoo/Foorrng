@@ -94,7 +94,7 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         return truckService.getTruckDetail(truckId).toNonDefault()
     }
 
-    override suspend fun markFavoriteTruck(truckId: Long): Result<Long> {
+    override suspend fun markFavoriteTruck(truckId: Long): Result<String> {
         return truckService.markFavoriteFoodTruck(truckId).toNonDefault()
     }
 

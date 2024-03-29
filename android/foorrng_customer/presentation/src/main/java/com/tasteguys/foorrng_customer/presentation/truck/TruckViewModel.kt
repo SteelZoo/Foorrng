@@ -43,8 +43,8 @@ class TruckViewModel @Inject constructor(
     val truckDetailResult: LiveData<Result<TruckDetailData>>
         get() = _truckDetailResult
 
-    private val _markFavoriteTruckResult = MutableLiveData<Result<Long>>()
-    val markFavoriteCategory: LiveData<Result<Long>>
+    private val _markFavoriteTruckResult = MutableLiveData<Result<String>>()
+    val markFavoriteCategory: LiveData<Result<String>>
         get() = _markFavoriteTruckResult
 
     private val _favoriteTruckListResult = MutableLiveData<Result<List<TruckDataWithAddress>>>()

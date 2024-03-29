@@ -7,7 +7,7 @@ data class TruckRegisterUpdateResponse(
     val id: Long,
     val announcement: String,
     val createdDay: Long,
-    val picture: String,
+    val picture: String?,
     val name: String,
     val accountInfo: String,
     val carNumber: String,

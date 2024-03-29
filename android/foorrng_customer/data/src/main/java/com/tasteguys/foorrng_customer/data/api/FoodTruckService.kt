@@ -46,7 +46,7 @@ interface FoodTruckService {
     @POST("foodtrucks/like/{foodtruckId}")
     suspend fun markFavoriteFoodTruck(
         @Path("foodtruckId") truckId: Long
-    ): Result<DefaultResponse<Long>>
+    ): Result<DefaultResponse<String>>
 
     @GET("mypage/likes")
     suspend fun getFavoriteTrucks(): Result<DefaultResponse<List<TruckFavoriteListResponse>>>

@@ -62,7 +62,7 @@ class TruckRepositoryImpl @Inject constructor(
             .map { it.toDomain() }
     }
 
-    override suspend fun markFavoriteTruck(truckId: Long): Result<Long> {
+    override suspend fun markFavoriteTruck(truckId: Long): Result<String> {
         return truckRemoteDatasource.markFavoriteTruck(truckId)
     }
 

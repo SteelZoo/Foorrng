@@ -129,7 +129,7 @@ class RegisterTruckFragment @Inject constructor(
                         setMark(opData.address, opData.lat, opData.lng)
                         tilLocation.editText!!.setText(opData.address)
                         Glide.with(requireContext())
-                            .load(Uri.parse(mainData.picture))
+                            .load(mainData.picture)
                             .error(R.drawable.bg_profile_photo)
                             .fallback(R.drawable.bg_profile_photo)
                             .into(binding.ivTruckPhoto)
@@ -220,7 +220,7 @@ class RegisterTruckFragment @Inject constructor(
 //            truckViewModel.registerTruck(
             truckRegisterUpdateViewModel.registerTruck(
                 name.value!!,
-                picture.value!!.toFile(requireContext()),
+                picture.value.toFile(requireContext()),
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
@@ -277,13 +277,42 @@ class RegisterTruckFragment @Inject constructor(
             .setTitle("제보 하시겠습니까?")
             .setMessage("제보시 3회이상의 신고가 있을 시에만 삭제가 가능합니다.")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
-                if (isNew) register() else update()
+                validateInput().onSuccess {
+                    if (isNew) register() else update()
+                }.onFailure {
+                    showToast(it.message ?: "알 수 없는 오류가 발생했습니다.")
+                }
+
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
     }
+
+    private fun validateInput(): Result<String> {
+        val nameValidation = binding.tilTruckName.editText!!.text.toString().isNotBlank()
+        val carNumValidation = binding.tilCarNumber.editText!!.text.toString().let {
+            it.isNotBlank() && it.matches(Regex("^[0-9]{2,3}[가-힣][0-9]{4}$"))
+        }
+//        val categoryValidation =
+//            menuCategoryAdapter?.getSelectedCategoryList()?.isNotEmpty() ?: false
+
+        val msg = if (!nameValidation) {
+            "이름을 입력해주세요"
+        } else if (!carNumValidation) {
+            "차량 번호를 올바르게 입력해주세요"
+        }
+//        else if (!categoryValidation) {
+//            "카테고리를 선택해주세요"
+//        }
+        else {
+            return Result.success("success")
+        }
+
+        return Result.failure(Exception(msg))
+    }
+
 
     override fun onDestroy() {
         with(registerInputViewModel) {

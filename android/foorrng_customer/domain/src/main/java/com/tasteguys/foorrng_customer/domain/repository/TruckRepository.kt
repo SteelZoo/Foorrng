@@ -42,7 +42,7 @@ interface TruckRepository {
 
     suspend fun markFavoriteTruck(
         truckId: Long
-    ): Result<Long>
+    ): Result<String>
 
     suspend fun getFavoriteTruckList(): Result<List<FavoriteTruckData>>
 

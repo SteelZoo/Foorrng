@@ -102,7 +102,9 @@ class TruckInfoFragment(
                     .load(picture)
                     .error(R.drawable.bg_profile_photo)
 //                    .fitCenter()
-                    .centerInside()
+//                    .centerInside()
+                    .centerCrop()
+                    .circleCrop()
                     .into(binding.civTruckImg)
                 changeToolbarName(data.name, it.getOrNull()!!.type)
             }

@@ -8,7 +8,7 @@ data class TruckFavoriteListResponse(
     @Json(name="name")
     val name: String,
     @Json(name="img")
-    val picture: String,
+    val picture: String?,
     @Json(name="category")
     val category: List<String>,
     @Json(name="reviewCnt")
