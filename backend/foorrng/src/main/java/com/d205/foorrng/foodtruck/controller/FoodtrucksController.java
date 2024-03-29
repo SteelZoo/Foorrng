@@ -29,7 +29,7 @@ public class FoodtrucksController {
     private final LikeFoodtruckService likeFoodtruckService;
 
 
-    @GetMapping("")
+    @PostMapping("")
     @ApiResponse(responseCode = "200", description = "소비자 푸드트럭 전체 조회")
     public ResponseEntity<? extends BaseResponseBody> findAllByFoodtrucksToCustomer(@Valid @RequestBody FoodtrucksReqDto foodtrucksReqDto) {
         List<FoodtrucksResDto> foodtrucksResDtos = foodtrucksService.foodtrucklist(foodtrucksReqDto);
