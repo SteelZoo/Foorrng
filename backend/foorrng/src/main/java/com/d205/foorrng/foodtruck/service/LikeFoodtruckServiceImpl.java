@@ -25,7 +25,7 @@ public class LikeFoodtruckServiceImpl implements LikeFoodtruckService {
     private final FoodtruckLikeRepository foodtruckLikeRepository;
 
     @Override
-    public LikeFoodtrucksDto LikeFoodtruck(Long foodtrucks_seq) {
+    public void likeFoodtruck(Long foodtrucks_seq) {
         User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
 
         Foodtrucks foodtrucks = foodtrucksRepository.findById(foodtrucks_seq)
@@ -38,6 +38,5 @@ public class LikeFoodtruckServiceImpl implements LikeFoodtruckService {
         } else {     // 좋아요가 없음 -> 생성
             foodtruckLikeRepository.save(new FoodtruckLike(user, foodtrucks));
         }
-        return null;
     }
 }
