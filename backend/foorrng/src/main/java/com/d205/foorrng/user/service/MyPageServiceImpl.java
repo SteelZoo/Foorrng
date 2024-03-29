@@ -67,7 +67,7 @@ public class MyPageServiceImpl implements MyPageService {
             // 리뷰 총 개수
             List<Review> reviews = reviewRepository.findByFoodtrucksId(foodtrucks.getId());
 
-            FoodtrucksUserResDto foodtrucksResDto = new FoodtrucksUserResDto(foodtrucks.getId(), foodtruckName, foodtruckPicture, category, reviews.size());
+            FoodtrucksUserResDto foodtrucksResDto = new FoodtrucksUserResDto(foodtrucks.getId(), foodtrucks.getFoodtruckRole(), foodtruckName, foodtruckPicture, category, reviews.size());
             foodtrucksResDtoList.add(foodtrucksResDto);
         }
             return foodtrucksResDtoList;
