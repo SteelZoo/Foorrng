@@ -90,7 +90,7 @@ public class UserController {
                     .stream()
                     .map(favoriteFoods -> favoriteFoods.getMenu())
                     .collect(Collectors.toList()));
-            userInfo.put("FoodtruckLikeList", foodtruckLikeRepository.findAllByUser(user.get()));
+//            userInfo.put("FoodtruckLikeList", foodtruckLikeRepository.findAllByUser(user.get()));
 
             return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, userInfo));
         }
@@ -121,10 +121,5 @@ public class UserController {
 
     }
 
-    // jwt 토큰 작동 체크를 위한 api
-    @PostMapping("/check")
-    public String check() {
-        return "checked";
-    }
 
 }
