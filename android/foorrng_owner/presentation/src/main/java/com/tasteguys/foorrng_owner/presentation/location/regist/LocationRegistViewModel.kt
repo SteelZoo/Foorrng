@@ -21,7 +21,7 @@ class LocationRegistViewModel @Inject constructor(
         get() = _runDayList
 
     fun setRunLocation(runLocation: RunLocation) {
-        _runLocation.value = runLocation
+        _runLocation.postValue(runLocation)
     }
 
     fun addRunDay(runDay: RunDay){
