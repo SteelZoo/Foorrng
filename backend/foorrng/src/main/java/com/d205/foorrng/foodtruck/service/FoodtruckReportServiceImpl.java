@@ -98,6 +98,7 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
         foodtruckReport.updateAccountInfo(foodtruckUpdateReqDto.getAccountInfo());
         foodtruckReport.updatePhoneNumber(foodtruckUpdateReqDto.getPhoneNumber());
         foodtruckReport.updatePhoneNumber(foodtruckUpdateReqDto.getPhoneNumber());
+        foodtruckReport.updateCarNumber(foodtruckUpdateReqDto.getCarNumber());
 
         // 이미지 수정
         if(picture!=null){
