@@ -30,6 +30,7 @@ public class OperationInfoService {
     private final MarkRepository markRepository;
     private final OperationInfoRepository operationInfoRepository;
 
+    private final ArrayList<String> days = new ArrayList<>(Arrays.asList("월", "화", "수", "목", "금", "토", "일"));
 //    @Transactional
     public List<OperationInfo> createOperationInfo(Long markId, OperationInfoDto operationInfoDto) {
 
@@ -44,6 +45,12 @@ public class OperationInfoService {
                     markRepository.delete(mark);
                 };
                 throw new Exceptions(ErrorCode.DAY_OCCUPIED);
+            }
+            if (!days.contains(day.get("day"))) {
+                if (mark.getOperationInfoList() == null || mark.getOperationInfoList().isEmpty()) {
+                    markRepository.delete(mark);
+                };
+                throw new Exceptions(ErrorCode.DAY_NOT_VALID);
             }
             OperationInfo operationInfo = OperationInfo
                     .builder()

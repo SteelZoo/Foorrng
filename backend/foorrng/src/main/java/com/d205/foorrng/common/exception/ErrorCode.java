@@ -34,6 +34,7 @@ public enum ErrorCode {
     // 운영정보
     OPERATION_NOT_EXIST(HttpStatus.BAD_REQUEST, "O-001", "운영정보가 없습니다."),
     DAY_OCCUPIED(HttpStatus.BAD_REQUEST, "O-002", "해당 요일은 이미 운영중입니다."),
+    DAY_NOT_VALID(HttpStatus.BAD_REQUEST, "O-003", "유효하지 않은 요일 형태입니다."),
 
 
     // Validation

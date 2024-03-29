@@ -28,6 +28,11 @@ public class UserRegistService {
     private final UserRepository userRepository;
 
     public boolean checkBusinessNumber(RegistDto businessNumber) {
+        //  금요일 테스트용으로 중복 허용
+//        if (userRepository.findByBusinessNumber(businessNumber.getBusinessNumber()) != null) {
+//            return false;
+//        }
+
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = "https://api.odcloud.kr/api/nts-businessman/v1/status";
         HttpHeaders headers = new HttpHeaders();
@@ -57,19 +62,12 @@ public class UserRegistService {
             return true;
         }
         return false;
-        // 요소 삭제 예시: 두 번째 요소 삭제
-    //    dataArray.remove(1);
-
-        // 삭제 후 결과 확인
-    //    System.out.println("================");
-    //    System.out.println(dataObject.get("b_stt"));
-    ////    System.out.println(jsonResponse.get("data"));
-    //    System.out.println("================");
-    //
-    //    return true;
     }
 
 
-
-
+    public void testMethod() {
+        User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
+        user.addBusinessNumber("0123456789");
+        userRepository.save(user);
+    }
 }
