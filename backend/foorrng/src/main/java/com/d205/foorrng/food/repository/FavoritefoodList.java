@@ -8,18 +8,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum FavoritefoodList {
 
-    HAMBURGER("햄버거"),
-    ICECREAM("아이스크림"),
-    GOPCHANG_MAKCHANG("곱창 & 막창"),
-    CHICKEN("치킨"),
-    DESSERT_COFFEE("디저트 & 커피"),
-    SCHOOLFOOD("분식"),
-    KEBAB_TACO("케밥 & 타코"),
-    CHICKENSKEWERS("닭꼬치"),
-    HOTDOG("핫도그"),
+    RICE_BOWL("덮밥"),
+    ROAST_CHICKEN("전기구이통닭"),
+    SKEWERS("꼬치"),
     TAKOYAKI("타코야끼"),
-    CHURROS("츄러스"),
-    STEAK("스테이크");
+    TACO_KEBAB("타코 & 케밥"),
+    KOREAN_STREETFOOD("분식"),
+    BREAD("빵"),
+    FAMINE_CROPS("구황작물"),
+    CAFE_DESSERT("카페 & 디저트"),
+    ETC("기타");
 
     private final String menu;
 
