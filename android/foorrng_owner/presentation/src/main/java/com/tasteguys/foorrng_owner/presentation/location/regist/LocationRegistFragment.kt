@@ -15,6 +15,7 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.LocationProviderController
 import com.tasteguys.foorrng_owner.presentation.base.WeekDaySelectManager
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRegistBinding
+import com.tasteguys.foorrng_owner.presentation.location.AddRundayDialog
 import com.tasteguys.foorrng_owner.presentation.location.manage.RunLocationAdapter
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
@@ -36,10 +37,6 @@ class LocationRegistFragment(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        locationProviderController = LocationProviderController(mainActivity, this)
-        weekDaySelectManager = WeekDaySelectManager(binding.layoutSelectWeekday,dayClickListener)
-
-
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.layout_location_map) as MapFragment?
                 ?: MapFragment.newInstance().also {
@@ -51,6 +48,8 @@ class LocationRegistFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        locationProviderController = LocationProviderController(mainActivity, this)
+        weekDaySelectManager = WeekDaySelectManager(binding.layoutSelectWeekday,dayClickListener)
     }
 
     private fun init() {
@@ -78,11 +77,19 @@ class LocationRegistFragment(
     }
 
     private val dayClickListener: (DayOfWeek, Boolean) -> Unit = { dayOfWeek, isOn ->
-
+        showAddRunDayDialog(dayOfWeek)
     }
 
-    private fun showAddRunDayDialog(){
-
+    private fun showAddRunDayDialog(dayOfWeek: DayOfWeek){
+        AddRundayDialog(requireContext(),dayOfWeek)
+            .setCancelListener { dialog ->
+                dialog.dismiss()
+            }
+            .setCreateListener { dialog, runDay ->
+                locationRegistViewModel.addRunDay(runDay)
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private val mapCallback = OnMapReadyCallback { naverMap ->
