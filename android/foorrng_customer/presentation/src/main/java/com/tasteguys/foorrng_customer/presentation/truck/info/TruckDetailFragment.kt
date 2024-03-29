@@ -6,6 +6,7 @@ import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -61,7 +62,6 @@ class TruckDetailFragment(truckId: Long) : BaseFragment<FragmentTruckDetailBindi
                     this@TruckDetailFragment, 5000
                 )
                 uiSettings.isLocationButtonEnabled = true
-                locationTrackingMode = LocationTrackingMode.Follow
                 truckViewModel.truckDetailResult.observe(viewLifecycleOwner) { res ->
                     if (res.isSuccess) {
                         val marks = res.getOrNull()!!.operation
@@ -71,6 +71,7 @@ class TruckDetailFragment(truckId: Long) : BaseFragment<FragmentTruckDetailBindi
                                 map = it
                             }
                         }
+                        it.moveCamera(CameraUpdate.scrollTo(LatLng(marks[0].lat, marks[0].lng)))
                     }
                 }
             }

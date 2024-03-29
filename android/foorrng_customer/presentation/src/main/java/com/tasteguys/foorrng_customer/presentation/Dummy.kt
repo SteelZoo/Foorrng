@@ -62,15 +62,15 @@ object Dummy{
     val markInfo = mutableListOf(
         TruckMark(
             0, 0, 0, 0, "대구광역시 중구 명륜로 23길 80", mutableListOf(
-                TruckOperationInfo("화", 0, 0),
-                TruckOperationInfo("금", 0, 0),
+                TruckOperationInfo("화", "12:00", "16:00"),
+                TruckOperationInfo("금", "12:00", "16:00"),
             )
 
         ),
         TruckMark(
             0, 0, 0, 0, "대구광역시 중구 명륜로 24길", mutableListOf(
-                TruckOperationInfo("월", 0, 0),
-                TruckOperationInfo("수", 0, 0),
+                TruckOperationInfo("월", "12:00", "16:00"),
+                TruckOperationInfo("수", "12:00", "16:00"),
             )
 
         )

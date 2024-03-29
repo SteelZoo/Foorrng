@@ -12,7 +12,7 @@ data class TruckMainInfoResponse(
     val phoneNumber: String,
 
     @Json(name="businessNumber")
-    val bussiNumber: String,
+    val bussiNumber: String?,
     val category: List<String>
 
 )

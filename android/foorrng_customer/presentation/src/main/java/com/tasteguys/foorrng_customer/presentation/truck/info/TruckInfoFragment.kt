@@ -10,6 +10,7 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckInfoBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
+import com.tasteguys.foorrng_customer.presentation.main.MainViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,19 +27,37 @@ class TruckInfoFragment(
 ) {
     private val truckViewModel: TruckViewModel by activityViewModels()
 
-    override fun setToolbar() {
-        MainToolbarControl(
-            true, truckName, menuRes = if (type == "foodTruck") 0 else R.menu.menu_edit
-        ).also {
-            mainViewModel.changeToolbar(it)
-        }.addNavIconClickListener {
-            parentFragmentManager.popBackStack()
-        }.addMenuItemClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment(false, truckId))
-                .addToBackStack(null)
-                .commit()
-        }
+//    override fun setToolbar() {
+//        Log.d(TAG, "setToolbar: ")
+//        MainToolbarControl(
+//            true, truckName, menuRes = if (type == "Foodtruck") 0 else R.menu.menu_edit
+//        ).also {
+//            mainViewModel.changeToolbar(it)
+//        }.addNavIconClickListener {
+//            parentFragmentManager.popBackStack()
+//        }.addMenuItemClickListener {
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.fcv_container, RegisterTruckFragment(false, truckId))
+//                .addToBackStack(null)
+//                .commit()
+//        }
+//    }
+
+    private fun changeToolbarName(name: String, type: String){
+        mainViewModel.changeToolbar(
+            MainToolbarControl(
+                true, name, menuRes = if (type == "foodtruck") 0 else R.menu.menu_edit
+            ).also {
+                mainViewModel.changeToolbar(it)
+            }.addNavIconClickListener {
+                parentFragmentManager.popBackStack()
+            }.addMenuItemClickListener {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fcv_container, RegisterTruckFragment(false, truckId))
+                    .addToBackStack(null)
+                    .commit()
+            }
+        )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -50,7 +69,7 @@ class TruckInfoFragment(
     val tabs = listOf(
         TruckBasicInfoFragment(truckId),
         TruckDetailFragment(truckId),
-        TruckReviewFragment(truckId)
+        TruckReviewFragment(truckId, truckName)
     )
 
     private fun initView() {
@@ -82,10 +101,13 @@ class TruckInfoFragment(
                 Glide.with(requireContext())
                     .load(picture)
                     .error(R.drawable.bg_profile_photo)
-                    .fitCenter()
+//                    .fitCenter()
+                    .centerInside()
                     .into(binding.civTruckImg)
+                changeToolbarName(data.name, it.getOrNull()!!.type)
             }
         }
+
     }
 
 }

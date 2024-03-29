@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.truck.regist
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -20,6 +21,7 @@ import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+private const val TAG = "TruckSelectLocationFrag"
 @AndroidEntryPoint
 class TruckSelectLocationFragment @Inject constructor(
     val isNew:Boolean
@@ -70,11 +72,13 @@ class TruckSelectLocationFragment @Inject constructor(
 
         binding.btnConfirm.setOnClickListener {
             with(selectMarkLocationViewModel){
-                registerInputViewModel.setMark(
-                    markAddress.value!!,
-                    markLat.value!!,
-                    markLng.value!!
-                )
+                if(markAddress.value!!.isNotEmpty()){
+                    registerInputViewModel.setMark(
+                        markAddress.value!!,
+                        markLat.value!!,
+                        markLng.value!!
+                    )
+                }
             }
 
             parentFragmentManager.popBackStack()
@@ -99,6 +103,7 @@ class TruckSelectLocationFragment @Inject constructor(
                 setOnMapClickListener { _, coord ->
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this
+                    Log.d(TAG, "initView: ${coord.latitude} ${coord.longitude}")
                     geoManager.getAddress(coord.latitude, coord.longitude) { address ->
                         selectMarkLocationViewModel.setMark(address, coord.latitude, coord.longitude)
                     }

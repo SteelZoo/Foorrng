@@ -102,6 +102,7 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _announcement.value=""
         _phoneNumber.value=""
         _markAddress.value=""
+        _markInfo.value=MapMark("",-1.0, -1.0)
         _category.value = _category.value!!.map { FavoriteCategory(it.name, false) }.toMutableList()
 
     }
