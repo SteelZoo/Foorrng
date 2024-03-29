@@ -18,5 +18,4 @@ public class FoodtruckUpdateReqDto {
     private String carNumber;
     private String phoneNumber;
     private List<String> category;
-    private MultipartFile picture;
 }

@@ -16,7 +16,6 @@ public class MenuRequestDto {
     private String name;
     @NotNull
     private Long price;
-    private MultipartFile picture;
     @NotNull
     private Long foodtruck;
 }

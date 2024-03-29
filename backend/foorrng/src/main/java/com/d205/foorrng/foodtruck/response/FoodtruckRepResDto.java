@@ -39,8 +39,4 @@ public class FoodtruckRepResDto {
         this.carNumber = foodtruck.getCarNumber();
         this.phoneNumber = foodtruck.getPhoneNumber();
     }
-
-    public static FoodtruckRepResDto fromEntity(FoodtruckReport foodtruck) {
-        return new FoodtruckRepResDto(foodtruck);
-    }
 }

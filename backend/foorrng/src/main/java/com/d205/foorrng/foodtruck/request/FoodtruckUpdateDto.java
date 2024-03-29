@@ -8,8 +8,6 @@ public class FoodtruckUpdateDto {
 
     private String announcement;            // 공지사항
 
-    private String picture;                 // 푸듣트럭 차 사진
-
     @NotEmpty
     private String name;                    // 가게 이름
 

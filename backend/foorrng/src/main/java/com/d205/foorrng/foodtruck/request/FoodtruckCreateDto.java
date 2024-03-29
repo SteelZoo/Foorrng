@@ -10,7 +10,6 @@ public class FoodtruckCreateDto {
 
     // 푸드트럭 정보
     private String announcement;            // 공지사항
-    private String picture;                 // 푸듣트럭 차 사진
     @NotEmpty
     private String name;                    // 가게 이름
     private String accountInfo;            // 계봐 번호
