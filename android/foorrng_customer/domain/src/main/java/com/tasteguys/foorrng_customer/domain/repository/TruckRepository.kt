@@ -54,4 +54,15 @@ interface TruckRepository {
         operationInfo: List<TruckOperationData>
     ): Result<TruckDetailMarkData>
 
+    suspend fun registerReview(
+        truckId: Long,
+        rvIsDelicious: Boolean,
+        rvIsCool: Boolean,
+        rvIsClean: Boolean,
+        rvIsKind: Boolean,
+        rvIsSpecial: Boolean,
+        rvIsCheap: Boolean,
+        rvIsFast: Boolean
+    ): Result<Long>
+
 }

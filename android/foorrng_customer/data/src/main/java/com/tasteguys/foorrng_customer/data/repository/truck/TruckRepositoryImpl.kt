@@ -84,4 +84,18 @@ class TruckRepositoryImpl @Inject constructor(
         ).map { it.toDomain() }
     }
 
+    override suspend fun registerReview(
+        truckId: Long,
+        rvIsDelicious: Boolean,
+        rvIsCool: Boolean,
+        rvIsClean: Boolean,
+        rvIsKind: Boolean,
+        rvIsSpecial: Boolean,
+        rvIsCheap: Boolean,
+        rvIsFast: Boolean
+    ): Result<Long> {
+        return truckRemoteDatasource.registerReview(
+            truckId, rvIsDelicious, rvIsCool, rvIsClean, rvIsKind, rvIsSpecial, rvIsCheap, rvIsFast
+        ).map { truckId }
+    }
 }

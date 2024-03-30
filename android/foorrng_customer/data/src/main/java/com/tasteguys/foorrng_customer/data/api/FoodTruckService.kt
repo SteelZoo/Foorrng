@@ -8,6 +8,8 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -56,5 +58,11 @@ interface FoodTruckService {
         @Path("foodtruck-id") truckId: Long,
         @Body markInfo: TruckMarkRequest
     ): Result<DefaultResponse<TruckRegisterOperationResponse>>
+
+    @POST("review/{foodtruckId}/regist")
+    suspend fun registerReview(
+        @Path("foodtruckId") truckId: Long,
+        @Body review: TruckRegisterReviewRequest
+    ): Result<DefaultResponse<TruckRegisterReviewResponse>>
 
 }

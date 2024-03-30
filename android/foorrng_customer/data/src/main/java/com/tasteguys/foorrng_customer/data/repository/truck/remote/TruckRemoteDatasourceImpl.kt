@@ -13,6 +13,8 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -32,16 +34,16 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         phoneNumber: String,
         category: List<String>
     ): Result<TruckRegisterUpdateResponse> {
-        if (picture != null) {
+        return if (picture != null) {
             val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
-            return truckService.reportFoodTruck(
+            truckService.reportFoodTruck(
                 TruckRequest(
                     name, carNumber, announcement, phoneNumber, category
                 ),
                 MultipartBody.Part.createFormData("picture", picture.name, requestFile),
             ).toNonDefault()
         } else {
-            return truckService.reportFoodTruck(
+            truckService.reportFoodTruck(
                 TruckRequest(
                     name, carNumber, announcement, phoneNumber, category
                 ), null,
@@ -113,6 +115,23 @@ class TruckRemoteDatasourceImpl @Inject constructor(
             truckId, TruckMarkRequest(
                 TruckMarkDto(address, lat, lng),
                 TruckOperationInfoDto(operationInfo)
+            )
+        ).toNonDefault()
+    }
+
+    override suspend fun registerReview(
+        truckId: Long,
+        rvIsDelicious: Boolean,
+        rvIsCool: Boolean,
+        rvIsClean: Boolean,
+        rvIsKind: Boolean,
+        rvIsSpecial: Boolean,
+        rvIsCheap: Boolean,
+        rvIsFast: Boolean
+    ): Result<TruckRegisterReviewResponse> {
+        return truckService.registerReview(
+            truckId, TruckRegisterReviewRequest(
+                rvIsDelicious, rvIsCool, rvIsClean, rvIsKind, rvIsSpecial, rvIsCheap, rvIsFast
             )
         ).toNonDefault()
     }

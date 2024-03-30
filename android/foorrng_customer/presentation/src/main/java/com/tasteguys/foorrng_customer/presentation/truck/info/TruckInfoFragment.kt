@@ -21,7 +21,6 @@ private const val TAG = "TruckInfoFragment"
 class TruckInfoFragment(
     private val truckId: Long,
     private val truckName: String,
-    private val type: String
 ) : MainBaseFragment<FragmentTruckInfoBinding>(
     { FragmentTruckInfoBinding.bind(it) }, R.layout.fragment_truck_info
 ) {

@@ -97,7 +97,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                     override fun onClick(position: Int) {
                         val curTruck = currentList[position]
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_container, TruckInfoFragment(curTruck.truckId, curTruck.name, curTruck.type))
+                            .replace(R.id.fcv_container, TruckInfoFragment(curTruck.truckId, curTruck.name))
                             .addToBackStack(null)
                             .commit()
                     }

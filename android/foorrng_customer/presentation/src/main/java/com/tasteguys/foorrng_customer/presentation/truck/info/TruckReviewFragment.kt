@@ -32,7 +32,6 @@ class TruckReviewFragment(private val truckId: Long, private val truckName: Stri
 
     private fun initView(){
         with(binding){
-            tvTotalCnt.text = Dummy.truckInfo.review.total.toString()
             rvReview.apply {
                 adapter = truckReviewAdapter
             }

@@ -146,7 +146,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                         parentFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fcv_container,
-                                TruckInfoFragment(curTruck.truckId, curTruck.name, curTruck.type)
+                                TruckInfoFragment(curTruck.truckId, curTruck.name)
                             )
                             .addToBackStack(null)
                             .commit()
