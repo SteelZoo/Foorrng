@@ -33,7 +33,7 @@ interface FoodTruckService {
         @Part picture: MultipartBody.Part?,
     ): Result<DefaultResponse<TruckRegisterUpdateResponse>>
 
-    @GET("foodtrucks")
+    @POST("foodtrucks")
     suspend fun getTrucks(
         @Body location: LocationRequest
     ): Result<DefaultResponse<List<TruckListResponse>>>

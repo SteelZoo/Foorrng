@@ -12,4 +12,6 @@ data class TruckDataWithAddress(
     val type: String = "Foodtruck",
     val isOperating: Boolean,
     val address: String = "",
+    val lat: Double,
+    val lng: Double
 )

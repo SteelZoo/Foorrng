@@ -1,7 +1,6 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
 import com.squareup.moshi.Json
-import dagger.multibindings.IntoMap
 
 data class TruckListResponse(
     @Json(name = "foodtruckId")
@@ -10,12 +9,12 @@ data class TruckListResponse(
     val markId: Long,
     @Json(name = "latitude")
     val latitude: Double,
-    @Json(name = "longitude")
+    @Json(name = "longitutde")
     val longitude: Double,
     @Json(name = "name")
     val name: String,
     @Json(name = "img")
-    val picture: String,
+    val picture: String?,
     @Json(name = "type")
     val type: String,
     @Json(name= "category")

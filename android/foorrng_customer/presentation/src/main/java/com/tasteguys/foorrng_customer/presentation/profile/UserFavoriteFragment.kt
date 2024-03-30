@@ -13,8 +13,6 @@ import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
-import com.tasteguys.foorrng_customer.presentation.festival.regist.FestivalSelectLocationFragment
-import com.tasteguys.foorrng_customer.presentation.festival.regist.RegisterFestivalFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
@@ -109,11 +107,11 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                     }
                 })
                 setOnButtonClickListener(object: TruckAdapter.TruckListHolder.ButtonClickListener{
-                    override fun onToggleClick(isChecked: Boolean) {
+                    override fun onToggleClick(position:Int) {
 
                     }
 
-                    override fun onButtonClick() {
+                    override fun onButtonClick(position:Int) {
                     }
 
                 })

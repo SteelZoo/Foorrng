@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseActivity
 import com.tasteguys.foorrng_customer.presentation.databinding.ActivityMainBinding
-import com.tasteguys.foorrng_customer.presentation.profile.UserFavoriteFragment
+import com.tasteguys.foorrng_customer.presentation.home.HomeMapFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainActivity_Genseong"
@@ -21,8 +21,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
         observeToolbarControl()
 
-        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, UserFavoriteFragment()).commit()
+//        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, UserFavoriteFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
     }
+
 
     private fun observeToolbarControl(){
         mainViewModel.toolbarController.observe(this){ controller ->
