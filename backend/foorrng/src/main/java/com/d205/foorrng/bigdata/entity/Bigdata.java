@@ -1,4 +1,4 @@
-package com.d205.foorrng.bigdata;
+package com.d205.foorrng.bigdata.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
