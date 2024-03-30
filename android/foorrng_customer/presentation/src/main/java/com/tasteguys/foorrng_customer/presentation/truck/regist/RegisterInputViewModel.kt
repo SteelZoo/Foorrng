@@ -57,18 +57,14 @@ class RegisterInputViewModel @Inject constructor() : ViewModel() {
         _phoneNumber.postValue(input)
     }
 
+    private val _foodCategory = mutableMapOf<String, Boolean>()
+    val foodCategory: MutableMap<String, Boolean>
+        get() = _foodCategory
+
     private val _category = MutableLiveData(mutableListOf<FavoriteCategory>())
     val category: LiveData<MutableList<FavoriteCategory>>
         get() = _category
 
-    fun setCategory(list: MutableList<FavoriteCategory>){
-        _category.value = list.toMutableList()
-    }
-
-    fun checkCategory(idx: Int){
-        val isChecked = _category.value?.get(idx)?.favorite
-        _category.value?.set(idx, _category.value!![idx].copy(favorite = !isChecked!!))
-    }
 
     private val _markAddress = MutableLiveData("")
     val markAddress: LiveData<String>

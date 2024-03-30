@@ -1,7 +1,9 @@
 package com.tasteguys.foorrng_customer.module
 
+import com.tasteguys.foorrng_customer.data.repository.food.FoodCategoryRepositoryImpl
 import com.tasteguys.foorrng_customer.data.repository.truck.TruckRepositoryImpl
 import com.tasteguys.foorrng_customer.data.repository.user.UserRepositoryImpl
+import com.tasteguys.foorrng_customer.domain.repository.FoodCategoryRepository
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
 import com.tasteguys.foorrng_customer.domain.repository.UserRepository
 import dagger.Binds
@@ -20,4 +22,8 @@ abstract class RepositoryModule {
     @Singleton
     @Binds
     abstract fun bindTruckRepository(truckRepositoryImpl: TruckRepositoryImpl): TruckRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindFoodCategoryRepository(foodCategoryRepositoryImpl: FoodCategoryRepositoryImpl): FoodCategoryRepository
 }
