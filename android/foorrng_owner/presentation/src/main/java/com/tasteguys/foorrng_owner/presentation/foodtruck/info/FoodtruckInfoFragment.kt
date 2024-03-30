@@ -69,10 +69,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
         ).addNavIconClickListener {
             parentFragmentManager.popBackStack()
         }.addMenuItemClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.layout_main_fragment, RegistFoodtruckFragment())
-                .addToBackStack(null)
-                .commit()
+            showToast("수정하기")
         }.also {
             mainViewModel.changeToolbar(it)
         }

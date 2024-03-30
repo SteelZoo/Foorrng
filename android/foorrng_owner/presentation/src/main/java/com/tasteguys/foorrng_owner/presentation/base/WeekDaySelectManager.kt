@@ -80,6 +80,7 @@ class WeekDaySelectManager(
     private fun applySetClickListener(){
         weekdayViewList.forEachIndexed { index, toggleButton ->
             toggleButton.setOnClickListener {
+                toggleButton.isChecked = !toggleButton.isChecked
                 dayClickListener(dayOfWeekList[index],it.isSelected)
             }
         }
