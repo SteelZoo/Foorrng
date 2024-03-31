@@ -2,6 +2,7 @@ package com.tasteguys.foorrng_owner.data.repository.foodtruck
 
 import com.tasteguys.foorrng_owner.data.mapper.toFoodtruckInfoData
 import com.tasteguys.foorrng_owner.data.mapper.toMarkData
+import com.tasteguys.foorrng_owner.data.mapper.toMarkRegistRequest
 import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRemoteDatasource
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
 import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
@@ -62,5 +63,9 @@ class FoodtruckRepositoryImpl @Inject constructor(
         return foodtruckRemoteDatasource.getMarkList().map { list ->
             list.map { it.toMarkData() }
         }
+    }
+
+    override suspend fun registMark(foodtruckId: Long,markData: MarkData): Result<Boolean> {
+        return foodtruckRemoteDatasource.registMark(foodtruckId,markData.toMarkRegistRequest())
     }
 }

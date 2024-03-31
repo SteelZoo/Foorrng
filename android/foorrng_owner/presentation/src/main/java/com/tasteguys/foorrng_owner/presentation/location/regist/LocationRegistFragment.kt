@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -66,7 +67,37 @@ class LocationRegistFragment(
     }
 
     private fun init() {
+        registerListener()
         registerObserve()
+        if (recommentLocation != null) {
+            map?.moveCamera(
+                CameraUpdate.scrollTo(recommentLocation.latLng).finishCallback {
+                    map?.moveCamera(
+                        CameraUpdate.zoomTo(16.0)
+                    )
+                }
+            )
+        } else {
+            locationProviderController.getCurrnetLocation { task ->
+                hideLoading()
+                task.addOnSuccessListener {
+                    map?.moveCamera(
+                        CameraUpdate.scrollTo(
+                            LatLng(it.latitude, it.longitude)
+                        )
+                    )
+                }
+            }.also {
+                showLoading()
+            }
+        }
+
+    }
+
+    private fun registerListener() {
+        binding.btnRegist.setOnClickListener {
+            locationRegistViewModel.registRunLocationInfo()
+        }
     }
 
     private fun registerObserve() {
@@ -86,6 +117,16 @@ class LocationRegistFragment(
 
         locationRegistViewModel.runLocation.observe(viewLifecycleOwner) {
             binding.tvAddress.text = it.address
+        }
+
+        locationRegistViewModel.registResult.observe(viewLifecycleOwner){ result ->
+            result.onSuccess {
+                showToast("등록이 완료되었습니다.")
+                parentFragmentManager.popBackStack()
+            }.onFailure {
+                showToast(it.message ?: "등록에 실패했습니다.")
+            }
+
         }
     }
 

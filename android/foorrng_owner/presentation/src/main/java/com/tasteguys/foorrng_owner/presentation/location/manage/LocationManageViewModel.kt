@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LocationManageViewModel @Inject constructor(
-    private val getMarkListUseCase: GetMarkListUseCase
+    private val getMarkListUseCase: GetMarkListUseCase,
+    // TODO deleteUseCase
 ) : ViewModel() {
     private var _runLocationInfoListResult = MutableLiveData<Result<List<RunLocationInfo>>>()
     val runLocationInfoListResult: LiveData<Result<List<RunLocationInfo>>>
@@ -43,6 +44,7 @@ class LocationManageViewModel @Inject constructor(
                         -1,
                         "대구광역시 중구 명륜로 23길 80 $i",
                         LatLng(35.863585 + (i / 1000.0), 128.595737 + (i / 1000.0)),
+                        false,
                         listOf(
                             RunInfo(
                                 DayOfWeek.MONDAY,

@@ -80,7 +80,7 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 
     private fun setAdapter(runLocationList: List<RunLocationInfo>) {
         if (runLocationAdapter == null) {
-            runLocationAdapter = RunLocationAdapter(runLocationList,deleteClickListener,naviClickListener)
+            runLocationAdapter = RunLocationAdapter(runLocationList,deleteClickListener,naviClickListener,itemClickListener)
         }
         binding.rvLocationInfo.adapter = runLocationAdapter
     }
@@ -91,6 +91,16 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 
     private val naviClickListener: (RunLocationInfo) -> Unit = {
         NavDialog(mainActivity,it).show()
+    }
+
+    private val itemClickListener: (RunLocationInfo) -> Unit = { runLocationInfo ->
+        naverMap?.let {
+            it.moveCamera(
+                CameraUpdate.scrollTo(runLocationInfo.latLng).finishCallback {
+                    it.moveCamera(CameraUpdate.zoomTo(16.0))
+                }
+            )
+        }
     }
 
     private val mapCallback = OnMapReadyCallback { naverMap ->

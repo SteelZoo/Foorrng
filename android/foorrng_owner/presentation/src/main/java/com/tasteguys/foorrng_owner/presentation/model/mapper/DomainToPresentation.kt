@@ -46,7 +46,7 @@ fun MenuData.toMenu(): Menu {
 
 fun MarkData.toRunLocationInfo(): RunLocationInfo{
     return RunLocationInfo(
-        id,address,LatLng(latitude, longitude),operationInfoList.map { it.toRunInfo() }
+        id,address,LatLng(latitude, longitude),isOpen,operationInfoList.map { it.toRunInfo() }
     )
 }
 
