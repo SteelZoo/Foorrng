@@ -16,9 +16,30 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_title"
+                style="@style/Foorrng.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/festival_name"
+                    android:inputType="text"
+                    android:maxLength="20"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_organizer"
@@ -54,12 +75,13 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ti_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/date"
                     android:inputType="text"
-                    android:maxLength="20"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -123,6 +145,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_festival_info"
+                style="@style/Foorrng.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ti_festival_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/festival_info"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_location"
                 style="@style/Foorrng.TextInputLayout"
                 android:layout_width="match_parent"
@@ -140,7 +184,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/location"
                     android:inputType="text"
-                    android:maxLength="30"
                     android:maxLines="1"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>

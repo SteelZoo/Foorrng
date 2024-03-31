@@ -68,6 +68,7 @@ class FestivalSelectLocationFragment @Inject constructor(
                 setOnMapClickListener { _, coord ->
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this
+                    festivalViewModel.latLng = marker.position
                     geoManager.getAddress(coord.latitude, coord.longitude) { address ->
                         festivalViewModel.setTempAddress(address)
                     }

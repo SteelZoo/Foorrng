@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.module
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.tasteguys.foorrng_customer.AuthInterceptor
+import com.tasteguys.foorrng_customer.data.api.FestivalService
 import com.tasteguys.foorrng_customer.data.api.FoodService
 import com.tasteguys.foorrng_customer.data.api.FoodTruckService
 import com.tasteguys.foorrng_customer.data.api.UserService
@@ -106,6 +107,14 @@ object NetworkModule {
         retrofit: Retrofit
     ): FoodService{
         return retrofit.create(FoodService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesFestivalService(
+        retrofit: Retrofit
+    ): FestivalService{
+        return retrofit.create(FestivalService::class.java)
     }
 
 }

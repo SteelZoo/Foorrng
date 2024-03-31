@@ -6,6 +6,9 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 private const val TAG = "FileManager"
 fun Uri?.toFile(context: Context): File? {
@@ -19,7 +22,12 @@ fun Uri?.toFile(context: Context): File? {
     }else{
         null
     }
+}
 
+fun Long.toDateString(): String{
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = this
+    return SimpleDateFormat("yyyy.MM.dd", Locale.KOREAN).format(calendar.time).toString()
 }
 
 class FileManager {
