@@ -21,7 +21,6 @@ private const val TAG = "TruckInfoFragment"
 class TruckInfoFragment(
     private val truckId: Long,
     private val truckName: String,
-    private val type: String
 ) : MainBaseFragment<FragmentTruckInfoBinding>(
     { FragmentTruckInfoBinding.bind(it) }, R.layout.fragment_truck_info
 ) {
@@ -102,7 +101,9 @@ class TruckInfoFragment(
                     .load(picture)
                     .error(R.drawable.bg_profile_photo)
 //                    .fitCenter()
-                    .centerInside()
+//                    .centerInside()
+                    .centerCrop()
+                    .circleCrop()
                     .into(binding.civTruckImg)
                 changeToolbarName(data.name, it.getOrNull()!!.type)
             }

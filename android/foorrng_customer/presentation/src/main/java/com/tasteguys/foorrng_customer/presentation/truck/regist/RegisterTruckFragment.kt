@@ -18,8 +18,10 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.base.GalleryLauncher
 import com.tasteguys.foorrng_customer.presentation.base.toFile
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentRegisterTruckBinding
+import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
+import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +43,8 @@ class RegisterTruckFragment @Inject constructor(
     private val truckViewModel: TruckViewModel by activityViewModels()
     private val registerInputViewModel: RegisterInputViewModel by activityViewModels()
     private val truckRegisterUpdateViewModel: TruckRegisterUpdateViewModel by viewModels()
+    private val dailyFavoriteViewModel: DailyFavoriteViewModel by activityViewModels()
+
     private val favoriteListAdapter = DailyFavoriteListAdapter()
 
     private val galleryLauncher: GalleryLauncher by lazy {
@@ -80,25 +84,22 @@ class RegisterTruckFragment @Inject constructor(
     }
 
     private fun initView() {
-
         with(binding) {
             with(registerInputViewModel) {
-                if (category.value!!.isEmpty()) {
-                    setCategory(Dummy.category)
-                    favoriteListAdapter.submitList(category.value)
-                }
-
                 rvMenuCategory.apply {
                     layoutManager = FlexboxLayoutManager(context)
                     adapter = favoriteListAdapter.apply {
                         submitList(category.value)
                         setOnItemClickListener(object : BaseHolder.ItemClickListener {
                             override fun onClick(position: Int) {
-                                checkCategory(position)
+                                val name = currentList[position].name
+                                foodCategory[name] = !foodCategory[name]!!
                             }
                         })
                     }
                 }
+                foodCategory.clear()
+                foodCategory.putAll( dailyFavoriteViewModel.getCategoryResult.value!!.getOrNull()!!.associateWith { false })
 
                 tilTruckName.editText!!.addTextChangedListener {
                     inputName(it.toString())
@@ -116,8 +117,8 @@ class RegisterTruckFragment @Inject constructor(
                 if (!isNew && !inputState) {
                     with(truckViewModel) {
                         val data = truckDetailResult.value!!.getOrNull()!!
-                        val mainData = data!!.mainData
-                        val opData = data!!.operation[0]
+                        val mainData = data.mainData
+                        val opData = data.operation[0]
                         inputName(mainData.name)
                         tilTruckName.editText!!.setText(mainData.name)
                         inputPhoneNumber(mainData.phoneNumber)
@@ -129,10 +130,14 @@ class RegisterTruckFragment @Inject constructor(
                         setMark(opData.address, opData.lat, opData.lng)
                         tilLocation.editText!!.setText(opData.address)
                         Glide.with(requireContext())
-                            .load(Uri.parse(mainData.picture))
+                            .load(mainData.picture)
                             .error(R.drawable.bg_profile_photo)
                             .fallback(R.drawable.bg_profile_photo)
                             .into(binding.ivTruckPhoto)
+                        for(food in mainData.category){
+                            if(food in foodCategory)
+                                foodCategory[food] = true
+                        }
                     }
                     inputState = true
                 }else{
@@ -147,6 +152,7 @@ class RegisterTruckFragment @Inject constructor(
                         .fallback(R.drawable.bg_profile_photo)
                         .into(binding.ivTruckPhoto)
                 }
+                favoriteListAdapter.submitList(foodCategory.map { FavoriteCategory(it.key, it.value) })
             }
 
             tilLocation.visibility = if(isNew) View.VISIBLE else View.GONE
@@ -176,7 +182,7 @@ class RegisterTruckFragment @Inject constructor(
                 if (it.isSuccess) {
                     registerOperationInfo(it.getOrNull()!!.id)
 
-                    // 시나리오용. register하면 무조건 즐겨찾기에 들어간다
+                    // register하면 무조건 즐겨찾기에 들어간다
                     truckViewModel.markFavoriteTruck(it.getOrNull()!!.id)
                 }
             }
@@ -194,44 +200,23 @@ class RegisterTruckFragment @Inject constructor(
                 }
             }
         }
-//        truckViewModel.registerResult.observe(viewLifecycleOwner) {
-//            if (it.isSuccess) {
-//                registerOperationInfo(it.getOrNull()!!.id)
-//            }
-//        }
-
-//        truckViewModel.markRegisterResult.observe(viewLifecycleOwner) {
-//            if (it.isSuccess) {
-//                showToast("등록 성공")
-//                parentFragmentManager.popBackStack()
-//            }
-//        }
-
-//        truckViewModel.updateResult.observe(viewLifecycleOwner){
-//            if(it.isSuccess){
-//                showToast("업데이트 성공")
-//                parentFragmentManager.popBackStack()
-//            }
-//        }
     }
 
     private fun register() {
         with(registerInputViewModel) {
-//            truckViewModel.registerTruck(
             truckRegisterUpdateViewModel.registerTruck(
                 name.value!!,
-                picture.value!!.toFile(requireContext()),
+                picture.value.toFile(requireContext()),
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
-                category.value!!.filter { it.favorite }.map { it.name }
+                foodCategory.filter { it.value }.map { it.key }
             )
         }
     }
 
     private fun update() {
         with(registerInputViewModel) {
-//            truckViewModel.updateTruck(
             truckRegisterUpdateViewModel.updateTruck(
                 truckId,
                 name.value!!,
@@ -239,14 +224,13 @@ class RegisterTruckFragment @Inject constructor(
                 carNumber.value!!,
                 announcement.value!!,
                 phoneNumber.value!!,
-                category.value!!.filter { it.favorite }.map { it.name }
+                foodCategory.filter { it.value }.map { it.key }
             )
         }
     }
 
     private fun registerOperationInfo(id: Long) {
         with(registerInputViewModel) {
-//            truckViewModel.registerOperationInfo(
             truckRegisterUpdateViewModel.registerOperationInfo(
                 id,
                 markAddress.value!!,
@@ -277,13 +261,42 @@ class RegisterTruckFragment @Inject constructor(
             .setTitle("제보 하시겠습니까?")
             .setMessage("제보시 3회이상의 신고가 있을 시에만 삭제가 가능합니다.")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
-                if (isNew) register() else update()
+                validateInput().onSuccess {
+                    if (isNew) register() else update()
+                }.onFailure {
+                    showToast(it.message ?: "알 수 없는 오류가 발생했습니다.")
+                }
+
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
     }
+
+    private fun validateInput(): Result<String> {
+        val nameValidation = binding.tilTruckName.editText!!.text.toString().isNotBlank()
+        val carNumValidation = binding.tilCarNumber.editText!!.text.toString().let {
+            it.isNotBlank() && it.matches(Regex("^[0-9]{2,3}[가-힣][0-9]{4}$"))
+        }
+//        val categoryValidation =
+//            menuCategoryAdapter?.getSelectedCategoryList()?.isNotEmpty() ?: false
+
+        val msg = if (!nameValidation) {
+            "이름을 입력해주세요"
+        } else if (!carNumValidation) {
+            "차량 번호를 올바르게 입력해주세요"
+        }
+//        else if (!categoryValidation) {
+//            "카테고리를 선택해주세요"
+//        }
+        else {
+            return Result.success("success")
+        }
+
+        return Result.failure(Exception(msg))
+    }
+
 
     override fun onDestroy() {
         with(registerInputViewModel) {

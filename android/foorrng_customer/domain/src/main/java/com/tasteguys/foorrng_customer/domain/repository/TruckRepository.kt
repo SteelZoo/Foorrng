@@ -42,7 +42,7 @@ interface TruckRepository {
 
     suspend fun markFavoriteTruck(
         truckId: Long
-    ): Result<Long>
+    ): Result<String>
 
     suspend fun getFavoriteTruckList(): Result<List<FavoriteTruckData>>
 
@@ -53,5 +53,16 @@ interface TruckRepository {
         lng: Double,
         operationInfo: List<TruckOperationData>
     ): Result<TruckDetailMarkData>
+
+    suspend fun registerReview(
+        truckId: Long,
+        rvIsDelicious: Boolean,
+        rvIsCool: Boolean,
+        rvIsClean: Boolean,
+        rvIsKind: Boolean,
+        rvIsSpecial: Boolean,
+        rvIsCheap: Boolean,
+        rvIsFast: Boolean
+    ): Result<Long>
 
 }

@@ -6,7 +6,7 @@ data class TruckData(
     val latitude: Double,
     val longitude: Double,
     val name: String,
-    val picture: String,
+    val picture: String?,
     val type: String,
     val category: List<String>,
     val reviewCnt: Int,

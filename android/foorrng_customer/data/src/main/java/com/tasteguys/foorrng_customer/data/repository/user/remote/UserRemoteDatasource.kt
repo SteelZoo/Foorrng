@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.repository.user.remote
 
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
+import com.tasteguys.foorrng_customer.data.model.user.UserResponse
 
 interface UserRemoteDatasource {
     suspend fun registerOwner(
@@ -14,4 +15,7 @@ interface UserRemoteDatasource {
         name: String,
         email: String
     ): Result<LoginResponse>
+
+    suspend fun getUser(): Result<UserResponse>
+
 }

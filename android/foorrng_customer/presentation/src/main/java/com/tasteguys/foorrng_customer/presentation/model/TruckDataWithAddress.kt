@@ -4,7 +4,7 @@ data class TruckDataWithAddress(
     val truckId: Long,
     val markId: Long,
     val name: String,
-    val picture: String,
+    val picture: String?,
     val isFavorite: Boolean,
     val numOfReview: Int,
     val distance: Int,
@@ -12,4 +12,6 @@ data class TruckDataWithAddress(
     val type: String = "Foodtruck",
     val isOperating: Boolean,
     val address: String = "",
+    val lat: Double,
+    val lng: Double
 )

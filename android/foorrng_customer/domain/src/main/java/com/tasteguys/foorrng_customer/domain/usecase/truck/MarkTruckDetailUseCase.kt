@@ -8,7 +8,7 @@ class MarkTruckDetailUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         truckId: Long
-    ): Result<Long> {
+    ): Result<String> {
         return repository.markFavoriteTruck(truckId)
     }
 }

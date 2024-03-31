@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_customer.data.api.UserService
 import com.tasteguys.foorrng_customer.data.mapper.toNonDefault
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.data.model.user.UserRequest
+import com.tasteguys.foorrng_customer.data.model.user.UserResponse
 import javax.inject.Inject
 
 class UserRemoteDatasourceImpl @Inject constructor(
@@ -25,5 +26,9 @@ class UserRemoteDatasourceImpl @Inject constructor(
             name,
             email
         )).toNonDefault()
+    }
+
+    override suspend fun getUser(): Result<UserResponse> {
+        return userService.getUserData().toNonDefault()
     }
 }

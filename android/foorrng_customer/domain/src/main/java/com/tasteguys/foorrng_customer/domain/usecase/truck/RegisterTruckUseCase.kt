@@ -12,7 +12,7 @@ class RegisterTruckUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         name: String,
-        picture: File,
+        picture: File?,
         carNumber: String,
         announcement: String,
         phoneNumber: String,

@@ -7,6 +7,7 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import java.io.File
 
@@ -43,7 +44,7 @@ interface TruckRemoteDatasource {
 
     suspend fun markFavoriteTruck(
         truckId: Long
-    ): Result<Long>
+    ): Result<String>
 
     suspend fun getFavoriteTruckList(): Result<List<TruckFavoriteListResponse>>
 
@@ -54,5 +55,16 @@ interface TruckRemoteDatasource {
         lng: Double,
         operationInfo: List<TruckOperationInfo>
     ):Result<TruckRegisterOperationResponse>
+
+    suspend fun registerReview(
+        truckId: Long,
+        rvIsDelicious: Boolean,
+        rvIsCool: Boolean,
+        rvIsClean: Boolean,
+        rvIsKind: Boolean,
+        rvIsSpecial: Boolean,
+        rvIsCheap: Boolean,
+        rvIsFast: Boolean
+    ): Result<TruckRegisterReviewResponse>
 
 }

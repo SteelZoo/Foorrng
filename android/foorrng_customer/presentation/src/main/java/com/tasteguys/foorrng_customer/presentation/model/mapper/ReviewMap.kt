@@ -30,4 +30,14 @@ object ReviewMap{
         "rvIsCool" to COOL,
         "rvIsKind" to KIND
     )
+
+    val registerReviewMap = mapOf(
+        DELICIOUS to "rvIsDelicious",
+        SPECIAL to "rvIsSpecial",
+        CHEAP to "rvIsCheap",
+        FAST to "rvIsFast",
+        CLEAN to "rvIsClean",
+        COOL to "rvIsCool",
+        KIND to "rvIsKind"
+    )
 }

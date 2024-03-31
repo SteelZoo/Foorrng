@@ -23,8 +23,9 @@ fun TruckData.toTruckDataWithAddress(): TruckDataWithAddress{
         category,
         type,
         isOperating,
-        //구하는 함수 필요
-        "ㅇㄹㅇㄹ"
+        "ㅇㄹㅇㄹ",
+        latitude,
+        longitude
     )
 }
 
@@ -40,7 +41,9 @@ fun FavoriteTruckData.toTruckDataWithAddress(): TruckDataWithAddress{
         category = category,
         type = "FoodtruckReport",
         isOperating = false,
-        ""
+        "",
+        -1.0,
+        -1.0
     )
 }
 

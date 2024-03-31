@@ -13,10 +13,10 @@ import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
-import com.tasteguys.foorrng_customer.presentation.festival.regist.FestivalSelectLocationFragment
-import com.tasteguys.foorrng_customer.presentation.festival.regist.RegisterFestivalFragment
+import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
+import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.TruckAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
@@ -33,6 +33,10 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
     private val favoriteAdapter = DailyFavoriteListAdapter()
     private val truckAdapter = TruckAdapter()
     private val truckViewModel: TruckViewModel by activityViewModels()
+
+    private val userViewModel:UserViewModel by activityViewModels()
+    private val dailyFavoriteViewModel: DailyFavoriteViewModel by activityViewModels()
+
 
     override fun setToolbar() {
         MainToolbarControl(
@@ -51,6 +55,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
     private fun initView(){
         truckViewModel.getFavoriteTruckList()
+        dailyFavoriteViewModel.getCategory()
 
         binding.test.setOnClickListener{
             parentFragmentManager.beginTransaction()
@@ -65,17 +70,6 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 //                .replace(R.id.fcv_container, RegisterFestivalFragment())
 //                .addToBackStack(null)
 //                .commit()
-//        }
-
-        favoriteAdapter.submitList(Dummy.category)
-//        truckAdapter.submitList(Dummy.trucks)
-
-//        truckViewModel.markFavoriteCategory.observe(viewLifecycleOwner){
-//            if(it.isSuccess){
-//                showToast("찜 성공")
-//            }else{
-//                showToast("실패")
-//            }
 //        }
 
     }
@@ -103,17 +97,17 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                     override fun onClick(position: Int) {
                         val curTruck = currentList[position]
                         parentFragmentManager.beginTransaction()
-                            .replace(R.id.fcv_container, TruckInfoFragment(curTruck.truckId, curTruck.name, curTruck.type))
+                            .replace(R.id.fcv_container, TruckInfoFragment(curTruck.truckId, curTruck.name))
                             .addToBackStack(null)
                             .commit()
                     }
                 })
                 setOnButtonClickListener(object: TruckAdapter.TruckListHolder.ButtonClickListener{
-                    override fun onToggleClick(isChecked: Boolean) {
+                    override fun onToggleClick(position:Int) {
 
                     }
 
-                    override fun onButtonClick() {
+                    override fun onButtonClick(position:Int) {
                     }
 
                 })
@@ -131,6 +125,21 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 res.getOrNull()?.let {
                     truckAdapter.submitList(it)
                 }
+            }
+        }
+        dailyFavoriteViewModel.getCategoryResult.observe(viewLifecycleOwner){res->
+            if(res.isSuccess){
+                userViewModel.foodCategory.putAll(res.getOrNull()!!.associateWith { false })
+                userViewModel.getUserData()
+            }
+        }
+        userViewModel.getUserResult.observe(viewLifecycleOwner){res->
+            if(res.isSuccess){
+                val category = res.getOrNull()!!.favoriteCategory
+                for(food in category){
+                    userViewModel.foodCategory[food] = true
+                }
+                favoriteAdapter.submitList(userViewModel.foodCategory.map { FavoriteCategory(it.key, it.value) })
             }
         }
     }

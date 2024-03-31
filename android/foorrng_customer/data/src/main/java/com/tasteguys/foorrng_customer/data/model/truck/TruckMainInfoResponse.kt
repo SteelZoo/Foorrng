@@ -6,7 +6,7 @@ data class TruckMainInfoResponse(
     val announcement: String,
     val name: String,
     val createdDay: Long,
-    val picture: String,
+    val picture: String?,
     val accountInfo: String,
     val carNumber: String,
     val phoneNumber: String,

@@ -3,12 +3,12 @@ package com.tasteguys.foorrng_customer.data.model
 import com.squareup.moshi.Json
 
 data class LocationRequest(
-    @Json(name="latitude_left")
+    @Json(name="latitudeLeft")
     val latitudeLeft: Double,
-    @Json(name="longitude_left")
+    @Json(name="longitudeLeft")
     val longitudeLeft: Double,
-    @Json(name="latitude_right")
+    @Json(name="latitudeRight")
     val latitudeRight: Double,
-    @Json(name="longitude_right")
+    @Json(name="longitudeRight")
     val longitudeRight: Double,
 )

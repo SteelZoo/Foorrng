@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_customer.data.mapper
 
+import com.tasteguys.foorrng_customer.data.model.FoodCategoryEntity
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMarkResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
@@ -11,6 +12,8 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationRes
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
+import com.tasteguys.foorrng_customer.data.model.user.UserResponse
+import com.tasteguys.foorrng_customer.domain.model.food.FoodCategoryData
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
@@ -21,10 +24,15 @@ import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckReviewData
 import com.tasteguys.foorrng_customer.domain.model.user.TokenData
+import com.tasteguys.foorrng_customer.domain.model.user.UserData
 
 fun LoginResponse.toDomain() = TokenData(
     accessToken = accessToken,
     refreshToken = refreshToken
+)
+
+fun UserResponse.toDomain() = UserData(
+    category, uid
 )
 
 fun TruckListResponse.toDomain() = TruckData(
@@ -81,4 +89,8 @@ fun TruckDetailMarkResponse.toDomain() = TruckDetailMarkData(
 fun TruckRegisterOperationResponse.toDomain() = TruckDetailMarkData(
     id, lat, lng, "", false, operationInfo.map { it.toDomain() }
 )
+
+fun FoodCategoryEntity.toDomain(): FoodCategoryData{
+    return FoodCategoryData(name)
+}
 
