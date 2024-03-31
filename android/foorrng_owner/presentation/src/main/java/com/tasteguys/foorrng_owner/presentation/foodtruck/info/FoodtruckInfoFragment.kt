@@ -80,7 +80,7 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
     }
 
     private val dummyFoodtruck = FoodTruckInfo(
-        1, "맛있는 녀석들", "123가1234", "010-1234-1234","화긴",listOf("치킨"), "공지합니다","",
+        1, "맛있는 녀석들", "123가1234", "010-1234-1234","화긴",listOf("치킨"), "공지합니다","","",
         ReviewSet(
             10, listOf(
                 Review("음식이 맛있어요", 9),

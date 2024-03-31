@@ -5,9 +5,12 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationManageBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
@@ -23,7 +26,8 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 ) {
     private val locationManageViewModel: LocationManageViewModel by viewModels()
 
-    private var map: NaverMap? = null
+    private var naverMap: NaverMap? = null
+    private var markOverlayList = mutableListOf<Marker>()
 
     private var runLocationAdapter: RunLocationAdapter? = null
 
@@ -48,9 +52,26 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
     }
 
     private fun registerObserve() {
-        locationManageViewModel.runLocationInfoListResult.observe(viewLifecycleOwner) {
-            it.onSuccess {
+        locationManageViewModel.runLocationInfoListResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
                 setAdapter(it)
+                naverMap?.let { naverMap ->
+                    naverMap.moveCamera(
+                        CameraUpdate.fitBounds(
+                            LatLngBounds.from(it.map { runLocationInfo -> runLocationInfo.latLng })
+                            ,50
+                        )
+                    )
+                }
+
+                it.forEach { info ->
+                    val marker = Marker().apply {
+                        position = info.latLng
+                        icon = OverlayImage.fromResource(R.drawable.ic_marker)
+                        this.map = naverMap
+                    }
+                    markOverlayList.add(marker)
+                }
             }.onFailure {
                 showToast(it.message ?: "영업 위치를 불러오는데 실패했습니다.")
             }
@@ -75,7 +96,7 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
     private val mapCallback = OnMapReadyCallback { naverMap ->
         init()
 
-        map = naverMap.apply {
+        this.naverMap = naverMap.apply {
             // 한반도 영역 제한
             extent = LatLngBounds(LatLng(31.43, 122.37), LatLng(44.35, 132.0))
             uiSettings.apply {

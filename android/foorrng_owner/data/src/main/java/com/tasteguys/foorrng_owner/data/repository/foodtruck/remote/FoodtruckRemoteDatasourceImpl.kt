@@ -2,9 +2,11 @@ package com.tasteguys.foorrng_owner.data.repository.foodtruck.remote
 
 import com.tasteguys.foorrng_owner.data.api.FoodtruckService
 import com.tasteguys.foorrng_owner.data.mapper.toNonDefault
+import com.tasteguys.foorrng_owner.data.model.DefaultResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckUpdateRequest
+import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -72,5 +74,9 @@ class FoodtruckRemoteDatasourceImpl @Inject constructor(
             .map {
                 it.foodtruckId >= 0L
             }
+    }
+
+    override suspend fun getMarkList(): Result<List<MarkResponse>> {
+        return  foodtruckService.getMarkList().toNonDefault()
     }
 }

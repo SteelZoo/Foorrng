@@ -1,6 +1,8 @@
 package com.tasteguys.foorrng_owner.data.repository.foodtruck.remote
 
+import com.tasteguys.foorrng_owner.data.model.DefaultResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
+import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import java.io.File
 
 interface FoodtruckRemoteDatasource {
@@ -26,4 +28,6 @@ interface FoodtruckRemoteDatasource {
         category: List<String>,
         picture: File?
     ) : Result<Boolean>
+
+    suspend fun getMarkList(): Result<List<MarkResponse>>
 }

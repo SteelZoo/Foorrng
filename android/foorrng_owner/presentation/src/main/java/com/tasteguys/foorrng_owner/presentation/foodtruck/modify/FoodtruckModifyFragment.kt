@@ -159,7 +159,7 @@ class FoodtruckModifyFragment : MainBaseFragment<FragmentFoodtruckModifyBinding>
     private fun checkBackStackDialog() {
         MaterialAlertDialogBuilder(_activity)
             .setTitle("등록을 취소하시겠습니까?")
-            .setMessage("작성 중인 내용이 모두 삭제되고 앱이 종료됩니다.")
+            .setMessage("작성 중인 내용이 모두 지워집니다.")
             .setPositiveButton("확인") { _, _ ->
                 parentFragmentManager.popBackStack()
             }

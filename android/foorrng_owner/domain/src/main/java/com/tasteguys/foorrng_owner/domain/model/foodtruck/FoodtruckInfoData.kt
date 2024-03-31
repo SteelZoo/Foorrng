@@ -10,6 +10,7 @@ data class FoodtruckInfoData(
     val phoneNumber: String,
     val category: List<String>,
     val picture: String,
+    val businessNumber: String,
     val totalReview: Int,
     val reviews: List<ReviewData>
 )

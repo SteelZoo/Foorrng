@@ -9,5 +9,6 @@ data class FoodtruckRegistResponse(
     val carNumber: String,
     val phoneNumber: String,
     val category: List<String>,
-    val picture: String
+    val picture: String,
+    val businessNumber: String?
 )

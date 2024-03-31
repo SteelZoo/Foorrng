@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_owner.domain.repository
 
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
+import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
 import java.io.File
 
 interface FoodtruckRepository {
@@ -26,4 +27,6 @@ interface FoodtruckRepository {
         category: List<String>,
         picture: File?
     ) : Result<Boolean>
+
+    suspend fun getMarkList(): Result<List<MarkData>>
 }

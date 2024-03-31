@@ -1,8 +1,10 @@
 package com.tasteguys.foorrng_owner.data.repository.foodtruck
 
 import com.tasteguys.foorrng_owner.data.mapper.toFoodtruckInfoData
+import com.tasteguys.foorrng_owner.data.mapper.toMarkData
 import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRemoteDatasource
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
+import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
 import com.tasteguys.foorrng_owner.domain.repository.FoodtruckRepository
 import java.io.File
 import javax.inject.Inject
@@ -54,5 +56,11 @@ class FoodtruckRepositoryImpl @Inject constructor(
             category = category,
             picture = picture
         )
+    }
+
+    override suspend fun getMarkList(): Result<List<MarkData>> {
+        return foodtruckRemoteDatasource.getMarkList().map { list ->
+            list.map { it.toMarkData() }
+        }
     }
 }

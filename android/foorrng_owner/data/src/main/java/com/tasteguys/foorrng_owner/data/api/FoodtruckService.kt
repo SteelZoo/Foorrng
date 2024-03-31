@@ -5,6 +5,7 @@ import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckUpdateRequest
+import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import okhttp3.MultipartBody
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -18,15 +19,18 @@ interface FoodtruckService {
     suspend fun registFoodtruck(
         @Part picture: MultipartBody.Part?,
         @Part("foodtruckDto") foodtruckCreateDto: FoodtruckRegistRequest
-    ) : Result<DefaultResponse<FoodtruckRegistResponse>>
+    ): Result<DefaultResponse<FoodtruckRegistResponse>>
 
     @GET("foodtrucks/owner")
-    suspend fun getFoodtruck() : Result<DefaultResponse<FoodtruckDetailResponse>>
+    suspend fun getFoodtruck(): Result<DefaultResponse<FoodtruckDetailResponse>>
 
     @Multipart
     @PATCH("foodtruck/update")
     suspend fun updateFoodtruck(
         @Part picture: MultipartBody.Part?,
         @Part("foodtruckDto") foodtruckUpdateDto: FoodtruckUpdateRequest
-    ) : Result<DefaultResponse<FoodtruckRegistResponse>>
+    ): Result<DefaultResponse<FoodtruckRegistResponse>>
+
+    @GET("mark/list")
+    suspend fun getMarkList(): Result<DefaultResponse<List<MarkResponse>>>
 }
