@@ -3,6 +3,7 @@ package com.tasteguys.foorrng_customer.data.mapper
 import com.tasteguys.foorrng_customer.data.model.FoodCategoryEntity
 import com.tasteguys.foorrng_customer.data.model.festival.FestivalResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMarkResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
@@ -55,7 +56,7 @@ fun TruckDetailResponse.toDomain() = TruckDetailData(
     type,
     mainInfo.toDomain(),
     reviews.map { it.toDomain() },
-    menus.map { it.toDomain() },
+    menus.map { it.toDomain(mainInfo.truckId)},
     totalReview,
     operation.map { it.toDomain() }
 )
@@ -68,8 +69,12 @@ fun TruckReviewResponse.toDomain() = TruckReviewData(
     id, cnt
 )
 
+fun TruckDetailMenuResponse.toDomain(truckId: Long) = TruckMenuData(
+    id, name, price, picture, truckId
+)
+
 fun TruckMenuResponse.toDomain() = TruckMenuData(
-    id, name, price, picture
+    id, name, price, picture, truckId
 )
 
 fun TruckOperationInfo.toDomain() = TruckOperationData(

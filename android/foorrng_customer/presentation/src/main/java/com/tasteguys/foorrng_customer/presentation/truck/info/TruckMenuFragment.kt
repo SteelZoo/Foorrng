@@ -7,14 +7,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
+import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckMenuBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckMenu
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class TruckMenuFragment(truckId: Long) : MainBaseFragment<FragmentTruckMenuBinding>(
+@AndroidEntryPoint
+class TruckMenuFragment(private val truckId: Long) : MainBaseFragment<FragmentTruckMenuBinding>(
     { FragmentTruckMenuBinding.bind(it)}, R.layout.fragment_truck_menu
 ) {
 
@@ -35,24 +39,44 @@ class TruckMenuFragment(truckId: Long) : MainBaseFragment<FragmentTruckMenuBindi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        registerObserve()
     }
 
     private fun initView(){
-
         binding.rvMenu.apply {
-//            adapter = truckMenuAdapter.apply{
-//                submitList(Dummy.truckInfo.menu)
-//            }
             adapter = truckMenuAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
 
+        binding.btnAddMenu.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, TruckMenuRegisterFragment(truckId, null))
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun registerObserve(){
         truckViewModel.truckDetailResult.observe(viewLifecycleOwner){ res->
             if(res.isSuccess){
-                truckMenuAdapter.submitList(
-                    res.getOrNull()?.menus!!.map { it.toTruckMenu() }
-                )
+                truckMenuAdapter.apply{
+                    submitList(
+                        res.getOrNull()?.menus!!.map { it.toTruckMenu() }
+                    )
+                    setOnItemClickListener(object : BaseHolder.ItemClickListener{
+                        override fun onClick(position: Int) {
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.fcv_container, TruckMenuRegisterFragment(truckId, currentList[position]))
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                    })
+                }
+                if(res.getOrNull()!!.type=="foodtruck"){
+                    binding.btnAddMenu.visibility = View.GONE
+                }
             }
         }
     }
+
 }

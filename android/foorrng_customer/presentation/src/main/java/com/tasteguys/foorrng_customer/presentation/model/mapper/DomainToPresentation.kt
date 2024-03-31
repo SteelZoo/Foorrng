@@ -54,7 +54,7 @@ fun FavoriteTruckData.toFavoriteTruck(): FavoriteTruck{
 }
 
 fun TruckMenuData.toTruckMenu(): TruckMenu{
-    return TruckMenu(name, price.toInt(), picture)
+    return TruckMenu(id, name, price.toInt(), picture, truckId)
 }
 
 fun TruckReviewData.toReview(total: Int): Review {

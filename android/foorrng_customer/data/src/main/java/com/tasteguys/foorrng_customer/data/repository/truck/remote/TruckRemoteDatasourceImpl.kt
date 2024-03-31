@@ -10,6 +10,8 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuRequest
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
@@ -134,5 +136,54 @@ class TruckRemoteDatasourceImpl @Inject constructor(
                 rvIsDelicious, rvIsCool, rvIsClean, rvIsKind, rvIsSpecial, rvIsCheap, rvIsFast
             )
         ).toNonDefault()
+    }
+
+    override suspend fun getMenu(truckId: Long): Result<List<TruckMenuResponse>> {
+        return truckService.getMenu(truckId).toNonDefault()
+    }
+
+    override suspend fun registerMenu(
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String> {
+        return if(picture!=null){
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            truckService.registerMenu(
+                TruckMenuRequest(name, price, truckId),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+            ).toNonDefault()
+        }else{
+            truckService.registerMenu(
+                TruckMenuRequest(name, price, truckId), null
+            ).toNonDefault()
+        }
+    }
+
+    override suspend fun updateMenu(
+        id: Long,
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String> {
+        return if(picture!=null){
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            truckService.updateMenu(
+                id,
+                TruckMenuRequest(name, price, truckId),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+            ).toNonDefault()
+        }else{
+            truckService.updateMenu(
+                id,
+                TruckMenuRequest(name, price, truckId), null
+            ).toNonDefault()
+        }
+    }
+
+    override suspend fun deleteMenu(id: Long): Result<String> {
+        return truckService.deleteMenu(id).toNonDefault()
     }
 }

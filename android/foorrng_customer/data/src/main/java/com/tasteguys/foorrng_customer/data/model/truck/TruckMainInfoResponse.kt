@@ -3,6 +3,8 @@ package com.tasteguys.foorrng_customer.data.model.truck
 import com.squareup.moshi.Json
 
 data class TruckMainInfoResponse(
+    @Json(name="foodtruckId")
+    val truckId: Long,
     val announcement: String,
     val name: String,
     val createdDay: Long,

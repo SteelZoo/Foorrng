@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateRespon
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
@@ -66,5 +67,28 @@ interface TruckRemoteDatasource {
         rvIsCheap: Boolean,
         rvIsFast: Boolean
     ): Result<TruckRegisterReviewResponse>
+
+    suspend fun getMenu(
+        truckId: Long
+    ): Result<List<TruckMenuResponse>>
+
+    suspend fun registerMenu(
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String>
+
+    suspend fun updateMenu(
+        id: Long,
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String>
+
+    suspend fun deleteMenu(
+        id: Long
+    ): Result<String>
 
 }

@@ -100,8 +100,6 @@ class TruckInfoFragment(
                 Glide.with(requireContext())
                     .load(picture)
                     .error(R.drawable.bg_profile_photo)
-//                    .fitCenter()
-//                    .centerInside()
                     .centerCrop()
                     .circleCrop()
                     .into(binding.civTruckImg)

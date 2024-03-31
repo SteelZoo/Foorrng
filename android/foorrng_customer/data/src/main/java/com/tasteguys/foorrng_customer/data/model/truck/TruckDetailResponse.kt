@@ -10,7 +10,7 @@ data class TruckDetailResponse(
     @Json(name="review")
     val reviews: List<TruckReviewResponse>,
     @Json(name="menus")
-    val menus: List<TruckMenuResponse>,
+    val menus: List<TruckDetailMenuResponse>,
     @Json(name="totalReview")
     val totalReview: Int,
     @Json(name="mark")
