@@ -29,6 +29,16 @@ class MenuCategoryAdapter(
         return menuCategoryList.size
     }
 
+    fun setSelectCategoryList(selectedCategoryList: List<String>){
+        selectedCategoryList.forEach { category ->
+            val index = menuCategoryList.indexOf(category)
+            if (index != -1){
+                this.selectedCategoryList[index] = true
+                this.notifyItemChanged(index)
+            }
+        }
+    }
+
     fun getSelectedCategoryList(): List<String>{
         return menuCategoryList.filterIndexed { index, _ ->
             selectedCategoryList[index]

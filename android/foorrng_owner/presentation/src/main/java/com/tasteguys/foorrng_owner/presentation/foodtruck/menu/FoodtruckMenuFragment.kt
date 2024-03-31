@@ -21,13 +21,15 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        foodtruckMenuViewModel.getMenuList()
+        foodtruckMenuViewModel.getMenuList().also {
+            showLoading()
+        }
 
         registerListener()
         registerObserve()
     }
 
-    private fun registerListener(){
+    private fun registerListener() {
         binding.btnAddMenu.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, MenuEditFragment())
@@ -38,23 +40,22 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
 
     private fun registerObserve() {
         foodtruckMenuViewModel.menuList.observe(viewLifecycleOwner) {
+            hideLoading()
             it.onSuccess {
                 setMenuList(it)
             }.onFailure {
                 showToast(it.message.toString())
-                parentFragmentManager.popBackStack()
+//                parentFragmentManager.popBackStack()
             }
         }
     }
 
     private fun setMenuList(list: List<Menu>) {
-        if (menuAdapter == null) {
-            menuAdapter = MenuListAdapter(list){
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.layout_main_fragment, MenuEditFragment(it))
-                    .addToBackStack(null)
-                    .commit()
-            }
+        menuAdapter = MenuListAdapter(list) {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, MenuEditFragment(it))
+                .addToBackStack(null)
+                .commit()
         }
         binding.rvFoodtruckMenu.adapter = menuAdapter
     }
@@ -64,7 +65,9 @@ class FoodtruckMenuFragment : MainBaseFragment<FragmentFoodMenuBinding>(
             MainToolbarControl(
                 title = "메뉴 관리",
                 visible = true,
-            )
+            ).addNavIconClickListener {
+                parentFragmentManager.popBackStack()
+            }
         )
     }
 }

@@ -23,6 +23,7 @@ class FoodtruckInfoTabFragment(
             tvCallNumber.text = foodTruckInfo.callNumber
             tvFoodCategory.text = foodTruckInfo.category.joinToString()
             tvNotice.text = foodTruckInfo.notice
+            tvBusinessNumber.text = foodTruckInfo.businessNumber
         }
 
         registerListener()

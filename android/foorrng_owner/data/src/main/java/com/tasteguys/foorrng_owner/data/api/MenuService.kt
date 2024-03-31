@@ -29,6 +29,6 @@ interface MenuService {
 
     @GET("menu/{foodtruckId}")
     suspend fun getMenuList(
-        @Part("foodtruckId") foodtruckId: Long,
+        @Path("foodtruckId") foodtruckId: Long,
     ): Result<DefaultResponse<List<MenuResponse>>>
 }

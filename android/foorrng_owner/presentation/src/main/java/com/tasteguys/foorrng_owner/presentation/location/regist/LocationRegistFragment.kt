@@ -1,32 +1,27 @@
 package com.tasteguys.foorrng_owner.presentation.location.regist
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.overlay.PolygonOverlay
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.GeoManager
 import com.tasteguys.foorrng_owner.presentation.base.LocationProviderController
 import com.tasteguys.foorrng_owner.presentation.base.WeekDaySelectManager
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRegistBinding
 import com.tasteguys.foorrng_owner.presentation.location.AddRundayDialog
-import com.tasteguys.foorrng_owner.presentation.location.manage.RunLocationAdapter
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
+import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 import com.tasteguys.foorrng_owner.presentation.model.run.RunDay
 import com.tasteguys.foorrng_owner.presentation.model.run.RunLocation
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import javax.inject.Inject
 
@@ -45,6 +40,7 @@ class LocationRegistFragment(
 
     private lateinit var weekDaySelectManager: WeekDaySelectManager
     private var runLocationAdapter: RegistDayAdapter? = null
+
     @Inject
     lateinit var geoManager: GeoManager
 
@@ -63,6 +59,10 @@ class LocationRegistFragment(
         super.onViewCreated(view, savedInstanceState)
         locationProviderController = LocationProviderController(mainActivity, this)
         weekDaySelectManager = WeekDaySelectManager(binding.layoutSelectWeekday, dayClickListener)
+
+        mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            checkBackStackDialog()
+        }
     }
 
     private fun init() {
@@ -109,6 +109,19 @@ class LocationRegistFragment(
             .show()
     }
 
+    private fun checkBackStackDialog() {
+        MaterialAlertDialogBuilder(_activity)
+            .setTitle("등록을 취소하시겠습니까?")
+            .setMessage("작성 중인 내용이 모두 지워집니다.")
+            .setPositiveButton("확인") { _, _ ->
+                parentFragmentManager.popBackStack()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     private val mapCallback = OnMapReadyCallback { naverMap ->
         init()
 
@@ -126,14 +139,23 @@ class LocationRegistFragment(
                 ) {
                     locationRegistViewModel.setRunLocation(
                         RunLocation(
-                            it.replace("대한민국",""), cameraPosition.target
+                            it.replace("대한민국", ""), cameraPosition.target
                         )
                     )
                 }
             }
         }
+    }
 
-
+    override fun setToolbar() {
+        mainViewModel.changeToolbar(
+            MainToolbarControl(
+                true,
+                "영업 위치 등록",
+            ).addNavIconClickListener {
+                checkBackStackDialog()
+            }
+        )
     }
 
 }

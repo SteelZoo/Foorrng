@@ -9,5 +9,6 @@ data class FoodTruckInfo(
     val category: List<String>,
     val notice: String,
     val pictureUrl: String,
+    val businessNumber: String,
     val reviewSet: ReviewSet,
 )

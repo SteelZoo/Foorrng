@@ -1,17 +1,25 @@
 package com.tasteguys.foorrng_owner.presentation.foodtruck.menu
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tasteguys.foorrng_owner.domain.usecase.menu.GetMenuListUseCase
+import com.tasteguys.foorrng_owner.presentation.base.PrefManager
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
+import com.tasteguys.foorrng_owner.presentation.model.mapper.toMenu
+import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import retrofit2.http.GET
 import javax.inject.Inject
 
+private const val TAG = "FoodtruckMenuViewModel_poorrng"
 @HiltViewModel
 class FoodtruckMenuViewModel @Inject constructor(
-
+    private val getMenuListUseCase: GetMenuListUseCase,
+    private val prefManager: PrefManager
 ) : ViewModel() {
     private var _menuList = MutableLiveData<Result<List<Menu>>>()
     val menuList: LiveData<Result<List<Menu>>>
@@ -19,7 +27,19 @@ class FoodtruckMenuViewModel @Inject constructor(
 
     fun getMenuList() {
         viewModelScope.launch {
-            _menuList.postValue(dummyMenuList())
+            val id = prefManager.foodtruckId
+            Log.d(TAG, "getMenuList: $id")
+            if (id >= 0){
+                getMenuListUseCase(id).let { result ->
+                    _menuList.postValue(
+                        result.map { it.map { menuData -> menuData.toMenu() } }
+                    )
+                }
+            } else {
+                _menuList.postValue(
+                    Result.failure(FoorrngException("","푸드트럭 정보 호출에 실패했습니다."))
+                )
+            }
         }
     }
 

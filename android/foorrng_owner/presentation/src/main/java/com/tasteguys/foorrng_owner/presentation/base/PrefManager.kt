@@ -62,6 +62,17 @@ class PrefManager(context: Context) {
         return pref.getString(PREF_REFRESHTOKEN, null)
     }
 
+    var foodtruckId: Long
+        set(value) {
+            pref.edit().apply {
+                putLong(PREF_FOODTRUCKID, value)
+                apply()
+            }
+        }
+        get() {
+            return pref.getLong(PREF_FOODTRUCKID, -1)
+        }
+
     fun setFcmToken(fcmToken: String){
         pref.edit().apply {
             putString(FCM_TOKEN, fcmToken)
@@ -84,6 +95,7 @@ class PrefManager(context: Context) {
 
     companion object{
         private const val PREF_USERID = "user_id"
+        private const val PREF_FOODTRUCKID = "foodtruck_id"
         private const val PREF_ACCESSTOKEN = "access_token"
         private const val PREF_REFRESHTOKEN = "refresh_token"
         private const val FCM_TOKEN = "fcm_token"

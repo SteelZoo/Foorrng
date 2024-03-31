@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.modify.FoodtruckModifyFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
@@ -69,14 +70,17 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
         ).addNavIconClickListener {
             parentFragmentManager.popBackStack()
         }.addMenuItemClickListener {
-            showToast("수정하기")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, FoodtruckModifyFragment())
+                .addToBackStack(null)
+                .commit()
         }.also {
             mainViewModel.changeToolbar(it)
         }
     }
 
     private val dummyFoodtruck = FoodTruckInfo(
-        1, "맛있는 녀석들", "123가1234", "010-1234-1234","화긴",listOf("치킨"), "공지합니다","",
+        1, "맛있는 녀석들", "123가1234", "010-1234-1234","화긴",listOf("치킨"), "공지합니다","","",
         ReviewSet(
             10, listOf(
                 Review("음식이 맛있어요", 9),
