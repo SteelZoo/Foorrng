@@ -11,6 +11,7 @@ import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
@@ -18,14 +19,18 @@ import com.tasteguys.foorrng_owner.presentation.databinding.FragmentMenuEditBind
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.text.SimpleDateFormat
 
+@AndroidEntryPoint
 class MenuEditFragment(
     private val menu: Menu? = null
 ) : MainBaseFragment<FragmentMenuEditBinding>(
     FragmentMenuEditBinding::bind, R.layout.fragment_menu_edit
 ) {
+    private val menuEditViewModel: MenuEditViewModel by viewModels()
+
     private val title = if (menu == null) "메뉴 추가" else "메뉴 수정"
     private var photoFile: File? = null
 
@@ -37,6 +42,29 @@ class MenuEditFragment(
         }
 
         setUi_Listener()
+        registerObserve()
+    }
+
+    private fun registerObserve(){
+        menuEditViewModel.menuRegistResult.observe(viewLifecycleOwner){
+            it.onSuccess {
+                hideLoading()
+                parentFragmentManager.popBackStack()
+            }.onFailure {
+                hideLoading()
+                showToast(it.message.toString())
+            }
+        }
+
+        menuEditViewModel.menuModifyResult.observe(viewLifecycleOwner){
+            it.onSuccess {
+                hideLoading()
+                parentFragmentManager.popBackStack()
+            }.onFailure {
+                hideLoading()
+                showToast(it.message.toString())
+            }
+        }
     }
 
     private fun setUi_Listener() {
@@ -53,7 +81,18 @@ class MenuEditFragment(
     }
 
     private fun setCreateUi() {
+        binding.btnSave.setOnClickListener {
+            val name = binding.etMenuName.text.toString()
+            val price = binding.etMenuPrice.text.toString()
+            val image = photoFile
 
+            if (name.isEmpty() || price.isBlank() || image == null) {
+                showToast("모든 항목을 입력해주세요.")
+            } else {
+                showLoading()
+                menuEditViewModel.registMenu(name, price.toInt(), image)
+            }
+        }
     }
 
     private fun setEditUi() {
@@ -65,6 +104,19 @@ class MenuEditFragment(
 
             binding.etMenuName.setText(it.name)
             binding.etMenuPrice.setText(it.price.toString())
+        }
+
+        binding.btnSave.setOnClickListener {
+            showLoading()
+            val name = binding.etMenuName.text.toString()
+            val price = binding.etMenuPrice.text.toString()
+            val image = photoFile
+
+            if (name.isBlank() || price.isBlank()) {
+                showToast("모든 항목을 입력해주세요.")
+            } else {
+                menuEditViewModel.modifyMenu(menu!!.id, name, price.toInt(), image)
+            }
         }
     }
 

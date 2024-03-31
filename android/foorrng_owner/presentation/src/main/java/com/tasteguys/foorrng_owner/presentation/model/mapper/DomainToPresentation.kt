@@ -2,7 +2,9 @@ package com.tasteguys.foorrng_owner.presentation.model.mapper
 
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.ReviewData
+import com.tasteguys.foorrng_owner.domain.model.menu.MenuData
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
+import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.ReviewSet
 
@@ -26,5 +28,11 @@ fun List<ReviewData>.toReviewSet(totalReview: Int = -1): ReviewSet {
         reviewList = map {
             Review(it.id, it.count)
         }
+    )
+}
+
+fun MenuData.toMenu(): Menu {
+    return Menu(
+        id,pictureUrl,name,price.toInt()
     )
 }
