@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_owner.presentation.foodtruck.regist
+package com.tasteguys.foorrng_owner.presentation.foodtruck.modify
 
 import android.app.Activity
 import android.content.Intent
@@ -17,8 +17,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
-import com.tasteguys.foorrng_owner.presentation.databinding.FragmentRegistFoodtruckBinding
-import com.tasteguys.foorrng_owner.presentation.home.HomeFragment
+import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckModifyBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.MenuCategoryAdapter
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,27 +26,47 @@ import java.io.File
 import java.text.SimpleDateFormat
 
 @AndroidEntryPoint
-class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>(
-    FragmentRegistFoodtruckBinding::bind, R.layout.fragment_regist_foodtruck
+class FoodtruckModifyFragment : MainBaseFragment<FragmentFoodtruckModifyBinding>(
+    FragmentFoodtruckModifyBinding::bind, R.layout.fragment_foodtruck_modify
 ) {
-    private val registFoodtruckViewModel: RegistFoodtruckViewModel by viewModels()
+    private val foodtruckModifyViewModel: FoodtruckModifyViewModel by viewModels()
 
     private var menuCategoryAdapter: MenuCategoryAdapter? = null
 
     private var photoFile: File? = null
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCategoryView()
         setCategoryViewAdapter(dummyCategory.sortedBy { it.length })
 
-
         mainActivity.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             checkBackStackDialog()
         }
 
+        init()
         registerObserve()
         registerListener()
+    }
+
+    private fun init() {
+        mainViewModel.foodtruckInfo.value?.peekContent()?.getOrNull()?.let {
+            binding.tilFoodtruckName.editText!!.setText(it.name)
+            binding.tilCarNumber.editText!!.setText(it.carNumber)
+            binding.tilAccountNumber.editText!!.setText(it.accountInfo)
+            binding.tilCallNumber.editText!!.setText(it.callNumber)
+            binding.tilNotice.editText!!.setText(it.notice)
+            Glide.with(this)
+                .load(it.pictureUrl)
+                .centerCrop()
+                .apply(RequestOptions().circleCrop())
+                .into(binding.ivTruckPhoto)
+            menuCategoryAdapter?.setSelectCategoryList(it.category)
+        } ?: run {
+            showToast("푸드트럭 정보를 불러오는데 실패했습니다.")
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun registerListener() {
@@ -56,25 +76,50 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
     }
 
     private fun registerObserve() {
-        registFoodtruckViewModel.registInfoResult.observe(viewLifecycleOwner) {
+        foodtruckModifyViewModel.foodtruckModifyResult.observe(viewLifecycleOwner) {
             hideLoading()
             it.onSuccess {
-                showToast("등록이 완료되었습니다.")
+                showToast("수정이 완료되었습니다.")
                 mainViewModel.getFoodtruckInfo()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.layout_main_fragment, HomeFragment())
-                    .commit()
+                parentFragmentManager.popBackStack()
             }.onFailure {
                 showToast(it.message ?: "알 수 없는 오류가 발생했습니다.")
             }
         }
     }
 
-    private fun regist() {
+    private fun initCategoryView() {
+        binding.rvMenuCategory.layoutManager = FlexboxLayoutManager(_activity)
+    }
+
+    private fun setCategoryViewAdapter(menuList: List<String>) {
+        if (menuCategoryAdapter == null) {
+            menuCategoryAdapter = MenuCategoryAdapter(menuList)
+        }
+        binding.rvMenuCategory.adapter = menuCategoryAdapter
+    }
+
+    override fun setToolbar() {
+        MainToolbarControl(
+            visible = true,
+            title = "푸드트럭 수정",
+            menuRes = R.menu.menu_check
+        ).addMenuItemClickListener {
+            modify().also {
+                showLoading()
+            }
+        }.addNavIconClickListener {
+            checkBackStackDialog()
+        }.also {
+            mainViewModel.changeToolbar(it)
+        }
+    }
+
+    private fun modify() {
         validateInput()
             .onSuccess {
                 if (menuCategoryAdapter != null) {
-                    registFoodtruckViewModel.registFoodtruck(
+                    foodtruckModifyViewModel.updateFoodtruck(
                         binding.tilFoodtruckName.editText!!.text.toString(),
                         binding.tilCarNumber.editText!!.text.toString(),
                         binding.tilAccountNumber.editText!!.text.toString(),
@@ -111,44 +156,17 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
         return Result.failure(Exception(msg))
     }
 
-    override fun setToolbar() {
-        MainToolbarControl(
-            visible = true,
-            title = resources.getString(R.string.regist_foodtruck_title),
-            menuRes = R.menu.menu_check
-        ).addMenuItemClickListener {
-            regist().also {
-                showLoading()
-            }
-        }.addNavIconClickListener {
-            checkBackStackDialog()
-        }.also {
-            mainViewModel.changeToolbar(it)
-        }
-    }
-
     private fun checkBackStackDialog() {
         MaterialAlertDialogBuilder(_activity)
             .setTitle("등록을 취소하시겠습니까?")
             .setMessage("작성 중인 내용이 모두 삭제되고 앱이 종료됩니다.")
             .setPositiveButton("확인") { _, _ ->
-                mainActivity.finish()
+                parentFragmentManager.popBackStack()
             }
             .setNegativeButton("취소") { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
-    }
-
-    private fun initCategoryView() {
-        binding.rvMenuCategory.layoutManager = FlexboxLayoutManager(_activity)
-    }
-
-    private fun setCategoryViewAdapter(menuList: List<String>) {
-        if (menuCategoryAdapter == null) {
-            menuCategoryAdapter = MenuCategoryAdapter(menuList)
-        }
-        binding.rvMenuCategory.adapter = menuCategoryAdapter
     }
 
 

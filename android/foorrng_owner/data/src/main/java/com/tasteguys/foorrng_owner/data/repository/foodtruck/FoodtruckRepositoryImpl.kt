@@ -33,4 +33,26 @@ class FoodtruckRepositoryImpl @Inject constructor(
     override suspend fun getFoodtruck(): Result<FoodtruckInfoData> {
         return foodtruckRemoteDatasource.getFoodtruck().map { it.toFoodtruckInfoData() }
     }
+
+    override suspend fun updateFoodtruck(
+        foodtruckId: Long,
+        name: String,
+        carNumber: String,
+        accountInfo: String,
+        phoneNumber: String,
+        announcement: String,
+        category: List<String>,
+        picture: File?
+    ): Result<Boolean> {
+        return foodtruckRemoteDatasource.updateFoodtruck(
+            foodtruckId = foodtruckId,
+            name = name,
+            carNumber = carNumber,
+            accountInfo = accountInfo,
+            phoneNumber = phoneNumber,
+            announcement = announcement,
+            category = category,
+            picture = picture
+        )
+    }
 }

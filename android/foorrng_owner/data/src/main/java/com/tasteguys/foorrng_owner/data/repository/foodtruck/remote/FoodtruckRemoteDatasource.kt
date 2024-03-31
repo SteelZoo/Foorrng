@@ -15,4 +15,15 @@ interface FoodtruckRemoteDatasource {
     ) : Result<Boolean>
 
     suspend fun getFoodtruck() : Result<FoodtruckDetailResponse>
+
+    suspend fun updateFoodtruck(
+        foodtruckId: Long,
+        name: String,
+        carNumber: String,
+        accountInfo: String,
+        phoneNumber: String,
+        announcement: String,
+        category: List<String>,
+        picture: File?
+    ) : Result<Boolean>
 }

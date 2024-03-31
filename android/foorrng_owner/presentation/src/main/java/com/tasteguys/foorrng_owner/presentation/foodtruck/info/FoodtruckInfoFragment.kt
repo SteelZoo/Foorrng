@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentFoodtruckInfoBinding
+import com.tasteguys.foorrng_owner.presentation.foodtruck.modify.FoodtruckModifyFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
@@ -69,7 +70,10 @@ class FoodtruckInfoFragment : MainBaseFragment<FragmentFoodtruckInfoBinding>(
         ).addNavIconClickListener {
             parentFragmentManager.popBackStack()
         }.addMenuItemClickListener {
-            showToast("수정하기")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, FoodtruckModifyFragment())
+                .addToBackStack(null)
+                .commit()
         }.also {
             mainViewModel.changeToolbar(it)
         }
