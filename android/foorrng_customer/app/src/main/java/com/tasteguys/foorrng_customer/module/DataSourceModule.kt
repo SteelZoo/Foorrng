@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.module
 
+import com.tasteguys.foorrng_customer.data.repository.festival.remote.FestivalRemoteDataSource
+import com.tasteguys.foorrng_customer.data.repository.festival.remote.FestivalRemoteDataSourceImpl
 import com.tasteguys.foorrng_customer.data.repository.food.FoodCategoryRepositoryImpl
 import com.tasteguys.foorrng_customer.data.repository.food.local.FoodCategoryLocalDataSource
 import com.tasteguys.foorrng_customer.data.repository.food.local.FoodCategoryLocalDataSourceImpl
@@ -33,5 +35,9 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindFoodCategoryRemoteDataSource(foodCategoryRemoteDataSourceImpl: FoodCategoryRemoteDataSourceImpl): FoodCategoryRemoteDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindFestivalRemoteDataSource(festivalRemoteDataSourceImpl: FestivalRemoteDataSourceImpl): FestivalRemoteDataSource
 
 }

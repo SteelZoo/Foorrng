@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.mapper
 
 import com.tasteguys.foorrng_customer.data.model.FoodCategoryEntity
+import com.tasteguys.foorrng_customer.data.model.festival.FestivalResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMarkResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
@@ -13,6 +14,7 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateRespon
 import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.data.model.user.UserResponse
+import com.tasteguys.foorrng_customer.domain.model.festival.FestivalData
 import com.tasteguys.foorrng_customer.domain.model.food.FoodCategoryData
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
@@ -92,5 +94,11 @@ fun TruckRegisterOperationResponse.toDomain() = TruckDetailMarkData(
 
 fun FoodCategoryEntity.toDomain(): FoodCategoryData{
     return FoodCategoryData(name)
+}
+
+fun FestivalResponse.toDomain(): FestivalData{
+    return FestivalData(
+        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+    )
 }
 
