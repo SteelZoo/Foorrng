@@ -40,16 +40,15 @@ public class MenuController {
     private final FoodtruckService foodtrucksService;
     private final FoodtrucksRepository foodtrucksRepository;
 
-    @PostMapping("/regist/{foodtruckId}")
+    @PostMapping("/regist")
     @ApiResponse(responseCode = "201", description = "매뉴 생성 성공")
     public ResponseEntity<? extends BaseResponseBody> createMenu(
             Authentication authentication,
-            @PathVariable("foodtruckId") Long foodtruckSeq,
             @Valid @RequestPart("menuRequestDto") @Parameter(name = "menuRequestDto", description = "메뉴 정보") MenuRequestDto menuRequestDto,
             @RequestPart(value = "picture", required = false) @Parameter(name = "picture", description = "업로드 하고자 하는 메뉴 사진 파일") MultipartFile picture
     ) throws IOException {
 
-        Foodtrucks foodtrucks = foodtrucksRepository.findById(foodtruckSeq)
+        Foodtrucks foodtrucks = foodtrucksRepository.findById(menuRequestDto.getFoodtruck())
                 .orElseThrow(() -> new Exceptions(ErrorCode.FOODTRUCK_NOT_EXIST));
 
 
