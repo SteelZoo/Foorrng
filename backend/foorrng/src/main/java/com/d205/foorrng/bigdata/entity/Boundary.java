@@ -9,7 +9,8 @@ import java.util.Map;
 @Entity
 @Getter
 @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Boundary {
 
     @Id

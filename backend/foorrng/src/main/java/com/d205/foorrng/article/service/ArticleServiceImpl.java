@@ -32,6 +32,7 @@ import org.springframework.web.servlet.tags.ArgumentTag;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,7 +75,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(articleDto.getOrganizer())
                     .startDate(articleDto.getStartDate())
                     .endDate(articleDto.getEndDate())
-                    .picture(mainImgUrl)
+                    .mainImage(mainImgUrl)
                     .build();
             articlePostRepository.save(article);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 업데이트 됐습니다."));
@@ -88,6 +89,8 @@ public class ArticleServiceImpl implements ArticleService{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(1, "서버 내부 오류: " + e.getMessage()));
         }
     }
+
+
 
     @Transactional
     @Override
@@ -121,7 +124,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(article.getOrganizer())
                     .startDate(article.getStartDate())
                     .endDate(article.getEndDate())
-                    .picture(mainImgUrl)
+                    .mainImage(mainImgUrl)
                     .build();
             articlePostRepository.save(articleForSave);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 저장"));
@@ -156,7 +159,7 @@ public class ArticleServiceImpl implements ArticleService{
                 article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
         , article.getLatitude(), article.getLongitude(), article.getPhone(),
                 article.getEmail(), article.getKakaoID(), article.getOrganizer(),
-                article.getStartDate(), article.getEndDate(), article.getAddress());
+                article.getStartDate(), article.getEndDate(), article.getAddress(),article.getMainImage());
 
 
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDto));
@@ -202,9 +205,34 @@ public class ArticleServiceImpl implements ArticleService{
                     article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
                     , article.getLatitude(), article.getLongitude(), article.getPhone(),
                     article.getEmail(), article.getKakaoID(), article.getOrganizer(),
-                    article.getStartDate(), article.getEndDate(), article.getAddress());
+                    article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
             articleResDtoList.add(articleResDto);
         }
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
     }
+    @Override
+    public ResponseEntity<BaseResponseBody> getMyArticleList(Long userId) {
+        List<Article> articles = articlePostRepository.findAll();
+        List<ArticleResDto> articleResDtoList = new ArrayList<>();
+//        Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
+//        if (!currentUsername.isPresent()) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "User authentication failed"));
+//        }
+//        Long userId = Long.parseLong(currentUsername.get());
+        for (int i = 0; i < articles.size(); i++) {
+            Article article = articles.get(i);
+            logger.info(article.getUser().getId().toString());
+            logger.info(article.getUser().getUserUid().toString());
+            if (article.getUser().getId().equals(userId)){
+                ArticleResDto articleResDto = ArticleResDto.of(
+                        article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
+                        , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                        article.getEmail(), article.getKakaoID(), article.getOrganizer(),
+                        article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
+                articleResDtoList.add(articleResDto);
+            }
+        }
+        return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
+    }
+
 }
