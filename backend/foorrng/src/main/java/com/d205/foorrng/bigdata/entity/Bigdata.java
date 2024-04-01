@@ -18,10 +18,13 @@ public class Bigdata {
     @Column(name = "bigdata_seq")
     private Long id;
 
-    private String city; // 시
+    private String city; // 동
 
-    private String distract; // 군, 구
+    private String food;
 
-    private String town; // 동
+    private Double score;
+//    private String distract; // 군, 구
+
+//    private String town; // 동
     
 }
