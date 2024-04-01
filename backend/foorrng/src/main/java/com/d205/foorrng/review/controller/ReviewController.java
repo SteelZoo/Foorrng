@@ -1,7 +1,10 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.controller;
 
 import com.d205.foorrng.common.model.BaseResponseBody;
 import com.d205.foorrng.foodtruck.repository.FoodtrucksRepository;
+import com.d205.foorrng.review.request.ReviewReqDto;
+import com.d205.foorrng.review.response.ReviewResDto;
+import com.d205.foorrng.review.service.ReviewService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;

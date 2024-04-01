@@ -210,6 +210,7 @@ public class ArticleServiceImpl implements ArticleService{
         }
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
     }
+
     @Override
     public ResponseEntity<BaseResponseBody> getMyArticleList() {
 //        List<Article> articles = articlePostRepository.findAll();

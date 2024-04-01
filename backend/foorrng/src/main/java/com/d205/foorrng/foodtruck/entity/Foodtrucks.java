@@ -3,7 +3,7 @@ package com.d205.foorrng.foodtruck.entity;
 import com.d205.foorrng.food.Food;
 import com.d205.foorrng.mark.Mark;
 import com.d205.foorrng.requestDelete.RequestDelete;
-import com.d205.foorrng.review.Review;
+import com.d205.foorrng.review.entity.Review;
 import com.d205.foorrng.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -29,13 +29,6 @@ public class Foodtrucks {
     @ManyToOne
     @JoinColumn(name = "user_seq")
     private User user;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Foodtruck> foodtruck;
-
-    @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FoodtruckReport> foodtruckReport;
 
     @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Food> foods;
