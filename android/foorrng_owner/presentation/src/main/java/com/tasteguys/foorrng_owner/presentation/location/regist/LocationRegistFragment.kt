@@ -11,6 +11,7 @@ import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.CircleOverlay
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.GeoManager
 import com.tasteguys.foorrng_owner.presentation.base.LocationProviderController
@@ -37,7 +38,7 @@ class LocationRegistFragment(
     private val locationRegistViewModel: LocationRegistViewModel by viewModels()
 
     private lateinit var locationProviderController: LocationProviderController
-    private var map: NaverMap? = null
+    private var naverMap: NaverMap? = null
 
     private lateinit var weekDaySelectManager: WeekDaySelectManager
     private var runLocationAdapter: RegistDayAdapter? = null
@@ -70,18 +71,27 @@ class LocationRegistFragment(
         registerListener()
         registerObserve()
         if (recommentLocation != null) {
-            map?.moveCamera(
+            naverMap?.moveCamera(
                 CameraUpdate.scrollTo(recommentLocation.latLng).finishCallback {
-                    map?.moveCamera(
-                        CameraUpdate.zoomTo(16.0)
+                    naverMap?.moveCamera(
+                        CameraUpdate.zoomTo(14.0)
                     )
                 }
             )
+            CircleOverlay().apply {
+                center = recommentLocation.latLng
+                radius = 800.0
+                color = resources.getColor(R.color.recommend_overlay_solid_green, null)
+                outlineColor = resources.getColor(R.color.recommend_overlay_line_green, null)
+                outlineWidth = 3
+                map = naverMap
+            }
+
         } else {
             locationProviderController.getCurrnetLocation { task ->
                 hideLoading()
                 task.addOnSuccessListener {
-                    map?.moveCamera(
+                    naverMap?.moveCamera(
                         CameraUpdate.scrollTo(
                             LatLng(it.latitude, it.longitude)
                         )
@@ -164,9 +174,10 @@ class LocationRegistFragment(
     }
 
     private val mapCallback = OnMapReadyCallback { naverMap ->
+        this.naverMap = naverMap
         init()
 
-        map = naverMap.apply {
+        this.naverMap = naverMap.apply {
             // 한반도 영역 제한
             extent = LatLngBounds(LatLng(31.43, 122.37), LatLng(44.35, 132.0))
             uiSettings.apply {

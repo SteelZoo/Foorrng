@@ -90,7 +90,7 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
     }
 
     private val naviClickListener: (RunLocationInfo) -> Unit = {
-        NavDialog(mainActivity,it).show()
+        NavDialog(mainActivity,it.latLng.latitude,it.latLng.longitude,it.address).show()
     }
 
     private val itemClickListener: (RunLocationInfo) -> Unit = { runLocationInfo ->

@@ -12,8 +12,12 @@ import com.tasteguys.foorrng_owner.presentation.databinding.DialogNavigationBind
 import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
 
 
-class NavDialog(private val context: Context, private val runLocationInfo: RunLocationInfo) :
-    Dialog(context) {
+class NavDialog(
+    private val context: Context,
+    private val latitude: Double,
+    private val longitude: Double,
+    private val address: String
+) : Dialog(context) {
 
     private var binding: DialogNavigationBinding =
         DialogNavigationBinding.inflate(LayoutInflater.from(context))
@@ -37,7 +41,7 @@ class NavDialog(private val context: Context, private val runLocationInfo: RunLo
     private fun callNaverMap() {
         binding.layoutNaverMap.setOnClickListener {
             val url =
-                "nmap://route/car?dlat=${runLocationInfo.latLng.latitude}&dlng=${runLocationInfo.latLng.longitude}&dname=${runLocationInfo.address}&appname=com.tasteguys.foorrng_owner"
+                "nmap://route/car?dlat=${latitude}&dlng=${longitude}&dname=${address}&appname=com.tasteguys.foorrng_owner"
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             intent.addCategory(Intent.CATEGORY_BROWSABLE)
@@ -52,7 +56,6 @@ class NavDialog(private val context: Context, private val runLocationInfo: RunLo
                     )
                 );
             }
-
 
             this.dismiss()
         }
