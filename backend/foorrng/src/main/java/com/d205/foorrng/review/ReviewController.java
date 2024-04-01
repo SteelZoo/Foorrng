@@ -7,8 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +29,12 @@ public class ReviewController {
             @Valid @Parameter(name ="reviewReqDto", description = "리뷰 정보") @RequestBody ReviewReqDto reviewReqDto){
 
         ReviewResDto reviewId = reviewService.createReview(foodtrucksSeq, reviewReqDto);
-        return ResponseEntity.status(HttpStatus.SC_CREATED).body(BaseResponseBody.of(0, reviewId));
+        return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, reviewId));
     }
 
     @GetMapping("/{foodtruckId}/list")
     @ApiResponse(responseCode = "200", description = "리뷰 리스트 조회 성공")
     public ResponseEntity<? extends BaseResponseBody> getReview(@PathVariable("foodtruckId") Long foodtruckSeq){
-     return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, reviewService.getReviews(foodtruckSeq)));
+     return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, reviewService.getReviews(foodtruckSeq)));
     }
 }
