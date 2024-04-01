@@ -29,7 +29,7 @@ public class FestivalService {
 
     @Transactional
     public List<Festival> searchFestivalInThisMonth() {
-        String thisMonth = String.valueOf(Integer.parseInt(LocalDate.now(ZoneId.of("Asia/Seoul")).toString().substring(5, 7)) + 1);
+        String thisMonth = String.valueOf(Integer.parseInt(LocalDate.now(ZoneId.of("Asia/Seoul")).toString().substring(5, 7)));
 
         List<Festival> festivalList = festivalRepository.findAllByPeriod(thisMonth);
 

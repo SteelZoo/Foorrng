@@ -3,16 +3,8 @@ package com.d205.foorrng.article.controller;
 
 import com.d205.foorrng.article.dto.request.ArticleReqDto;
 import com.d205.foorrng.article.dto.request.ArticleUpdateReqDto;
-import com.d205.foorrng.article.dto.response.ArticleListResDto;
-import com.d205.foorrng.article.dto.response.ArticleResDto;
 import com.d205.foorrng.article.service.ArticleService;
-import com.d205.foorrng.article.service.ArticleServiceImpl;
-import com.d205.foorrng.common.exception.ErrorCode;
-import com.d205.foorrng.common.exception.Exceptions;
 import com.d205.foorrng.common.model.BaseResponseBody;
-import com.d205.foorrng.user.entity.User;
-import com.d205.foorrng.user.repository.UserRepository;
-import com.d205.foorrng.util.SecurityUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,16 +12,11 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Tag(name = "Article ", description = "관련 api ")
@@ -60,11 +47,11 @@ public class ArticleController {
     public ResponseEntity<? extends BaseResponseBody> searchArticle(@PathVariable("article-id") Long articleId) {
         return articleService.searchArticle(articleId);
     }
-    @GetMapping(value = "/my/list/{user-id}")
+    @GetMapping(value = "/my/list/")
     @Operation(summary = "내 게시글 조회",description = "내 게시글만 볼 수 있습니다. ")
     @ApiResponse(responseCode = "200",description = "성공")
-    public ResponseEntity<? extends BaseResponseBody> responseEntity(@PathVariable("user-id") Long userId){
-        return articleService.getMyArticleList(userId);
+    public ResponseEntity<? extends BaseResponseBody> responseEntity(){
+        return articleService.getMyArticleList();
     }
 
     @DeleteMapping("/delete/{article-id}")
@@ -89,6 +76,5 @@ public class ArticleController {
             @RequestPart(value = "mainImage") MultipartFile mainImage) {
         return articleService.saveArticle(articleReqDto, mainImage);
     }
-
 
 }

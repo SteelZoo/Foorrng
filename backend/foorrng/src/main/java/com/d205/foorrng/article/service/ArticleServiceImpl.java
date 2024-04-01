@@ -90,8 +90,6 @@ public class ArticleServiceImpl implements ArticleService{
         }
     }
 
-
-
     @Transactional
     @Override
     public ResponseEntity<BaseResponseBody> saveArticle(ArticleReqDto article, MultipartFile mainImage) {
@@ -106,6 +104,8 @@ public class ArticleServiceImpl implements ArticleService{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "사용자 인증 실패"));
             }
             Long userId = Long.parseLong(currentUsername.get());
+            logger.info(userId.toString()+"WERWERWER");
+
             Optional<User> userOptional = userRepository.findByUserUid(userId);
             if (!userOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(1, "사용자를 찾을 수 없음"));
@@ -210,27 +210,36 @@ public class ArticleServiceImpl implements ArticleService{
         }
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
     }
+
     @Override
-    public ResponseEntity<BaseResponseBody> getMyArticleList(Long userId) {
-        List<Article> articles = articlePostRepository.findAll();
+    public ResponseEntity<BaseResponseBody> getMyArticleList() {
+//        List<Article> articles = articlePostRepository.findAll();
+
         List<ArticleResDto> articleResDtoList = new ArrayList<>();
-//        Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
-//        if (!currentUsername.isPresent()) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "User authentication failed"));
-//        }
+        Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
+        User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
+        Long userId = user.getId();
+        if (!currentUsername.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "User authentication failed"));
+        }
 //        Long userId = Long.parseLong(currentUsername.get());
+        logger.info(userId.toString()+"ASDF");
+
+        List<Article> articles = articlePostRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("user not found with id "));
+
         for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
             logger.info(article.getUser().getId().toString());
             logger.info(article.getUser().getUserUid().toString());
-            if (article.getUser().getId().equals(userId)){
-                ArticleResDto articleResDto = ArticleResDto.of(
-                        article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
-                        , article.getLatitude(), article.getLongitude(), article.getPhone(),
-                        article.getEmail(), article.getKakaoID(), article.getOrganizer(),
-                        article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
-                articleResDtoList.add(articleResDto);
-            }
+//            if (article.getUser().getId().equals(userId)){
+            ArticleResDto articleResDto = ArticleResDto.of(
+                    article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
+                    , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                    article.getEmail(), article.getKakaoID(), article.getOrganizer(),
+                    article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
+            articleResDtoList.add(articleResDto);
+//            }
         }
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
     }

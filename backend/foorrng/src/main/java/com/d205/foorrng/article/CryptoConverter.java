@@ -14,7 +14,6 @@ public class CryptoConverter implements AttributeConverter<String,String> {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public String convertToEntityAttribute(String attribute) {
         if (attribute == null) return null;
