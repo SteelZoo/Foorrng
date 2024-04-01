@@ -1,6 +1,7 @@
-package com.d205.foorrng.bigdata;
+package com.d205.foorrng.bigdata.controller;
 
 
+import com.d205.foorrng.bigdata.service.BigdataService;
 import com.d205.foorrng.common.model.BaseResponseBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;

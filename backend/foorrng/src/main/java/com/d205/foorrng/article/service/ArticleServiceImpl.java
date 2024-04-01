@@ -32,6 +32,7 @@ import org.springframework.web.servlet.tags.ArgumentTag;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -74,7 +75,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(articleDto.getOrganizer())
                     .startDate(articleDto.getStartDate())
                     .endDate(articleDto.getEndDate())
-                    .picture(mainImgUrl)
+                    .mainImage(mainImgUrl)
                     .build();
             articlePostRepository.save(article);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 업데이트 됐습니다."));
@@ -103,6 +104,8 @@ public class ArticleServiceImpl implements ArticleService{
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "사용자 인증 실패"));
             }
             Long userId = Long.parseLong(currentUsername.get());
+            logger.info(userId.toString()+"WERWERWER");
+
             Optional<User> userOptional = userRepository.findByUserUid(userId);
             if (!userOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(1, "사용자를 찾을 수 없음"));
@@ -121,7 +124,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(article.getOrganizer())
                     .startDate(article.getStartDate())
                     .endDate(article.getEndDate())
-                    .picture(mainImgUrl)
+                    .mainImage(mainImgUrl)
                     .build();
             articlePostRepository.save(articleForSave);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 저장"));
@@ -156,7 +159,7 @@ public class ArticleServiceImpl implements ArticleService{
                 article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
         , article.getLatitude(), article.getLongitude(), article.getPhone(),
                 article.getEmail(), article.getKakaoID(), article.getOrganizer(),
-                article.getStartDate(), article.getEndDate(), article.getAddress());
+                article.getStartDate(), article.getEndDate(), article.getAddress(),article.getMainImage());
 
 
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDto));
@@ -202,9 +205,42 @@ public class ArticleServiceImpl implements ArticleService{
                     article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
                     , article.getLatitude(), article.getLongitude(), article.getPhone(),
                     article.getEmail(), article.getKakaoID(), article.getOrganizer(),
-                    article.getStartDate(), article.getEndDate(), article.getAddress());
+                    article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
             articleResDtoList.add(articleResDto);
         }
         return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
     }
+    @Override
+    public ResponseEntity<BaseResponseBody> getMyArticleList() {
+//        List<Article> articles = articlePostRepository.findAll();
+
+        List<ArticleResDto> articleResDtoList = new ArrayList<>();
+        Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
+        User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
+        Long userId = user.getId();
+        if (!currentUsername.isPresent()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(BaseResponseBody.of(1, "User authentication failed"));
+        }
+//        Long userId = Long.parseLong(currentUsername.get());
+        logger.info(userId.toString()+"ASDF");
+
+        List<Article> articles = articlePostRepository.findAllByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("user not found with id "));
+
+        for (int i = 0; i < articles.size(); i++) {
+            Article article = articles.get(i);
+            logger.info(article.getUser().getId().toString());
+            logger.info(article.getUser().getUserUid().toString());
+//            if (article.getUser().getId().equals(userId)){
+            ArticleResDto articleResDto = ArticleResDto.of(
+                    article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
+                    , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                    article.getEmail(), article.getKakaoID(), article.getOrganizer(),
+                    article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
+            articleResDtoList.add(articleResDto);
+//            }
+        }
+        return ResponseEntity.ok(BaseResponseBody.of(0, articleResDtoList));
+    }
+
 }

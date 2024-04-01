@@ -47,8 +47,10 @@ public enum ErrorCode {
     REVIEW_TODAY_EXIST(HttpStatus.BAD_REQUEST, "R-001", "이미 작성한 리뷰입니다"),
 
     // 축제
-    FESTIVAL_NOT_EXIST(HttpStatus.BAD_REQUEST, "FV-001", "축제가 존재하지 않습니다.")
+    FESTIVAL_NOT_EXIST(HttpStatus.BAD_REQUEST, "FV-001", "축제가 존재하지 않습니다."),
 
+    // 지역
+    BOUNDARY_NOT_EXIST(HttpStatus.BAD_REQUEST, "B-001", "지역경계 정보가 없습니다.")
     ;
 
     // 상태, 에러 코드, 메시지

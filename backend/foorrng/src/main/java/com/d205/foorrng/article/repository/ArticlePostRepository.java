@@ -16,6 +16,7 @@ public interface ArticlePostRepository extends JpaRepository<Article, Long>{
     @Override
     Optional<Article> findById(Long articleId);
 
+    Optional<List<Article>> findAllByUserId(Long userId);
 
     //리스트 반환
     @Override

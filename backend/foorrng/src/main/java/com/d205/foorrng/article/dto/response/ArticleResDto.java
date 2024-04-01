@@ -35,19 +35,23 @@ public class ArticleResDto {
     private Long endDate;
     @NotBlank
     private String address;
+
+    private String mainImage;
+
     public static ArticleResDto of(long articleId, long userId, String title,
                                    String content, double latitude, double longitude,
                                    String phone, String email, String kakaoId,
-                                   String organizer, long startDate, long endDate, String address){
+                                   String organizer, long startDate, long endDate, String address,String mainImage){
         return builder().articleId(articleId).userId(userId).title(title)
                 .content(content).latitude(latitude).longitude(longitude)
                 .phone(phone).email(email).kakaoId(kakaoId)
-                .organizer(organizer).startDate(startDate).endDate(endDate).address(address)
+                .organizer(organizer).startDate(startDate).endDate(endDate).address(address).mainImage(mainImage)
                 .build();
     }
 
     @Builder
-    public ArticleResDto(long articleId, long userId, String title, String content, double latitude, double longitude, String phone, String email, String kakaoId, String organizer, long startDate, long endDate, String address) {
+    public ArticleResDto(long articleId, long userId, String title, String content, double latitude, double longitude, String phone, String email, String kakaoId,
+                         String organizer, long startDate, long endDate, String address,String mainImage) {
         this.articleId = articleId;
         this.userId = userId;
         this.title = title;
@@ -61,5 +65,7 @@ public class ArticleResDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.address = address;
+        this.mainImage = mainImage;
     }
+
 }

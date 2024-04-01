@@ -60,6 +60,12 @@ public class ArticleController {
     public ResponseEntity<? extends BaseResponseBody> searchArticle(@PathVariable("article-id") Long articleId) {
         return articleService.searchArticle(articleId);
     }
+    @GetMapping(value = "/my/list/")
+    @Operation(summary = "내 게시글 조회",description = "내 게시글만 볼 수 있습니다. ")
+    @ApiResponse(responseCode = "200",description = "성공")
+    public ResponseEntity<? extends BaseResponseBody> responseEntity(){
+        return articleService.getMyArticleList();
+    }
 
     @DeleteMapping("/delete/{article-id}")
     @Operation(summary = "게시글 삭제", description = "게시글을 수정합니다.")

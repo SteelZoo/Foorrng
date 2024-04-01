@@ -30,30 +30,29 @@ public class MenuServiceImpl implements MenuService {
     private final S3Image imageSave;
 
     @Override
-    @Transactional
-    public MenuResDto createMenu(Optional<Foodtrucks> foodtrucks_seq, MenuRequestDto menuRequestDto, MultipartFile picture) throws IOException {
-        Foodtrucks foodtrucks = foodtrucks_seq.get();
+    public MenuResDto createMenu(Long foodtrucks_seq, MenuRequestDto menuResquestDto, MultipartFile picture) throws IOException {
+        Foodtrucks foodtrucks = foodtrucksRepository.findById(foodtrucks_seq)
+                .orElseThrow(() -> new Exceptions(ErrorCode.FOODTRUCK_NOT_EXIST));;
 
         // 메뉴 저장하기
         Menu menu = Menu.builder()
-                .name(menuRequestDto.getName())
-                .price(menuRequestDto.getPrice())
+                .name(menuResquestDto.getName())
+                .price(menuResquestDto.getPrice())
                 .foodtrucks(foodtrucks)
                 .build();
 
         // 이미지 s3에 저장하기
         String imgUrl = "";
         if(picture != null) {
-            String imgName = "menuIMG/" + menuRequestDto.getName() + ".png"; // 확장명
+            String imgName = "menuIMG/" + menuResquestDto.getName() + ".png"; // 확장명
             String dir = "/menuIMG";
-             imgUrl = imageSave.saveImageS3(picture, imgName,dir);
+            imgUrl = imageSave.saveImageS3(picture, imgName,dir);
         }
         menu.changePicture(imgUrl);
         menuRepository.save(menu);
 
         return MenuResDto.fromEntity(menu);
     }
-
 
     // 모든 메뉴 조회하기
     @Override
@@ -107,11 +106,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteMenu(Long menu_seq) {
-        Optional<Menu> menu = menuRepository.findById(menu_seq);
-        // 메뉴가 없을 경우 예외 처리
-        if(menu.isEmpty())
-            throw new Exceptions(ErrorCode.MENU_NOT_FOUND);
+    public int deleteMenu(Long menu_seq) throws IOException {
+        Menu menu = menuRepository.findById(menu_seq)
+                .orElseThrow(() -> new Exceptions(ErrorCode.MENU_NOT_FOUND));
+
         menuRepository.deleteById(menu_seq);
+        return 1;
     }
 }

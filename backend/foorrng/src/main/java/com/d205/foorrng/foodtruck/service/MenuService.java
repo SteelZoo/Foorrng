@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface MenuService {
 
     // 메뉴 생성
-    MenuResDto createMenu(Optional<Foodtrucks> foodtrucks_seq, MenuRequestDto menuResquestDto, MultipartFile multipartFile) throws IOException;
+    MenuResDto createMenu(Long foodtrucks_seq, MenuRequestDto menuResquestDto, MultipartFile picture) throws IOException;
 
     // 모든 메뉴 조회
     List<MenuResDto> findAllMenus();
@@ -21,10 +21,10 @@ public interface MenuService {
     List<MenuResDto> getMenus(Long foodtrucks_seq);
 
     // 메뉴 수정
-    MenuResDto updateMenu(Long menu_seq, MenuRequestDto menuRequestDto, MultipartFile multipartFile) throws IOException;
+    MenuResDto updateMenu(Long menu_seq, MenuRequestDto menuRequestDto, MultipartFile picture) throws IOException;
 
     // 메뉴 삭제
-    void deleteMenu(Long menu_seq);
+    int deleteMenu(Long menu_seq) throws IOException;
 
 
 }
