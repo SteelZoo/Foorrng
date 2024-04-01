@@ -24,7 +24,7 @@ public interface MenuService {
     MenuResDto updateMenu(Long menu_seq, MenuRequestDto menuRequestDto, MultipartFile picture) throws IOException;
 
     // 메뉴 삭제
-    void deleteMenu(Long menu_seq);
+    int deleteMenu(Long menu_seq) throws IOException;
 
 
 }

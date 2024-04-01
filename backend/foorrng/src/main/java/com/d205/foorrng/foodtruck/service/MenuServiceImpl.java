@@ -106,11 +106,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteMenu(Long menu_seq) {
-        Optional<Menu> menu = menuRepository.findById(menu_seq);
-        // 메뉴가 없을 경우 예외 처리
-        if(menu.isEmpty())
-            throw new Exceptions(ErrorCode.MENU_NOT_FOUND);
+    public int deleteMenu(Long menu_seq) throws IOException {
+        Menu menu = menuRepository.findById(menu_seq)
+                .orElseThrow(() -> new Exceptions(ErrorCode.MENU_NOT_FOUND));
+
         menuRepository.deleteById(menu_seq);
+        return 1;
     }
 }
