@@ -28,6 +28,9 @@ public interface ArticleService {
 
     ResponseEntity<BaseResponseBody> updateArticle(ArticleUpdateReqDto article, MultipartFile image);
 
+    // 내 게시글만 조회
+    ResponseEntity<BaseResponseBody> getMyArticleList(Long userId);
+
 
     //게시글 조회
     ResponseEntity<BaseResponseBody> searchArticle(Long articleId);

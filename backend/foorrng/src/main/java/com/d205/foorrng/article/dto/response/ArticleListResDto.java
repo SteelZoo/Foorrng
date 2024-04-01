@@ -16,6 +16,6 @@ public class ArticleListResDto {
     private double latitude;
     private double longitude;
     private String address;
-    private String image;
+    private String mainImage;
 
 }

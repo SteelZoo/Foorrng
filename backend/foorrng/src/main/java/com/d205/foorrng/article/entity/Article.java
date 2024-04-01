@@ -72,7 +72,8 @@ public class Article {
     private String address;
 
 
-    private String picture;             // 행사 이미지
+    private String mainImage;             // 행사 이미지
+
 }
 
 
