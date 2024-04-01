@@ -31,13 +31,6 @@ public class Foodtrucks {
     @JoinColumn(name = "user_seq")
     private User user;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Foodtruck> foodtruck;
-
-    @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<FoodtruckReport> foodtruckReport;
-
     @OneToMany(mappedBy = "foodtrucks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Food> foods;
 

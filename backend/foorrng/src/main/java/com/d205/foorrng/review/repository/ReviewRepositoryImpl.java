@@ -1,5 +1,6 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.repository;
 
+import com.d205.foorrng.review.repository.ReviewRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 

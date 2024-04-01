@@ -1,4 +1,4 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.repository;
 
 public interface ReviewRepositoryCustom {
     Long countDeliciousReviewsByFoodtruckId(Long foodtruckSeq);

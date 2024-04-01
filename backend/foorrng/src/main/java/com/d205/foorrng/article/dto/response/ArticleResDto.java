@@ -50,7 +50,8 @@ public class ArticleResDto {
     }
 
     @Builder
-    public ArticleResDto(long articleId, long userId, String title, String content, double latitude, double longitude, String phone, String email, String kakaoId,
+    public ArticleResDto(long articleId, long userId, String title, String content, double latitude, double longitude,
+                         String phone, String email, String kakaoId,
                          String organizer, long startDate, long endDate, String address,String mainImage) {
         this.articleId = articleId;
         this.userId = userId;
