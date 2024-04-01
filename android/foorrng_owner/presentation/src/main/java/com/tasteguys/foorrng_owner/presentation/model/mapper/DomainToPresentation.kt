@@ -1,11 +1,13 @@
 package com.tasteguys.foorrng_owner.presentation.model.mapper
 
 import com.naver.maps.geometry.LatLng
+import com.tasteguys.foorrng_owner.domain.model.ArticleData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.ReviewData
 import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
 import com.tasteguys.foorrng_owner.domain.model.mark.OperationInfoData
 import com.tasteguys.foorrng_owner.domain.model.menu.MenuData
+import com.tasteguys.foorrng_owner.presentation.model.article.Article
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
@@ -68,3 +70,7 @@ fun oneKoreanLetterTodayOfWeek(string: String): DayOfWeek{
         else -> throw IllegalArgumentException("Invalid DayOfWeek String")
     }
 }
+
+fun ArticleData.toArticle() = Article(
+    articleId,userId,title,content,LatLng(latitude,longitude),phone,email,kakaoId,organizer,startDate,endDate,address,mainImage
+)

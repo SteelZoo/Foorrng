@@ -1,11 +1,13 @@
 package com.tasteguys.foorrng_owner.data.mapper
 
+import com.tasteguys.foorrng_owner.data.model.article.ArticleResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.ReviewResponse
 import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import com.tasteguys.foorrng_owner.data.model.mark.OperationInfoResponse
 import com.tasteguys.foorrng_owner.data.model.menu.MenuResponse
 import com.tasteguys.foorrng_owner.data.model.user.LoginResponse
+import com.tasteguys.foorrng_owner.domain.model.ArticleData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.ReviewData
 import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
@@ -52,4 +54,21 @@ fun MarkResponse.toMarkData() = MarkData(
 
 fun OperationInfoResponse.toOperationInfoData() = OperationInfoData(
     day, startTime, endTime
+)
+
+fun ArticleResponse.toArticleData() = ArticleData(
+    articleId = articleId,
+    userId = userId,
+    title = title,
+    content = content,
+    latitude = latitude,
+    longitude = longitude,
+    phone = phone,
+    email = email,
+    kakaoId = kakaoId,
+    organizer = organizer,
+    startDate = startDate,
+    endDate = endDate,
+    address = address,
+    mainImage = mainImage
 )

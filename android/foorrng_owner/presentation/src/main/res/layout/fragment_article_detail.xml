@@ -40,6 +40,7 @@
                 style="@style/Foorrng.TEXT.EB.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/article_title_date"
                 android:textColor="@color/foorrng_orange_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,6 +60,7 @@
                 style="@style/Foorrng.TEXT.EB.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/article_title_contract"
                 android:textColor="@color/foorrng_orange_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -157,6 +159,7 @@
                 style="@style/Foorrng.TEXT.EB.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/article_title_detail"
                 android:textColor="@color/foorrng_orange_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -175,6 +178,7 @@
                 style="@style/Foorrng.TEXT.EB.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="@string/article_title_location"
                 android:textColor="@color/foorrng_orange_dark"
                 app:layout_constraintStart_toStartOf="parent"
@@ -185,11 +189,11 @@
                 android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1"
-                app:layout_constraintTop_toBottomOf="@id/view_article_location"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view_article_location" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
