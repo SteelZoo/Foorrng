@@ -75,7 +75,8 @@ public class MenuController {
     @DeleteMapping("/{menuId}")
     @ApiResponse(responseCode = "204", description = "푸드트럭 메뉴 삭제 성공")
     public ResponseEntity<? extends BaseResponseBody> deleteMenu(@Valid @PathVariable("menuId") Long menuSeq) throws IOException {
-        return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).body(BaseResponseBody.of(0, menuService.deleteMenu(menuSeq)));
+        menuService.deleteMenu(menuSeq);
+        return ResponseEntity.status(HttpStatus.SC_OK).body(BaseResponseBody.of(0, "success"));
     }
 
     // 메뉴 수정
