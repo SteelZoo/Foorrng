@@ -49,4 +49,12 @@
 
     <string name="location_recommend_title">영업 위치 추천</string>
     <string name="location_recommend_add">위치 등록</string>
+
+    <string name="article_title_guide">고객들이 직접 등록한\n행사 정보를 조회합니다.</string>
+    <string name="article_title_organizer">주최측</string>
+    <string name="article_title_date">날짜</string>
+    <string name="article_title_location">위치</string>
+    <string name="article_title_detail">행사내용</string>
+    <string name="article_title_contract">주최측 연락처</string>
+
 </resources>
