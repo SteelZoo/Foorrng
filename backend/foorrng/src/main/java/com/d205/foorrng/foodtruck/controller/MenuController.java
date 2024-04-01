@@ -1,5 +1,7 @@
 package com.d205.foorrng.foodtruck.controller;
 
+import com.d205.foorrng.common.exception.ErrorCode;
+import com.d205.foorrng.common.exception.Exceptions;
 import com.d205.foorrng.common.model.BaseResponseBody;
 import com.d205.foorrng.foodtruck.entity.Foodtrucks;
 import com.d205.foorrng.foodtruck.entity.Menu;
@@ -46,14 +48,12 @@ public class MenuController {
             @RequestPart(value = "picture", required = false) @Parameter(name = "picture", description = "업로드 하고자 하는 메뉴 사진 파일") MultipartFile picture
     ) throws IOException {
 
-        Long userUid = Long.parseLong(SecurityUtil.getCurrentUsername().get());
-
-        // 사용자 기반으로 푸드트럭 번호 찾기
-        Optional<Foodtrucks> foodtruck = foodtrucksRepository.findByUserUserUid(userUid);
+        Foodtrucks foodtrucks = foodtrucksRepository.findById(menuRequestDto.getFoodtruck())
+                .orElseThrow(() -> new Exceptions(ErrorCode.FOODTRUCK_NOT_EXIST));
 
 
         // 푸드 트럭의 메뉴 생성
-        MenuResDto menuId = menuService.createMenu(foodtruck, menuRequestDto, picture);
+        MenuResDto menuId = menuService.createMenu(foodtrucks.getId(), menuRequestDto, picture);
         return ResponseEntity.status(HttpStatus.SC_CREATED).body(BaseResponseBody.of(0, menuId));
     }
 
