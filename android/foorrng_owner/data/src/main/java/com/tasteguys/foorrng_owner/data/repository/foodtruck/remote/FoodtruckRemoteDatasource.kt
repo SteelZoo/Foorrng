@@ -1,8 +1,10 @@
 package com.tasteguys.foorrng_owner.data.repository.foodtruck.remote
 
+import com.tasteguys.foorrng_owner.data.model.DefaultResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.mark.MarkRegistRequest
 import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
+import retrofit2.http.Path
 import java.io.File
 
 interface FoodtruckRemoteDatasource {
@@ -34,5 +36,9 @@ interface FoodtruckRemoteDatasource {
     suspend fun registMark(
         foodtruckId: Long,
         mark: MarkRegistRequest
+    ): Result<Boolean>
+
+    suspend fun changeMarkRunState(
+        markId: Long
     ): Result<Boolean>
 }

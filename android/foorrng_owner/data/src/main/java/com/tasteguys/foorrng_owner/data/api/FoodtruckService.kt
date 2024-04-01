@@ -44,4 +44,9 @@ interface FoodtruckService {
         @Body markDto: MarkRegistRequest
     ): Result<DefaultResponse<MarkRegistResponse>>
 
+    @GET("mark/{markId}/change")
+    suspend fun changeMarkRunState(
+        @Path("markId") markId: Long
+    ): Result<DefaultResponse<MarkResponse>>
+
 }

@@ -34,4 +34,8 @@ interface FoodtruckRepository {
         foodtruckId: Long,
         markData: MarkData
     ): Result<Boolean>
+
+    suspend fun changeMarkRunState(
+        markId: Long
+    ): Result<Boolean>
 }

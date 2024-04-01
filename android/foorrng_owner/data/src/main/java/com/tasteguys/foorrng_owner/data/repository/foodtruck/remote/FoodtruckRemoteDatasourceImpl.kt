@@ -88,4 +88,12 @@ class FoodtruckRemoteDatasourceImpl @Inject constructor(
                 response.id >= 0L
             }
     }
+
+    override suspend fun changeMarkRunState(markId: Long): Result<Boolean> {
+        return foodtruckService.changeMarkRunState(markId)
+            .toNonDefault()
+            .map { response ->
+                response.id >= 0L
+            }
+    }
 }

@@ -68,4 +68,8 @@ class FoodtruckRepositoryImpl @Inject constructor(
     override suspend fun registMark(foodtruckId: Long,markData: MarkData): Result<Boolean> {
         return foodtruckRemoteDatasource.registMark(foodtruckId,markData.toMarkRegistRequest())
     }
+
+    override suspend fun changeMarkRunState(markId: Long): Result<Boolean> {
+        return foodtruckRemoteDatasource.changeMarkRunState(markId)
+    }
 }
