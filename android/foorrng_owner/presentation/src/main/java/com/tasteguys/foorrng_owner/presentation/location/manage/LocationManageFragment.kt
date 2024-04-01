@@ -53,13 +53,14 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 
     private fun registerObserve() {
         locationManageViewModel.runLocationInfoListResult.observe(viewLifecycleOwner) { result ->
+            hideLoading()
             result.onSuccess {
                 setAdapter(it)
                 naverMap?.let { naverMap ->
                     naverMap.moveCamera(
                         CameraUpdate.fitBounds(
-                            LatLngBounds.from(it.map { runLocationInfo -> runLocationInfo.latLng })
-                            ,50
+                            LatLngBounds.from(it.map { runLocationInfo -> runLocationInfo.latLng }),
+                            50
                         )
                     )
                 }
@@ -76,21 +77,37 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
                 showToast(it.message ?: "영업 위치를 불러오는데 실패했습니다.")
             }
         }
+
+        locationManageViewModel.deleteMarkResult.observe(viewLifecycleOwner){ result ->
+            result.onSuccess {
+                showToast("영업 위치를 삭제했습니다.")
+                locationManageViewModel.getRunLocationInfoList()
+            }.onFailure {
+                showToast(it.message ?: "영업 위치 삭제에 실패했습니다.")
+                hideLoading()
+            }
+        }
     }
 
     private fun setAdapter(runLocationList: List<RunLocationInfo>) {
-        if (runLocationAdapter == null) {
-            runLocationAdapter = RunLocationAdapter(runLocationList,deleteClickListener,naviClickListener,itemClickListener)
-        }
+
+        runLocationAdapter = RunLocationAdapter(
+            runLocationList,
+            deleteClickListener,
+            naviClickListener,
+            itemClickListener
+        )
+
         binding.rvLocationInfo.adapter = runLocationAdapter
     }
 
     private val deleteClickListener: (RunLocationInfo) -> Unit = {
-        showToast(it.address)
+        showLoading()
+        locationManageViewModel.deleteMark(it.id)
     }
 
     private val naviClickListener: (RunLocationInfo) -> Unit = {
-        NavDialog(mainActivity,it.latLng.latitude,it.latLng.longitude,it.address).show()
+        NavDialog(mainActivity, it.latLng.latitude, it.latLng.longitude, it.address).show()
     }
 
     private val itemClickListener: (RunLocationInfo) -> Unit = { runLocationInfo ->

@@ -38,4 +38,8 @@ interface FoodtruckRepository {
     suspend fun changeMarkRunState(
         markId: Long
     ): Result<Boolean>
+
+    suspend fun deleteMark(
+        markId: Long
+    ): Result<String>
 }

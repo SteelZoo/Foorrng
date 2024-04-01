@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_owner.data.model.DefaultResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.mark.MarkRegistRequest
 import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
+import retrofit2.http.DELETE
 import retrofit2.http.Path
 import java.io.File
 
@@ -41,4 +42,8 @@ interface FoodtruckRemoteDatasource {
     suspend fun changeMarkRunState(
         markId: Long
     ): Result<Boolean>
+
+    suspend fun deleteMark(
+        markId: Long
+    ): Result<String>
 }

@@ -10,6 +10,7 @@ import com.tasteguys.foorrng_owner.data.model.mark.MarkRegistResponse
 import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -49,4 +50,8 @@ interface FoodtruckService {
         @Path("markId") markId: Long
     ): Result<DefaultResponse<MarkResponse>>
 
+    @DELETE("mark/{markId}")
+    suspend fun deleteMark(
+        @Path("markId") markId: Long
+    ): Result<DefaultResponse<String>>
 }

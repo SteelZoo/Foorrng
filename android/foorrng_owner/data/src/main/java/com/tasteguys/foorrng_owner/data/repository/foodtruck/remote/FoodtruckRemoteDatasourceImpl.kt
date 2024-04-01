@@ -96,4 +96,9 @@ class FoodtruckRemoteDatasourceImpl @Inject constructor(
                 response.id >= 0L
             }
     }
+
+    override suspend fun deleteMark(markId: Long): Result<String> {
+        return foodtruckService.deleteMark(markId)
+            .toNonDefault()
+    }
 }

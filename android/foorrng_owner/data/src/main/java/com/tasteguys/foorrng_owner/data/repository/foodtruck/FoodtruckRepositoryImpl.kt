@@ -72,4 +72,8 @@ class FoodtruckRepositoryImpl @Inject constructor(
     override suspend fun changeMarkRunState(markId: Long): Result<Boolean> {
         return foodtruckRemoteDatasource.changeMarkRunState(markId)
     }
+
+    override suspend fun deleteMark(markId: Long): Result<String> {
+        return foodtruckRemoteDatasource.deleteMark(markId)
+    }
 }
