@@ -11,6 +11,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
+import com.tasteguys.foorrng_owner.presentation.article.ArticleListFragment
 import com.tasteguys.foorrng_owner.presentation.base.PermissionHelper
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentHomeBinding
 import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
@@ -103,6 +104,13 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
         binding.cvFoodtruckOpen.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, FoodtruckOpenFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvArticle.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, ArticleListFragment())
                 .addToBackStack(null)
                 .commit()
         }

@@ -12,8 +12,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
-            android:paddingTop="20dp"
+            android:padding="20dp"
             tools:context=".article.ArticleDetailFragment">
 
             <TextView
@@ -185,7 +184,7 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_article_detail" />
 
             <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/layout_location_map"
+                android:id="@+id/layout_article_map"
                 android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -194,6 +193,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view_article_location" />
+
+            <TextView
+                android:id="@+id/tv_article_address"
+                style="@style/Foorrng.TEXT.SB.18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_article_map"
+                tools:text="구미시 진평동 332 "/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
