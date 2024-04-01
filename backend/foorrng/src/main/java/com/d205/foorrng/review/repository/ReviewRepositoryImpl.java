@@ -3,8 +3,7 @@ package com.d205.foorrng.review.repository;
 import com.d205.foorrng.review.repository.ReviewRepositoryCustom;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
-
-import static com.d205.foorrng.review.QReview.review;
+import static com.d205.foorrng.review.entity.QReview.review;
 
 public class ReviewRepositoryImpl implements ReviewRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;

@@ -3,7 +3,7 @@ package com.d205.foorrng.foodtruck.entity;
 import com.d205.foorrng.food.Food;
 import com.d205.foorrng.mark.Mark;
 import com.d205.foorrng.requestDelete.RequestDelete;
-import com.d205.foorrng.review.Review;
+import com.d205.foorrng.review.entity.Review;
 import com.d205.foorrng.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
