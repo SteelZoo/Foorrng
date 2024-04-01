@@ -1,9 +1,15 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.service;
 
 import com.d205.foorrng.common.exception.ErrorCode;
 import com.d205.foorrng.common.exception.Exceptions;
 import com.d205.foorrng.foodtruck.entity.Foodtrucks;
 import com.d205.foorrng.foodtruck.repository.FoodtrucksRepository;
+import com.d205.foorrng.review.entity.Review;
+import com.d205.foorrng.review.repository.ReviewRepository;
+import com.d205.foorrng.review.request.ReviewReqDto;
+import com.d205.foorrng.review.response.ReviewResDto;
+import com.d205.foorrng.review.response.ReviewSummaryDto;
+import com.d205.foorrng.review.service.ReviewService;
 import com.d205.foorrng.user.entity.User;
 import com.d205.foorrng.user.repository.UserRepository;
 import com.d205.foorrng.util.SecurityUtil;
@@ -82,7 +88,7 @@ public class ReviewServiceImpl implements ReviewService {
         // 총 리뷰 개수 설정
         summary.setTotalReviews((long) reviews.size());
 
-        // 각 항목별 리뷰 개수를 집계fgfeat
+        // 각 항목별 리뷰 개수를 집계
         summary.setRvIsDelicious(reviews.stream().filter(Review::getRvIsDelicious).count());
         summary.setIsCool(reviews.stream().filter(Review::getRvIsCool).count());
         summary.setIsClean(reviews.stream().filter(Review::getRvIsClean).count());

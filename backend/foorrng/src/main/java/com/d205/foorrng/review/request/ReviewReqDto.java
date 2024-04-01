@@ -1,4 +1,4 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,10 +1,10 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.response;
 
 import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 public class ReviewSummaryDto {
     private Long totalReviews;
