@@ -2,6 +2,7 @@ package com.tasteguys.foorrng_owner.presentation.model.mapper
 
 import com.naver.maps.geometry.LatLng
 import com.tasteguys.foorrng_owner.domain.model.ArticleData
+import com.tasteguys.foorrng_owner.domain.model.RecommendVillageData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.FoodtruckInfoData
 import com.tasteguys.foorrng_owner.domain.model.foodtruck.ReviewData
 import com.tasteguys.foorrng_owner.domain.model.mark.MarkData
@@ -12,6 +13,7 @@ import com.tasteguys.foorrng_owner.presentation.model.foodtruck.FoodTruckInfo
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Menu
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.Review
 import com.tasteguys.foorrng_owner.presentation.model.foodtruck.ReviewSet
+import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 import com.tasteguys.foorrng_owner.presentation.model.location.RunInfo
 import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
 import java.time.DayOfWeek
@@ -74,3 +76,9 @@ fun oneKoreanLetterTodayOfWeek(string: String): DayOfWeek{
 fun ArticleData.toArticle() = Article(
     articleId,userId,title,LatLng(latitude,longitude),phone,email,kakaoId,organizer,startDate,endDate,address,mainImage
 )
+
+fun RecommendVillageData.toRecommendLocation() : RecommendLocation {
+    return RecommendLocation(
+        address,foodList,area.map { LatLng(it.latitude, it.longitude) }
+    )
+}

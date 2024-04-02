@@ -8,6 +8,7 @@ import com.tasteguys.foorrng_owner.data.api.ApiClient.BASE_URL
 import com.tasteguys.foorrng_owner.data.api.ArticleService
 import com.tasteguys.foorrng_owner.data.api.FoodtruckService
 import com.tasteguys.foorrng_owner.data.api.MenuService
+import com.tasteguys.foorrng_owner.data.api.RecommendService
 import com.tasteguys.foorrng_owner.data.api.UserService
 import com.tasteguys.retrofit_adapter.NetworkResponseAdapterFactory
 import dagger.Module
@@ -124,6 +125,14 @@ object NetworkModule {
         retrofit: Retrofit
     ): ArticleService {
         return retrofit.create(ArticleService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun providesRecommendService(
+        retrofit: Retrofit
+    ): RecommendService {
+        return retrofit.create(RecommendService::class.java)
     }
 
 }

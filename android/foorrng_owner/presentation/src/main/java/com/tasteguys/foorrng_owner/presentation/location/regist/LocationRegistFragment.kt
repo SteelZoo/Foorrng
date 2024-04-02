@@ -7,17 +7,21 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.CircleOverlay
+import com.naver.maps.map.overlay.PolygonOverlay
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.base.GeoManager
 import com.tasteguys.foorrng_owner.presentation.base.LocationProviderController
 import com.tasteguys.foorrng_owner.presentation.base.WeekDaySelectManager
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRegistBinding
 import com.tasteguys.foorrng_owner.presentation.location.AddRundayDialog
+import com.tasteguys.foorrng_owner.presentation.location.recommend.categotySolidColorResource
+import com.tasteguys.foorrng_owner.presentation.location.recommend.categotyStrokeColorResource
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
@@ -72,17 +76,13 @@ class LocationRegistFragment(
         registerObserve()
         if (recommentLocation != null) {
             naverMap?.moveCamera(
-                CameraUpdate.scrollTo(recommentLocation.latLng).finishCallback {
-                    naverMap?.moveCamera(
-                        CameraUpdate.zoomTo(14.0)
-                    )
-                }
+                CameraUpdate.fitBounds(LatLngBounds.from(recommentLocation.area))
+                    .animate(CameraAnimation.Easing)
             )
-            CircleOverlay().apply {
-                center = recommentLocation.latLng
-                radius = 800.0
-                color = resources.getColor(R.color.recommend_overlay_solid_green, null)
-                outlineColor = resources.getColor(R.color.recommend_overlay_line_green, null)
+            val polygon = PolygonOverlay().apply {
+                coords = recommentLocation.area
+                color = resources.getColor(categotySolidColorResource(recommentLocation.foodList[0]), null)
+                outlineColor = resources.getColor(categotyStrokeColorResource(recommentLocation.foodList[0]), null)
                 outlineWidth = 3
                 map = naverMap
             }

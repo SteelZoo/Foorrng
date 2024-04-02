@@ -35,6 +35,10 @@ class ArticleListFragment : MainBaseFragment<FragmentArticleListBinding>(
                 }
             }
         }
+
+        binding.ivBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
     }
 
     private fun registerObserve() {

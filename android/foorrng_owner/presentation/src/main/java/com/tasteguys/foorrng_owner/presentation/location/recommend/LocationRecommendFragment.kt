@@ -1,17 +1,20 @@
 package com.tasteguys.foorrng_owner.presentation.location.recommend
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.CircleOverlay
+import com.naver.maps.map.overlay.PolygonOverlay
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRecommendBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
@@ -29,7 +32,7 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
     private val locationRecommendViewModel: LocationRecommendViewModel by viewModels()
 
     private var naverMap: NaverMap? = null
-    private var recommendCircleList = mutableListOf<CircleOverlay>()
+    private var recommendPolygonList = mutableListOf<PolygonOverlay>()
 
     private var recommendLocationAdapter: RecommendLocationAdapter? = null
 
@@ -48,9 +51,10 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
 
     private fun registerObserve() {
         locationRecommendViewModel.recommendLocationList.observe(viewLifecycleOwner) {
-            it.onSuccess {
-                setAdapter(it)
-                setCircleOverlay(it)
+            hideLoading()
+            it.onSuccess { list ->
+                setAdapter(list)
+                setCircleOverlay(list)
             }.onFailure {
                 showToast("추천 위치를 불러오는데 실패했습니다.")
             }
@@ -64,7 +68,9 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
         bottomSheetSetting()
 
         registerObserve()
-        locationRecommendViewModel.getRecommendLocationList()
+        locationRecommendViewModel.getRecommendLocationList().also {
+            showLoading()
+        }
     }
 
 
@@ -83,15 +89,22 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
     private val itemClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
         naverMap?.let {
             it.moveCamera(
-                CameraUpdate.scrollTo(recommendLocation.latLng).finishCallback {
-                    it.moveCamera(CameraUpdate.zoomTo(14.0))
-                }
+                CameraUpdate.fitBounds(LatLngBounds.from(recommendLocation.area))
+                    .animate(CameraAnimation.Easing)
             )
+
+            Log.d("poooo", "${recommendLocation.area}")
         }
     }
 
     private val navClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
-        NavDialog(mainActivity, recommendLocation.latLng.latitude, recommendLocation.latLng.longitude, recommendLocation.address).show()
+        val lat = recommendLocation.area.map { it.latitude }.let {
+            it.max()+it.min()/2
+        }
+        val lng = recommendLocation.area.map { it.longitude }.let {
+            it.max()+it.min()/2
+        }
+        NavDialog(mainActivity, lat, lng, recommendLocation.address).show()
     }
 
     private val addClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
@@ -100,25 +113,31 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
             .addToBackStack(null)
             .commit()
     }
-
     // endregion rv Adapter
 
     private fun setCircleOverlay(list: List<RecommendLocation>){
-        // 기존 CircleOverlay 제거
-        recommendCircleList.forEach{
+        // 기존 Polygon 제거
+        recommendPolygonList.forEach{
             it.map = null
         }
-        // CircleOverlay 추가
-        list.forEach {
-            val circle = CircleOverlay().apply {
-                center = it.latLng
-                radius = 800.0
-                color = resources.getColor(R.color.recommend_overlay_solid_green, null)
-                outlineColor = resources.getColor(R.color.recommend_overlay_line_green, null)
-                outlineWidth = 3
-                map = naverMap
-            }
-            recommendCircleList.add(circle)
+        // Polygon 추가
+        list.forEachIndexed{ index, recommendLocation ->
+
+                val polygon = PolygonOverlay().apply {
+                    coords = recommendLocation.area.also {
+                        Log.d("poooo", "setCircleOverlay: $it")
+                    }
+                    color = resources.getColor(categotySolidColorResource(recommendLocation.foodList[0]), null)
+                    outlineColor = resources.getColor(categotyStrokeColorResource(recommendLocation.foodList[0]), null)
+                    outlineWidth = 3
+
+                }
+                recommendPolygonList.add(polygon)
+                recommendPolygonList.forEach {
+                    it.map = naverMap
+                }
+
+
         }
     }
 
