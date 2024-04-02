@@ -20,5 +20,4 @@ public class Bigdata {
     private String city;
     private String food;
     private Double score;
-    
 }
