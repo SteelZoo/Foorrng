@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BoundaryRepository extends JpaRepository<Boundary, String> {
-    Optional<List<Boundary>> findAllByAreaNameContaining(String areaName);
+public interface BoundaryRepository extends JpaRepository<Boundary, String>, BoundaryRepositoryCustom {
+    Optional<List<Boundary>> findAllByAreaNameLike(String areaName);
 }
