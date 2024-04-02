@@ -11,12 +11,8 @@ import lombok.Setter;
 public class ArticleUpdateReqDto {
     @NotNull
     private Long articleId;
-    @NotNull
-    private Long userId;
     @NotBlank
     private String title;
-    @NotBlank
-    private String content;
     @NotNull
     private Double latitude;
     @NotNull

@@ -67,7 +67,6 @@ public class ArticleServiceImpl implements ArticleService{
                     .address(articleDto.getAddress())
                     .phone(articleDto.getPhone())
                     .title(articleDto.getTitle())
-                    .content(articleDto.getContent())
                     .latitude(articleDto.getLatitude())
                     .longitude(articleDto.getLongitude())
                     .email(articleDto.getEmail())
@@ -116,7 +115,6 @@ public class ArticleServiceImpl implements ArticleService{
                     .address(article.getAddress())
                     .phone(article.getPhone())
                     .title(article.getTitle())
-                    .content(article.getContent())
                     .latitude(article.getLatitude())
                     .longitude(article.getLongitude())
                     .email(article.getEmail())
@@ -156,8 +154,7 @@ public class ArticleServiceImpl implements ArticleService{
         logger.error(articleOptional.get().getKakaoID());
         logger.error(articleOptional.get().getEmail());
         ArticleResDto articleResDto = ArticleResDto.of(
-                article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
-        , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                article.getId(),article.getUser().getId(),article.getTitle(), article.getLatitude(), article.getLongitude(), article.getPhone(),
                 article.getEmail(), article.getKakaoID(), article.getOrganizer(),
                 article.getStartDate(), article.getEndDate(), article.getAddress(),article.getMainImage());
 
@@ -202,8 +199,7 @@ public class ArticleServiceImpl implements ArticleService{
         for (int i = 0; i < articles.size(); i++) {
             Article article = articles.get(i);
             ArticleResDto articleResDto = ArticleResDto.of(
-                    article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
-                    , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                    article.getId(),article.getUser().getId(),article.getTitle(), article.getLatitude(), article.getLongitude(), article.getPhone(),
                     article.getEmail(), article.getKakaoID(), article.getOrganizer(),
                     article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
             articleResDtoList.add(articleResDto);
@@ -234,8 +230,8 @@ public class ArticleServiceImpl implements ArticleService{
             logger.info(article.getUser().getUserUid().toString());
 //            if (article.getUser().getId().equals(userId)){
             ArticleResDto articleResDto = ArticleResDto.of(
-                    article.getId(),article.getUser().getId(),article.getTitle(),article.getContent()
-                    , article.getLatitude(), article.getLongitude(), article.getPhone(),
+                    article.getId(),article.getUser().getId(),article.getTitle(),
+                    article.getLatitude(), article.getLongitude(), article.getPhone(),
                     article.getEmail(), article.getKakaoID(), article.getOrganizer(),
                     article.getStartDate(), article.getEndDate(), article.getAddress(), article.getMainImage());
             articleResDtoList.add(articleResDto);
