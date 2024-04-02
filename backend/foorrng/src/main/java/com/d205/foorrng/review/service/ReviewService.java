@@ -1,4 +1,8 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.service;
+
+import com.d205.foorrng.review.request.ReviewReqDto;
+import com.d205.foorrng.review.response.ReviewResDto;
+import com.d205.foorrng.review.response.ReviewSummaryDto;
 
 import java.util.List;
 import java.util.Map;

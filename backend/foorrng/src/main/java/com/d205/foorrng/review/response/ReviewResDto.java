@@ -1,5 +1,6 @@
-package com.d205.foorrng.review;
+package com.d205.foorrng.review.response;
 
+import com.d205.foorrng.review.entity.Review;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

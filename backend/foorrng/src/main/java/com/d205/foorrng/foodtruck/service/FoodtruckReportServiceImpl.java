@@ -130,21 +130,21 @@ public class FoodtruckReportServiceImpl implements FoodtruckReportService{
         Optional<RequestDelete> requestDelete = requestDeleteRepository.findByUserAndFoodtrucks(user, foodtrucks);
         if(requestDelete.isPresent()){
             throw new Exceptions(ErrorCode.Foodtruck_Delete_ALREADY_EXIST);
+        }
+
+        List<RequestDelete> requestDeletesList = requestDeleteRepository.findAllByFoodtrucks(foodtrucks);
+        if(requestDeletesList.size() >=2){
+            FoodtruckReport foodtruckReport = foodtruckReportRepository.findByFoodtruckId(new FoodtruckReportId(foodtrucks.getId())).get();
+            foodtrucksRepository.delete(foodtrucks);
+            foodtruckReportRepository.delete(foodtruckReport); // 왜 cascade가 안되는 걸까
+            return 0;
         }else{
-            List<RequestDelete> requestDeletesList = requestDeleteRepository.findAllByFoodtrucks(foodtrucks);
-            if(requestDeletesList.size() >=2){
-                FoodtruckReport foodtruckReport = foodtruckReportRepository.findByFoodtruckId(new FoodtruckReportId(foodtrucks.getId())).get();
-                foodtrucksRepository.delete(foodtrucks);
-                foodtruckReportRepository.delete(foodtruckReport); // 왜 cascade가 안되는 걸까
-                return 0;
-            }else{
-                RequestDelete newRequestDelete = RequestDelete.builder()
-                        .user(user)
-                        .foodtrucks(foodtrucks)
-                        .build();
-                requestDeleteRepository.save(newRequestDelete);
-                return 1;
-            }
+            RequestDelete newRequestDelete = RequestDelete.builder()
+                    .user(user)
+                    .foodtrucks(foodtrucks)
+                    .build();
+            requestDeleteRepository.save(newRequestDelete);
+            return 1;
         }
     };
 }

@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +19,6 @@ public class BigdataController {
     @GetMapping(value = "/api/recommend")
     @ApiResponse(responseCode = "200", description = "위치 추천")
     public ResponseEntity<? extends BaseResponseBody> recommendPosition(){
-        List<String> positionlist = bigdataService.recommendPosition();
-        return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, ""));
+        return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, bigdataService.recommendPosition()));
     }
-
-
 }

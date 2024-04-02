@@ -15,9 +15,9 @@ import com.d205.foorrng.mark.Mark;
 import com.d205.foorrng.mark.repository.MarkRepository;
 import com.d205.foorrng.operationInfo.OperationInfo;
 import com.d205.foorrng.operationInfo.repository.OperationInfoRepository;
-import com.d205.foorrng.review.Review;
-import com.d205.foorrng.review.ReviewRepository;
-import com.d205.foorrng.review.ReviewService;
+import com.d205.foorrng.review.entity.Review;
+import com.d205.foorrng.review.repository.ReviewRepository;
+import com.d205.foorrng.review.service.ReviewService;
 import com.d205.foorrng.user.entity.User;
 import com.d205.foorrng.user.repository.UserRepository;
 import com.d205.foorrng.util.SecurityUtil;
@@ -52,6 +52,7 @@ public class FoodtrucksServiceImlp implements FoodtrucksService{
         double latitudeMax = Math.max(foodtrucksReqDto.getLatitudeLeft(), foodtrucksReqDto.getLatitudeRight());
         double longitudeMin = Math.min(foodtrucksReqDto.getLongitudeLeft(), foodtrucksReqDto.getLongitudeRight());
         double longitudeMax = Math.max(foodtrucksReqDto.getLongitudeLeft(), foodtrucksReqDto.getLongitudeRight());
+
         List<Mark> markList = markRepository.findAllByLatitudeBetweenAndLongitudeBetween(latitudeMin, latitudeMax, longitudeMin, longitudeMax);
         List<FoodtrucksResDto> foodtrucksResDtos = new ArrayList<>();
         for(Mark mark:markList){
