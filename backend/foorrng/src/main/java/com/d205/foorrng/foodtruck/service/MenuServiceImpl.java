@@ -93,7 +93,7 @@ public class MenuServiceImpl implements MenuService {
         // 이미지 s3에 저장하기
         String imgUrl = "";
         if (picture != null) {
-            String imgName = "menuIMG/" + menuRequestDto.getName() + ".png"; // 확장명
+            String imgName = "menuIMG/" + menu.getId() + menuRequestDto.getName() + ".png"; // 확장명
             String dir = "/menuIMG";
             imgUrl = imageSave.saveImageS3(picture, imgName, dir);
             menu.changePicture(imgUrl);

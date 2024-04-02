@@ -61,7 +61,7 @@ public class ArticleServiceImpl implements ArticleService{
                 mainImgUrl = article.getMainImage();
             }else{
                 //널이 아니면 저장한다.
-                mainImgUrl = imageSave.saveImageS3(image,"images", "/articleIMG");
+                mainImgUrl = imageSave.saveImageS3(image,"images", "/articleIMG")+ articleDto.getArticleId() + ".png";
             }
             article =Article.builder()
                     .id(article.getId())
@@ -96,10 +96,6 @@ public class ArticleServiceImpl implements ArticleService{
     @Override
     public ResponseEntity<BaseResponseBody> saveArticle(ArticleReqDto article, MultipartFile mainImage) {
         try {
-            String mainImgUrl = "";
-            if (mainImage != null && !mainImage.isEmpty()) {
-                mainImgUrl = imageSave.saveImageS3(mainImage,"images", "/articleIMG");
-            }
             Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
             if (!currentUsername.isPresent()) {
                 // 현재 사용자 이름을 가져오는 데 실패한 경우
@@ -112,6 +108,7 @@ public class ArticleServiceImpl implements ArticleService{
             if (!userOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(1, "사용자를 찾을 수 없음"));
             }
+
             User user = userOptional.get();
             Article articleForSave = Article.builder()
                     .user(user)
@@ -125,8 +122,13 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(article.getOrganizer())
                     .startDate(article.getStartDate())
                     .endDate(article.getEndDate())
-                    .mainImage(mainImgUrl)
                     .build();
+            String mainImgUrl = "";
+            if (mainImage != null && !mainImage.isEmpty()) {
+                mainImgUrl = imageSave.saveImageS3(mainImage,"images", "/articleIMG")+ articleForSave.getId() + ".png";
+            }
+            articleForSave = Article.builder().mainImage(mainImgUrl).build();
+
             articlePostRepository.save(articleForSave);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 저장"));
         } catch (NumberFormatException e) {
