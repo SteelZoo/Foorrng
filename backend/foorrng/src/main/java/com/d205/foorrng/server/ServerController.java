@@ -19,4 +19,10 @@ public class ServerController {
         return "done";
     }
 
+    @GetMapping("/test")
+    public String check() {
+        String systEnv = System.getenv("TEMP_HOME");
+        return systEnv;
+    }
+
 }
