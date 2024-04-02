@@ -60,7 +60,7 @@ public class ArticleServiceImpl implements ArticleService{
                 mainImgUrl = article.getMainImage();
             }else{
                 //널이 아니면 저장한다.
-                mainImgUrl = imageSave.saveImageS3(image,"images", "/articleIMG")+ articleDto.getArticleId() + ".png";
+                mainImgUrl = imageSave.saveImageS3(image,"updated"+ articleDto.getArticleId() + ".png", "/articleIMG");
             }
             article =Article.builder()
                     .id(article.getId())
@@ -128,8 +128,10 @@ public class ArticleServiceImpl implements ArticleService{
             int articleNumber = getRandomNumber();
             String articleImagePath = getMD5Hash(article.getTitle()+articleNumber);
             String mainImgUrl = "";
+
             if (mainImage != null && !mainImage.isEmpty()) {
-                mainImgUrl = imageSave.saveImageS3(mainImage,"image", "/articleIMG")+ articleImagePath + ".png";
+
+                mainImgUrl = imageSave.saveImageS3(mainImage, articleImagePath + ".png", "/articleIMG");
             }
             Optional<User> userOptional = userRepository.findByUserUid(userId);
             if (!userOptional.isPresent()) {
