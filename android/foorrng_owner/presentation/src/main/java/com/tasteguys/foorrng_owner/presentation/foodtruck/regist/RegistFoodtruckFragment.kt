@@ -251,9 +251,9 @@ class RegistFoodtruckFragment : MainBaseFragment<FragmentRegistFoodtruckBinding>
         "꼬치",
         "타코야끼",
         "타코 & 케밥",
-        "분식(떡볶이 만두 순대 어묵 튀김)",
-        "빵(국화빵 붕어빵 호떡)",
-        "구황작물(군고구마, 찐옥수수, 군밤)",
+        "분식",
+        "빵",
+        "구황작물",
         "카페 & 디저트",
         "기타"
     )

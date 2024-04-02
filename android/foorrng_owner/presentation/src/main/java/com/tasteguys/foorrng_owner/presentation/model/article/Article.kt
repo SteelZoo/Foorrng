@@ -6,7 +6,6 @@ data class Article(
     val articleId: Long,
     val userId: Long,
     val title: String,
-    val content: String,
     val latLng: LatLng,
     val phone: String,
     val email: String,

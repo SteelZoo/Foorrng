@@ -51,6 +51,7 @@ class ArticleDetailFragment(
         binding.tvArticleCallNumber.text = article.phone
         binding.tvArticleEmail.text = article.email
         binding.tvArticleKakao.text = article.kakaoId
+        binding.tvArticleAddress.text = article.address
         Glide.with(binding.root)
             .load(article.mainImage)
             .fitCenter()

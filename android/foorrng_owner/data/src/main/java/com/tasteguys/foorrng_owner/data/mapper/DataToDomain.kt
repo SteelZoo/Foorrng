@@ -60,7 +60,6 @@ fun ArticleResponse.toArticleData() = ArticleData(
     articleId = articleId,
     userId = userId,
     title = title,
-    content = content,
     latitude = latitude,
     longitude = longitude,
     phone = phone,

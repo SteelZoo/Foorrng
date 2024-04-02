@@ -72,5 +72,5 @@ fun oneKoreanLetterTodayOfWeek(string: String): DayOfWeek{
 }
 
 fun ArticleData.toArticle() = Article(
-    articleId,userId,title,content,LatLng(latitude,longitude),phone,email,kakaoId,organizer,startDate,endDate,address,mainImage
+    articleId,userId,title,LatLng(latitude,longitude),phone,email,kakaoId,organizer,startDate,endDate,address,mainImage
 )
