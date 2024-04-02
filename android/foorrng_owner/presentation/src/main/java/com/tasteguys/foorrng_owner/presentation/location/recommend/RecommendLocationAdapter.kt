@@ -46,7 +46,7 @@ class RecommendLocationAdapter(
             addClickListener: (RecommendLocation) -> Unit
         ) {
             binding.tvRecommendLocationAddress.text = item.address
-            binding.tvRecommendLocationComment.text = item.comment
+            binding.tvRecommendLocationComment.text = item.foodList.joinToString(", ")
             binding.layoutRecommendLocationItem.setOnClickListener {
                 itemClicklListener(item)
             }

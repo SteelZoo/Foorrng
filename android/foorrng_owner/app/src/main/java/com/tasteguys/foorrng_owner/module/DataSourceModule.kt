@@ -6,6 +6,8 @@ import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRem
 import com.tasteguys.foorrng_owner.data.repository.foodtruck.remote.FoodtruckRemoteDatasourceImpl
 import com.tasteguys.foorrng_owner.data.repository.menu.remote.MenuRemoteDataSource
 import com.tasteguys.foorrng_owner.data.repository.menu.remote.MenuRemoteDataSourceImpl
+import com.tasteguys.foorrng_owner.data.repository.recommend.remote.RecommendRemoteDataSource
+import com.tasteguys.foorrng_owner.data.repository.recommend.remote.RecommendRemoteDataSourceImpl
 import com.tasteguys.foorrng_owner.data.repository.user.remote.UserRemoteDatasource
 import com.tasteguys.foorrng_owner.data.repository.user.remote.UserRemoteDatasourceImpl
 import dagger.Binds
@@ -32,4 +34,8 @@ abstract class DataSourceModule {
     @Singleton
     @Binds
     abstract fun bindArticleRemoteDataSource(articleRemoteDataSourceImpl: ArticleRemoteDataSourceImpl): ArticleRemoteDataSource
+
+    @Singleton
+    @Binds
+    abstract fun bindRecommendRemoteDataSource(recommendRemoteDataSourceImpl: RecommendRemoteDataSourceImpl): RecommendRemoteDataSource
 }
