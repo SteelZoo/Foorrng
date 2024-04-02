@@ -46,12 +46,8 @@ class TruckDetailFragment(truckId: Long) : BaseFragment<FragmentTruckDetailBindi
 
     private fun initView() {
         mapView = binding.mvMap
-
-
         binding.rvOpInfo.apply {
-            adapter = truckMarkInfoAdapter.apply {
-                submitList(Dummy.markInfo)
-            }
+            adapter = truckMarkInfoAdapter
         }
     }
 
@@ -72,6 +68,7 @@ class TruckDetailFragment(truckId: Long) : BaseFragment<FragmentTruckDetailBindi
                             }
                         }
                         it.moveCamera(CameraUpdate.scrollTo(LatLng(marks[0].lat, marks[0].lng)))
+                        truckMarkInfoAdapter.submitList(marks)
                     }
                 }
             }

@@ -57,6 +57,7 @@ class RegisterFestivalFragment @Inject constructor(
         }.addMenuItemClickListener {
             with(inputViewModel) {
                 validateInput().onSuccess {
+                    showLoading()
                     val img = if (imageChanged) infoImg.toFile(requireContext()) else null
                     if (isNew) {
                         registerFestival(img)
@@ -163,6 +164,7 @@ class RegisterFestivalFragment @Inject constructor(
             }
 
             registerResult.observe(viewLifecycleOwner) {
+                hideLoading()
                 if (it.isSuccess) {
                     showToast("등록 완료")
                     parentFragmentManager.popBackStack()
@@ -171,6 +173,7 @@ class RegisterFestivalFragment @Inject constructor(
                 }
             }
             updateResult.observe(viewLifecycleOwner) {
+                hideLoading()
                 if (it.isSuccess) {
                     showToast("등록 완료")
                     festivalViewModel.initAddress()

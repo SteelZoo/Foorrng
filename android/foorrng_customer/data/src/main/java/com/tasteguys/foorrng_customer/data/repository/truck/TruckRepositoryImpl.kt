@@ -2,6 +2,7 @@ package com.tasteguys.foorrng_customer.data.repository.truck
 
 import com.tasteguys.foorrng_customer.data.mapper.toData
 import com.tasteguys.foorrng_customer.data.mapper.toDomain
+import com.tasteguys.foorrng_customer.data.mapper.toRequestData
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.repository.truck.remote.TruckRemoteDatasource
 import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
@@ -85,7 +86,7 @@ class TruckRepositoryImpl @Inject constructor(
         operationInfo: List<TruckOperationData>
     ): Result<TruckDetailMarkData> {
         return truckRemoteDatasource.reportFoodTruckOperationInfo(truckId, address, lat, lng,
-            operationInfo.map { it.toData() }
+            operationInfo.map { it.toRequestData() }
         ).map { it.toDomain() }
     }
 

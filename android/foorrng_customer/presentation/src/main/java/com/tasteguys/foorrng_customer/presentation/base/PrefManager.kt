@@ -51,6 +51,18 @@ class PrefManager(context: Context) {
         return pref.getString(PREF_ACCESSTOKEN, null)
     }
 
+    fun setSurveyChecked(surveyChecked: Boolean){
+        pref.edit().apply{
+           putBoolean(PREF_SURVEY_CHECK, surveyChecked)
+           apply()
+        }
+    }
+
+    fun getSurveyChecked(): Boolean{
+        return pref.getBoolean(PREF_SURVEY_CHECK, false)
+    }
+
+
     fun setRefreshToken(refreshToken: String){
         pref.edit().apply {
             putString(PREF_REFRESHTOKEN, refreshToken)
@@ -83,24 +95,6 @@ class PrefManager(context: Context) {
     fun getFcmToken(): String?{
         return pref.getString(FCM_TOKEN, null)
     }
-    /**
-     * must use in RelayingFragment
-     */
-    fun setRelayingMode(mode: RELAYING_MODE) {
-        pref.edit().apply {
-            putInt(PREF_RELAYING_MODE,mode.ordinal)
-            apply()
-        }
-    }
-
-    fun getRelayingMode(): RELAYING_MODE {
-        return when(pref.getInt(PREF_RELAYING_MODE,-1)){
-            RELAYING_MODE.PATH.ordinal-> RELAYING_MODE.PATH
-            RELAYING_MODE.DISTANCE.ordinal-> RELAYING_MODE.DISTANCE
-            RELAYING_MODE.NONE.ordinal-> RELAYING_MODE.NONE
-            else-> RELAYING_MODE.NONE
-        }
-    }
 
     fun deleteAll(){
         val fcm = getFcmToken()
@@ -111,17 +105,15 @@ class PrefManager(context: Context) {
         }
     }
 
-    enum class RELAYING_MODE{
-        DISTANCE, PATH, NONE
-    }
 
     companion object{
         private const val PREF_USERID = "user_id"
         private const val PREF_AUTOLOGIN = "auto_login"
         private const val PREF_ACCESSTOKEN = "access_token"
+        private const val PREF_SURVEY_CHECK = "survey_checked"
+
         private const val PREF_REFRESHTOKEN = "refresh_token"
         private const val FCM_TOKEN = "fcm_token"
         private const val FCM_NEW_TOKEN = "fcm_new_token"
-        private const val PREF_RELAYING_MODE = "relaying_mode"
     }
 }

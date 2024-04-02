@@ -11,12 +11,13 @@ import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkDto
 import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRequest
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
-import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationInfoDto
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewRequest
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationRequest
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRegisterUpdateResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -114,7 +115,7 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         address: String,
         lat: Double,
         lng: Double,
-        operationInfo: List<TruckOperationInfo>
+        operationInfo: List<TruckOperationRequest>
     ): Result<TruckRegisterOperationResponse> {
         return truckService.registerMark(
             truckId, TruckMarkRequest(

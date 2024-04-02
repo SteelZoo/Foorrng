@@ -78,6 +78,7 @@ class FestivalSelectLocationFragment @Inject constructor(
                 }
 
                 setOnMapClickListener { _, coord ->
+                    showLoading()
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this
                     festivalViewModel.latLng = marker.position
@@ -91,6 +92,7 @@ class FestivalSelectLocationFragment @Inject constructor(
 
     private fun registerObserver(){
         festivalViewModel.tempAddress.observe(viewLifecycleOwner){
+            hideLoading()
             binding.tvAddress.text = it
         }
     }

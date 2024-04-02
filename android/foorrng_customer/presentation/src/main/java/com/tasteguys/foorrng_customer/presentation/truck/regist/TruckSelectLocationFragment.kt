@@ -24,7 +24,8 @@ import javax.inject.Inject
 private const val TAG = "TruckSelectLocationFrag"
 @AndroidEntryPoint
 class TruckSelectLocationFragment @Inject constructor(
-    val isNew:Boolean
+    private val isNew:Boolean,
+    private val registerInputViewModel: RegisterInputViewModel
 ) : MainBaseFragment<FragmentSelectLocationBinding>(
     { FragmentSelectLocationBinding.bind(it) }, R.layout.fragment_select_location
 ) {
@@ -32,7 +33,6 @@ class TruckSelectLocationFragment @Inject constructor(
     @Inject
     lateinit var geoManager: GeoManager
 
-    private val registerInputViewModel: RegisterInputViewModel by activityViewModels()
     private val selectMarkLocationViewModel: SelectLocationViewModel by viewModels()
 
     private lateinit var mapView: MapView
@@ -101,9 +101,9 @@ class TruckSelectLocationFragment @Inject constructor(
                 }
 
                 setOnMapClickListener { _, coord ->
+                    showLoading()
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this
-                    Log.d(TAG, "initView: ${coord.latitude} ${coord.longitude}")
                     geoManager.getAddress(coord.latitude, coord.longitude) { address ->
                         selectMarkLocationViewModel.setMark(address, coord.latitude, coord.longitude)
                     }
@@ -114,6 +114,7 @@ class TruckSelectLocationFragment @Inject constructor(
 
     private fun registerObserver(){
         selectMarkLocationViewModel.markAddress.observe(viewLifecycleOwner){
+            hideLoading()
             binding.tvAddress.text = it
         }
     }

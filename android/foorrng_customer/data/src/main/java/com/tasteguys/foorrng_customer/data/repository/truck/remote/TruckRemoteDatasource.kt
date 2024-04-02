@@ -5,8 +5,9 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationRequest
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import java.io.File
@@ -55,7 +56,7 @@ interface TruckRemoteDatasource {
         address: String,
         lat: Double,
         lng: Double,
-        operationInfo: List<TruckOperationInfo>
+        operationInfo: List<TruckOperationRequest>
     ):Result<TruckRegisterOperationResponse>
 
     suspend fun registerReview(

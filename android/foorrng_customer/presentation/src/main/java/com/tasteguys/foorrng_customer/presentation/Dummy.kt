@@ -8,6 +8,12 @@ import com.tasteguys.foorrng_customer.presentation.model.TruckMenu
 import com.tasteguys.foorrng_customer.presentation.model.TruckOperationInfo
 import com.tasteguys.foorrng_customer.presentation.model.TruckReview
 
+fun main(){
+    val a = mutableListOf(1, 2, 3)
+    print(a.map{it->it*it})
+    println(a)
+}
+
 object Dummy{
 
     val markInfo = mutableListOf(

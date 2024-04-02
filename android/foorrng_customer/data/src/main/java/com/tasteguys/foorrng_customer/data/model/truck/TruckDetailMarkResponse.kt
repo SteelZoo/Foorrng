@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
 import com.squareup.moshi.Json
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationInfo
 
 data class TruckDetailMarkResponse(
     val id: Long,

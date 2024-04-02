@@ -4,10 +4,7 @@
         android:id="@+id/fragment_home_map"
         android:title="주변"
         android:icon="@drawable/ic_location"/>
-    <item
-        android:id="@+id/fragment_register_truck"
-        android:title="제보"
-        android:icon="@drawable/ic_add"/>
+
     <item
         android:id="@+id/fragment_festival"
         android:title="정보"

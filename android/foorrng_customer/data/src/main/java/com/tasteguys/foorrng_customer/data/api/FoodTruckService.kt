@@ -9,7 +9,7 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkRequest
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRequest
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewRequest
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest

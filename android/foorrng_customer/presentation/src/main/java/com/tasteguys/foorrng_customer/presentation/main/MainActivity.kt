@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.main
 
+import android.Manifest
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -36,10 +38,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
                     true
                 }
-                R.id.fragment_register_truck->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, RegisterTruckFragment(true, -1)).commit()
-                    true
-                }
+//                R.id.fragment_register_truck->{
+//                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, RegisterTruckFragment(true, -1)).commit()
+//                    true
+//                }
                 R.id.fragment_festival->{
                     supportFragmentManager.beginTransaction().replace(R.id.fcv_container, FestivalListFragment()).commit()
                     true

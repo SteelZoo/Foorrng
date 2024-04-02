@@ -37,7 +37,8 @@ class LoginViewModel @Inject  constructor(
                     Log.d(TAG, "login: $tk")
                     prefManager.setUserId(userUid)
                     prefManager.setAccessToken(tk.accessToken)
-                    prefManager.setRefreshToken(tk.refreshToken)
+                    prefManager.setSurveyChecked(tk.surveyChecked)
+//                    prefManager.setRefreshToken(tk.refreshToken)
                 }
                 _loginResult.postValue(it)
             }

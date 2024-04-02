@@ -16,17 +16,20 @@ import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.base.GalleryLauncher
+import com.tasteguys.foorrng_customer.presentation.base.WeekDaySelectManager
 import com.tasteguys.foorrng_customer.presentation.base.toFile
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentRegisterTruckBinding
 import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.model.FavoriteCategory
+import com.tasteguys.foorrng_customer.presentation.model.RunDay
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.DailyFavoriteListAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.net.URI
+import java.time.DayOfWeek
 import javax.inject.Inject
 import kotlin.math.log
 
@@ -41,25 +44,25 @@ class RegisterTruckFragment @Inject constructor(
 ) {
 
     private val truckViewModel: TruckViewModel by activityViewModels()
-    private val registerInputViewModel: RegisterInputViewModel by activityViewModels()
-    private val truckRegisterUpdateViewModel: TruckRegisterUpdateViewModel by viewModels()
+    private val registerInputViewModel: RegisterInputViewModel by viewModels()
     private val dailyFavoriteViewModel: DailyFavoriteViewModel by activityViewModels()
 
     private val favoriteListAdapter = DailyFavoriteListAdapter()
+    private val runDayAdapter = RunDayAdapter()
 
     private val galleryLauncher: GalleryLauncher by lazy {
         GalleryLauncher(this)
     }
+
+    private lateinit var weekDaySelectManager: WeekDaySelectManager
 
     override fun setToolbar() {
         MainToolbarControl(
             visible = true,
             title = if(isNew) resources.getString(R.string.register_foodtruck) else resources.getString(R.string.update_foodtruck),
             menuRes = R.menu.menu_check,
-            backIcon = !isNew
         ).addMenuItemClickListener {
             confirmDialog()
-//            showToast("등록 완료")
         }.addNavIconClickListener {
             checkBackStackDialog()
         }.also {
@@ -67,9 +70,27 @@ class RegisterTruckFragment @Inject constructor(
         }
     }
 
+
+    private val dayClickListener: (DayOfWeek, Boolean) -> Unit = { dayOfWeek, isOn ->
+        showAddRunDayDialog(dayOfWeek)
+    }
+
+    private fun showAddRunDayDialog(dayOfWeek: DayOfWeek) {
+        AddRundayDialog(requireContext(), dayOfWeek)
+            .setCancelListener { dialog ->
+                dialog.dismiss()
+            }
+            .setCreateListener { dialog, runDay ->
+                registerInputViewModel.addRunDay(runDay)
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        weekDaySelectManager = WeekDaySelectManager(binding.layoutSelectWeekday, dayClickListener)
         galleryLauncher.pictureCallbackListener = object : GalleryLauncher.PictureCallbackListener {
             override fun onGetData(data: Uri) {
                 Glide.with(requireContext())
@@ -86,6 +107,17 @@ class RegisterTruckFragment @Inject constructor(
 
     private fun initView() {
         with(binding) {
+            rvRuninfoRegist.apply{
+                adapter = runDayAdapter.apply {
+                    setOnItemClickListener(object : BaseHolder.ItemClickListener{
+                        override fun onClick(position: Int) {
+                            val day = currentList[position].day
+                            registerInputViewModel.deleteRunDay(day)
+                        }
+                    })
+                }
+            }
+
             with(registerInputViewModel) {
                 rvMenuCategory.apply {
                     layoutManager = FlexboxLayoutManager(context)
@@ -102,65 +134,47 @@ class RegisterTruckFragment @Inject constructor(
                 foodCategory.clear()
                 foodCategory.putAll( dailyFavoriteViewModel.getCategoryResult.value!!.getOrNull()!!.associateWith { false })
 
-                tilTruckName.editText!!.addTextChangedListener {
-                    inputName(it.toString())
-                }
-                tilCallNumber.editText!!.addTextChangedListener {
-                    inputPhoneNumber(it.toString())
-                }
-                tilCarNumber.editText!!.addTextChangedListener {
-                    inputCarNumber(it.toString())
-                }
-                tilNotice.editText!!.addTextChangedListener {
-                    inputAnnouncement(it.toString())
-                }
-
+                tilTruckName.editText!!.addTextChangedListener { name = it.toString() }
+                tilCallNumber.editText!!.addTextChangedListener { phoneNumber = it.toString() }
+                tilCarNumber.editText!!.addTextChangedListener { carNumber = it.toString() }
+                tilNotice.editText!!.addTextChangedListener { announcement = it.toString() }
                 if (!isNew && !inputState) {
                     with(truckViewModel) {
                         val data = truckDetailResult.value!!.getOrNull()!!
                         val mainData = data.mainData
                         val opData = data.operation[0]
-                        inputName(mainData.name)
-                        tilTruckName.editText!!.setText(mainData.name)
-                        inputPhoneNumber(mainData.phoneNumber)
-                        tilCallNumber.editText!!.setText(mainData.phoneNumber)
-                        inputCarNumber(mainData.carNumber)
-                        tilCarNumber.editText!!.setText(mainData.carNumber)
-                        inputAnnouncement(mainData.announcement)
-                        tilNotice.editText!!.setText(mainData.announcement)
+                        name = mainData.name
+                        phoneNumber = mainData.phoneNumber
+                        carNumber = mainData.carNumber
+                        announcement = mainData.announcement
                         setMark(opData.address, opData.lat, opData.lng)
-                        tilLocation.editText!!.setText(opData.address)
-                        Glide.with(requireContext())
-                            .load(mainData.picture)
-                            .error(R.drawable.bg_profile_photo)
-                            .fallback(R.drawable.bg_profile_photo)
-                            .into(binding.ivTruckPhoto)
+                        loadedPicture = mainData.picture
                         for(food in mainData.category){
                             if(food in foodCategory)
                                 foodCategory[food] = true
                         }
                     }
                     inputState = true
-                }else{
-                    tilTruckName.editText!!.setText(name.value)
-                    tilCallNumber.editText!!.setText(phoneNumber.value)
-                    tilCarNumber.editText!!.setText(carNumber.value)
-                    tilNotice.editText!!.setText(announcement.value)
-                    tilLocation.editText!!.setText(markAddress.value)
-                    Glide.with(requireContext())
-                        .load(picture.value)
-                        .error(R.drawable.bg_profile_photo)
-                        .fallback(R.drawable.bg_profile_photo)
-                        .into(binding.ivTruckPhoto)
                 }
+                tilTruckName.editText!!.setText(name)
+                tilCallNumber.editText!!.setText(phoneNumber)
+                tilCarNumber.editText!!.setText(carNumber)
+                tilNotice.editText!!.setText(announcement)
+                tilLocation.editText!!.setText(markAddress.value)
+                Glide.with(requireContext())
+                    .load(loadedPicture)
+                    .error(R.drawable.bg_profile_photo)
+                    .fallback(R.drawable.bg_profile_photo)
+                    .into(binding.ivTruckPhoto)
                 favoriteListAdapter.submitList(foodCategory.map { FavoriteCategory(it.key, it.value) })
             }
 
             tilLocation.visibility = if(isNew) View.VISIBLE else View.GONE
+            layoutRundayRegist.visibility = if(isNew) View.VISIBLE else View.GONE
 
             tiLocation.setOnClickListener {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fcv_container, TruckSelectLocationFragment(isNew))
+                    .replace(R.id.fcv_container, TruckSelectLocationFragment(isNew, registerInputViewModel))
                     .addToBackStack(null)
                     .commit()
             }
@@ -174,70 +188,69 @@ class RegisterTruckFragment @Inject constructor(
     }
 
     private fun registerObserve() {
-        registerInputViewModel.markAddress.observe(viewLifecycleOwner) {
-            binding.tilLocation.editText!!.setText(it)
-        }
-
-        with(truckRegisterUpdateViewModel){
+        with(registerInputViewModel){
+            runDayList.observe(viewLifecycleOwner){lst->
+                weekDaySelectManager.setSelectedDay(lst.keys)
+                runDayAdapter.submitList(lst.values.toList())
+            }
+            markAddress.observe(viewLifecycleOwner) {
+                binding.tilLocation.editText!!.setText(it)
+            }
             registerResult.observe(viewLifecycleOwner){
                 if (it.isSuccess) {
                     registerOperationInfo(it.getOrNull()!!.id)
-
-                    // register하면 무조건 즐겨찾기에 들어간다
-                    truckViewModel.markFavoriteTruck(it.getOrNull()!!.id)
                 }
             }
-            markRegisterResult.observe(viewLifecycleOwner) {
+            markRegisterResult.observe(viewLifecycleOwner){
+                if(it.isSuccess){
+                    // register하면 무조건 즐겨찾기에 들어간다
+                    markFavoriteTruck(registerResult.value!!.getOrNull()!!.id)
+                }
+            }
+            markFavoriteTruckResult.observe(viewLifecycleOwner) {
                 if (it.isSuccess) {
                     showToast("등록 성공")
+                    hideLoading()
                     parentFragmentManager.popBackStack()
                 }
             }
             updateResult.observe(viewLifecycleOwner){
                 if(it.isSuccess){
                     showToast("업데이트 성공")
+                    hideLoading()
                     parentFragmentManager.popBackStack()
 
                 }
             }
+
         }
     }
 
     private fun register() {
-        with(registerInputViewModel) {
-            truckRegisterUpdateViewModel.registerTruck(
-                name.value!!,
+        showLoading()
+        with(registerInputViewModel){
+            registerTruck(
+                name,
                 picture.value.toFile(requireContext()),
-                carNumber.value!!,
-                announcement.value!!,
-                phoneNumber.value!!,
+                carNumber,
+                announcement,
+                phoneNumber,
                 foodCategory.filter { it.value }.map { it.key }
             )
         }
     }
 
     private fun update() {
+        showLoading()
         with(registerInputViewModel) {
-            truckRegisterUpdateViewModel.updateTruck(
+            updateTruck(
                 truckId,
-                name.value!!,
+                name,
                 if(imageChanged) picture.value!!.toFile(requireContext()) else null,
-                carNumber.value!!,
-                announcement.value!!,
-                phoneNumber.value!!,
+                carNumber,
+                announcement,
+                phoneNumber,
                 foodCategory.filter { it.value }.map { it.key }
-            )
-        }
-    }
-
-    private fun registerOperationInfo(id: Long) {
-        with(registerInputViewModel) {
-            truckRegisterUpdateViewModel.registerOperationInfo(
-                id,
-                markAddress.value!!,
-                markLat.value!!,
-                markLng.value!!,
-                listOf()
             )
         }
     }

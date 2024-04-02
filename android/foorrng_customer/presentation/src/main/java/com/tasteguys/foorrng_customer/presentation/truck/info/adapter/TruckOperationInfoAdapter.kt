@@ -3,16 +3,16 @@ package com.tasteguys.foorrng_customer.presentation.truck.info.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.ItemOperationDailyDetailBinding
-import com.tasteguys.foorrng_customer.presentation.model.TruckOperationInfo
 
-class TruckOperationInfoAdapter: BaseAdapter<TruckOperationInfo>() {
+class TruckOperationInfoAdapter: BaseAdapter<TruckOperationData>() {
 
-    class OperationInfoHolder(private val binding: ItemOperationDailyDetailBinding): BaseHolder<TruckOperationInfo>(binding){
+    class OperationInfoHolder(private val binding: ItemOperationDailyDetailBinding): BaseHolder<TruckOperationData>(binding){
         @SuppressLint("SetTextI18n")
-        override fun bindInfo(data: TruckOperationInfo) {
+        override fun bindInfo(data: TruckOperationData) {
             with(binding){
                 tvDay.text = "${data.day}요일"
                 tvTime.text="${data.startTime}~${data.endTime}"
@@ -23,7 +23,7 @@ class TruckOperationInfoAdapter: BaseAdapter<TruckOperationInfo>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseHolder<TruckOperationInfo> {
+    ): BaseHolder<TruckOperationData> {
         return OperationInfoHolder(ItemOperationDailyDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 }

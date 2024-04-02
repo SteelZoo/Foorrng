@@ -9,8 +9,8 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMainInfoResponse
 import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckOperationInfo
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.review.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
@@ -31,7 +31,8 @@ import com.tasteguys.foorrng_customer.domain.model.user.UserData
 
 fun LoginResponse.toDomain() = TokenData(
     accessToken = accessToken,
-    refreshToken = refreshToken
+    surveyChecked = surveyChecked
+//    refreshToken = refreshToken
 )
 
 fun UserResponse.toDomain() = UserData(

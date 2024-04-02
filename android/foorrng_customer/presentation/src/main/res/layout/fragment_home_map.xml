@@ -49,7 +49,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_margin="8dp">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_toggle_is_operating"
@@ -62,6 +63,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="사장님 인증"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_report"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                style="@style/Foorrng.Button"
+                android:text="제보하기"/>
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatButton

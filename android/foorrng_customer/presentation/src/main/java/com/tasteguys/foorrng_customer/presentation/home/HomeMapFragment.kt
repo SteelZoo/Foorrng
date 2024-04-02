@@ -1,13 +1,20 @@
 package com.tasteguys.foorrng_customer.presentation.home
 
+import android.Manifest
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gdd.presentation.base.PermissionHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -21,6 +28,7 @@ import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.TruckAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
+import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.max
 import kotlin.math.min
@@ -47,6 +55,8 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         initAdapter()
 
     }
+
+
 
     private fun initView() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
@@ -90,6 +100,13 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
             truckVewModel.getTruckList(latMin, lngMin, latMax, lngMax)
 
             binding.btnCurrentSearch.visibility = View.GONE
+        }
+
+        binding.btnReport.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, RegisterTruckFragment(true, -1))
+                .addToBackStack(null)
+                .commit()
         }
 
         bottomSheetBehavior.addBottomSheetCallback(object :
@@ -208,6 +225,5 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         }
 
     }
-
 
 }
