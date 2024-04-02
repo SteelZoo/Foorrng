@@ -30,6 +30,8 @@ interface TruckRepository {
         category: List<String>
     ): Result<TruckRegisterUpdateData>
 
+    suspend fun reportToDeleteFoodTruck(truckId: Long): Result<String>
+
     suspend fun getTruckList(
         latLeft: Double,
         lngLeft: Double,

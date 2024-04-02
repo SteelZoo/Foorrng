@@ -47,6 +47,10 @@ class TruckRepositoryImpl @Inject constructor(
         ).map { it.toDomain() }
     }
 
+    override suspend fun reportToDeleteFoodTruck(truckId: Long): Result<String> {
+        return truckRemoteDatasource.reportToDeleteTruck(truckId)
+    }
+
     override suspend fun getTruckList(
         latLeft: Double,
         lngLeft: Double,
@@ -112,7 +116,7 @@ class TruckRepositoryImpl @Inject constructor(
         truckId: Long,
         picture: File?
     ): Result<String> {
-        return truckRemoteDatasource.registerMenu(name, price, truckId, picture)
+        return truckRemoteDatasource.registerMenu(name, price, truckId, picture).map{it.name}
     }
 
     override suspend fun updateMenu(
@@ -122,7 +126,7 @@ class TruckRepositoryImpl @Inject constructor(
         truckId: Long,
         picture: File?
     ): Result<String> {
-        return truckRemoteDatasource.updateMenu(id, name, price, truckId, picture)
+        return truckRemoteDatasource.updateMenu(id, name, price, truckId, picture).map{it.name}
     }
 
     override suspend fun deleteMenu(id: Long): Result<String> {

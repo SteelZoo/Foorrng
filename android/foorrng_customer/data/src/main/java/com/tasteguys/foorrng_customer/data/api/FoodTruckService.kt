@@ -6,13 +6,14 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateRespon
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuRequest
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkRequest
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRequest
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewRequest
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewRequest
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRegisterUpdateResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -48,6 +49,9 @@ interface FoodTruckService {
         @Path("foodtruckId") truckId: Long
     ): Result<DefaultResponse<TruckDetailResponse>>
 
+    @DELETE("foodtruck-report/delete/{foodtruckReportId}")
+    suspend fun reportToDeleteTruck(@Path("foodtruckReportId") truckId: Long): Result<DefaultResponse<String>>
+
     @POST("foodtrucks/like/{foodtruckId}")
     suspend fun markFavoriteFoodTruck(
         @Path("foodtruckId") truckId: Long
@@ -71,18 +75,20 @@ interface FoodTruckService {
     @GET("menu/{foodtruckId}")
     suspend fun getMenu(@Path("foodtruckId") truckId: Long): Result<DefaultResponse<List<TruckMenuResponse>>>
 
+    @Multipart
     @POST("menu/regist")
     suspend fun registerMenu(
         @Part("menuRequestDto") menuRequest: TruckMenuRequest,
         @Part picture: MultipartBody.Part?
-    ):Result<DefaultResponse<String>>
+    ):Result<DefaultResponse<TruckMenuRegisterUpdateResponse>>
 
+    @Multipart
     @PATCH("menu/{menuId}")
     suspend fun updateMenu(
         @Path("menuId") id: Long,
         @Part("menuRequestDto") menuRequest: TruckMenuRequest,
         @Part picture: MultipartBody.Part?
-    ): Result<DefaultResponse<String>>
+    ): Result<DefaultResponse<TruckMenuRegisterUpdateResponse>>
     @DELETE("menu/{menuId}")
     suspend fun deleteMenu(@Path("menuId") id: Long): Result<DefaultResponse<String>>
 

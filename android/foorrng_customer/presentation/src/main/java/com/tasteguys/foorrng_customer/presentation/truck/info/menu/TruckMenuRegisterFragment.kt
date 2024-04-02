@@ -1,11 +1,8 @@
-package com.tasteguys.foorrng_customer.presentation.truck.info
+package com.tasteguys.foorrng_customer.presentation.truck.info.menu
 
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -56,8 +53,10 @@ class TruckMenuRegisterFragment(private val truckId: Long, private val data: Tru
                     .load(data.img)
                     .fallback(R.drawable.bg_profile_photo)
                     .into(ivMenuImage)
-                etMenuName.setText(data.name)
-                etMenuPrice.setText(data.price)
+                tilMenuName.editText!!.setText(data.name)
+                truckMenuViewModel.name = data.name
+                tilMenuPrice.editText!!.setText(data.price.toString())
+                truckMenuViewModel.price = data.price.toLong()
             }
             with(truckMenuViewModel){
                 tilMenuName.editText!!.addTextChangedListener {name = it.toString()}
@@ -79,6 +78,9 @@ class TruckMenuRegisterFragment(private val truckId: Long, private val data: Tru
                 }else{
                     truckMenuViewModel.updateMenu(data.id, truckId)
                 }
+            }
+            btnChangeImage.setOnClickListener {
+                galleryLauncher.openGallery()
             }
 
         }

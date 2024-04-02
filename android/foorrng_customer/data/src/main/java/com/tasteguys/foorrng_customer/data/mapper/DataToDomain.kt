@@ -8,11 +8,11 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMainInfoResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.data.model.user.UserResponse
 import com.tasteguys.foorrng_customer.domain.model.festival.FestivalData
@@ -103,7 +103,7 @@ fun FoodCategoryEntity.toDomain(): FoodCategoryData{
 
 fun FestivalResponse.toDomain(): FestivalData{
     return FestivalData(
-        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, picture
     )
 }
 

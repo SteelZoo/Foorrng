@@ -56,12 +56,17 @@ class RegisterFestivalFragment @Inject constructor(
             checkBackStackDialog()
         }.addMenuItemClickListener {
             with(inputViewModel) {
-                val img = if (imageChanged) infoImg.toFile(requireContext()) else null
-                if (isNew) {
-                    registerFestival(img)
-                } else {
-                    updateFestival(festivalId, img)
+                validateInput().onSuccess {
+                    val img = if (imageChanged) infoImg.toFile(requireContext()) else null
+                    if (isNew) {
+                        registerFestival(img)
+                    } else {
+                        updateFestival(festivalId, img)
+                    }
+                }.onFailure {
+                    showToast(it.message ?: "입력 오류")
                 }
+
             }
         }
     }
@@ -126,12 +131,12 @@ class RegisterFestivalFragment @Inject constructor(
                         talk = data.kakao
                         lat = data.lat
                         lng = data.lng
-                        inputViewModel.address = data.address
+                        setAddress(data.address)
                         startDate = data.startDate
                         endDate = data.endDate
                     }
                     tilDate.editText!!.setText("${startDate.toDateString()} ~ ${endDate.toDateString()}")
-                    tilLocation.editText!!.setText(inputViewModel.address)
+                    tilFestivalInfo.editText!!.setText(festivalViewModel.getDetailResult.value!!.getOrNull()!!.picture?:"")
                     inputState = true
                 }
 
@@ -141,7 +146,6 @@ class RegisterFestivalFragment @Inject constructor(
                 tilEmail.editText!!.setText(email)
                 tilKakaoTalk.editText!!.setText(talk)
 
-
             }
 
         }
@@ -149,12 +153,15 @@ class RegisterFestivalFragment @Inject constructor(
 
     private fun registerObserve() {
         festivalViewModel.address.observe(viewLifecycleOwner) {
-            binding.tilLocation.editText!!.setText(it)
-            inputViewModel.address = it
+            inputViewModel.setAddress(it)
             inputViewModel.lat = festivalViewModel.latLng.latitude
             inputViewModel.lng = festivalViewModel.latLng.longitude
         }
         with(inputViewModel) {
+            address.observe(viewLifecycleOwner){
+                binding.tilLocation.editText!!.setText(it)
+            }
+
             registerResult.observe(viewLifecycleOwner) {
                 if (it.isSuccess) {
                     showToast("등록 완료")
@@ -166,6 +173,7 @@ class RegisterFestivalFragment @Inject constructor(
             updateResult.observe(viewLifecycleOwner) {
                 if (it.isSuccess) {
                     showToast("등록 완료")
+                    festivalViewModel.initAddress()
                     parentFragmentManager.popBackStack()
                 } else {
                     showToast("오류")
@@ -179,12 +187,50 @@ class RegisterFestivalFragment @Inject constructor(
             .setTitle("등록을 취소하시겠습니까?")
             .setMessage("작성 중인 내용이 모두 삭제됩니다.")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
+                with(festivalViewModel){
+                    initAddress()
+                }
                 parentFragmentManager.popBackStack()
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun validateInput(): Result<String> {
+        with(binding){
+            val nameValidation = tilTitle.editText!!.text.toString().isNotBlank()
+            val organizerValidation = tilOrganizer.editText!!.text.toString().isNotBlank()
+            val emailValidation = tilEmail.editText!!.text.toString().let {
+                it.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()
+            }
+            val callNumberValidation = tilCallNumber.editText!!.text.toString().isNotBlank()
+            val locationValidation = tilLocation.editText!!.text.toString().isNotBlank()
+            val infoValidation = tilFestivalInfo.editText!!.text.toString().isNotBlank()
+
+            val msg = if (!nameValidation) {
+                "이름을 입력해주세요"
+            } else if (!organizerValidation) {
+                "주최자를 입력해주세요"
+            } else if (!emailValidation) {
+                "올바른 이메일을 입력해 주세요"
+            }else if (!callNumberValidation) {
+                "전화번호를 입력해주세요"
+            }
+            else if (!locationValidation) {
+                "위치를 지정해주세요"
+            }
+            else if (!infoValidation) {
+                "정보 이미지를 입력해주세요"
+            }
+            else {
+                return Result.success("success")
+            }
+            return Result.failure(Exception(msg))
+        }
+
+
     }
 
 }

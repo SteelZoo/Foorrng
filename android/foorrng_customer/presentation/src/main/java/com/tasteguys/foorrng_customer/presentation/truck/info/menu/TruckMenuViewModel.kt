@@ -1,11 +1,12 @@
-package com.tasteguys.foorrng_customer.presentation.truck.info
+package com.tasteguys.foorrng_customer.presentation.truck.info.menu
 
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckMenuData
 import com.tasteguys.foorrng_customer.domain.usecase.truck.menu.DeleteMenuUseCase
+import com.tasteguys.foorrng_customer.domain.usecase.truck.menu.GetMenuUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.menu.RegisterMenuUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.menu.UpdateMenuUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class TruckMenuViewModel @Inject constructor(
     private val registerMenuUseCase: RegisterMenuUseCase,
     private val updateMenuUseCase: UpdateMenuUseCase,
-    private val deleteMenuUseCase: DeleteMenuUseCase
+    private val deleteMenuUseCase: DeleteMenuUseCase,
+    private val getMenuUseCase: GetMenuUseCase
 ): ViewModel() {
 
     var name = ""
@@ -35,6 +37,10 @@ class TruckMenuViewModel @Inject constructor(
     private val _deleteResult = MutableLiveData<Result<String>>()
     val deleteResult: LiveData<Result<String>>
         get() = _deleteResult
+
+    private val _getMenuListResult = MutableLiveData<Result<List<TruckMenuData>>>()
+    val getMenuListResult: LiveData<Result<List<TruckMenuData>>>
+        get() = _getMenuListResult
 
     fun registerMenu(truckId: Long){
         viewModelScope.launch {
@@ -56,6 +62,14 @@ class TruckMenuViewModel @Inject constructor(
         viewModelScope.launch {
             deleteMenuUseCase(id).let {
                 _deleteResult.postValue(it)
+            }
+        }
+    }
+
+    fun getMenuList(truckId: Long){
+        viewModelScope.launch {
+            getMenuUseCase(truckId).let {
+                _getMenuListResult.postValue(it)
             }
         }
     }

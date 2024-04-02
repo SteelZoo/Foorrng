@@ -38,6 +38,9 @@ class TruckMenuAdapter( private var isSimple : Boolean = true, private var isEdi
                 if(!isEditable){
                     btnEdit.visibility = View.GONE
                 }
+                root.setOnClickListener{
+                    clickListener.onClick(layoutPosition)
+                }
             }
 
         }

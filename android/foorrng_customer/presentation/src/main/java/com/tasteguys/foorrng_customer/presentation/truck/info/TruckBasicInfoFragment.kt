@@ -5,14 +5,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseFragment
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckBasicInfoBinding
 import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckMenu
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.info.menu.TruckMenuFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.min
 
@@ -34,9 +33,7 @@ class TruckBasicInfoFragment(private val truckId: Long) :
     private fun initView() {
         binding.rvMenu.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.VERTICAL
-            }
+            adapter = truckMenuAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
         binding.btnMoreMenu.setOnClickListener {
@@ -45,7 +42,6 @@ class TruckBasicInfoFragment(private val truckId: Long) :
                 .addToBackStack(null)
                 .commit()
         }
-
     }
 
     private fun registerObserve() {
@@ -71,6 +67,11 @@ class TruckBasicInfoFragment(private val truckId: Long) :
                 data.menus.let {
                     truckMenuAdapter.submitList(
                         it.subList(0, min(3, it.size)).map { menu -> menu.toTruckMenu() })
+                }
+                if(data.type == "foodtruck"){
+                    binding.tvWarning.visibility = View.GONE
+                }else{
+                    binding.tvWarning.visibility = View.VISIBLE
                 }
 
             }

@@ -55,7 +55,8 @@ class RegisterTruckFragment @Inject constructor(
         MainToolbarControl(
             visible = true,
             title = if(isNew) resources.getString(R.string.register_foodtruck) else resources.getString(R.string.update_foodtruck),
-            menuRes = R.menu.menu_check
+            menuRes = R.menu.menu_check,
+            backIcon = !isNew
         ).addMenuItemClickListener {
             confirmDialog()
 //            showToast("등록 완료")

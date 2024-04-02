@@ -1,4 +1,4 @@
-package com.tasteguys.foorrng_customer.data.model.truck
+package com.tasteguys.foorrng_customer.data.model.truck.menu
 
 import com.squareup.moshi.Json
 

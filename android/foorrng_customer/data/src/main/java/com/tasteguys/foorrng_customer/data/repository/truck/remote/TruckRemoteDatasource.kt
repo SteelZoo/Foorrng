@@ -4,12 +4,11 @@ import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateRespon
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
-import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
-import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRegisterUpdateResponse
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import java.io.File
 
 interface TruckRemoteDatasource {
@@ -42,6 +41,8 @@ interface TruckRemoteDatasource {
     suspend fun getTruckDetail(
         truckId: Long
     ): Result<TruckDetailResponse>
+
+    suspend fun reportToDeleteTruck(truckId: Long): Result<String>
 
     suspend fun markFavoriteTruck(
         truckId: Long
@@ -77,7 +78,7 @@ interface TruckRemoteDatasource {
         price: Long,
         truckId: Long,
         picture: File?
-    ): Result<String>
+    ): Result<TruckMenuRegisterUpdateResponse>
 
     suspend fun updateMenu(
         id: Long,
@@ -85,7 +86,7 @@ interface TruckRemoteDatasource {
         price: Long,
         truckId: Long,
         picture: File?
-    ): Result<String>
+    ): Result<TruckMenuRegisterUpdateResponse>
 
     suspend fun deleteMenu(
         id: Long

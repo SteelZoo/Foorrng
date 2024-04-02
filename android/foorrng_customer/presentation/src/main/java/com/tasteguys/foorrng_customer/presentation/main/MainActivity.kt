@@ -9,7 +9,9 @@ import com.tasteguys.foorrng_customer.presentation.base.BaseActivity
 import com.tasteguys.foorrng_customer.presentation.databinding.ActivityMainBinding
 import com.tasteguys.foorrng_customer.presentation.festival.FestivalListFragment
 import com.tasteguys.foorrng_customer.presentation.home.HomeMapFragment
+import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.profile.UserFavoriteFragment
+import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "MainActivity_Genseong"
@@ -18,14 +20,37 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     ActivityMainBinding::inflate
 ) {
     private val mainViewModel: MainViewModel by viewModels()
+    private val dailyFavoriteViewModel: DailyFavoriteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        dailyFavoriteViewModel.getCategory()
         observeToolbarControl()
+        setBottomNavigationView()
+        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
+    }
 
-//        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, UserFavoriteFragment()).commit()
-//        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
-        supportFragmentManager.beginTransaction().replace(R.id.fcv_container, FestivalListFragment()).commit()
+    private fun setBottomNavigationView(){
+        binding.bnvBottomNav.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.fragment_home_map ->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
+                    true
+                }
+                R.id.fragment_register_truck->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, RegisterTruckFragment(true, -1)).commit()
+                    true
+                }
+                R.id.fragment_festival->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, FestivalListFragment()).commit()
+                    true
+                }
+                R.id.fragment_favorite->{
+                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, UserFavoriteFragment()).commit()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
 
@@ -46,6 +71,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     setNavigationOnClickListener {
                         controller.navIconClickListener()
                     }
+                    if(!controller.backIcon){
+                        navigationIcon = null
+                    }else{
+                        navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back)
+                    }
+
                 }
                 else {
                     binding.tbMain.visibility = View.GONE

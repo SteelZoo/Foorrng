@@ -1,11 +1,11 @@
-package com.tasteguys.foorrng_customer.presentation.truck.info
+package com.tasteguys.foorrng_customer.presentation.truck.info.menu
 
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckMenuBinding
@@ -14,7 +14,6 @@ import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckMenu
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
-import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,7 +22,7 @@ class TruckMenuFragment(private val truckId: Long) : MainBaseFragment<FragmentTr
 ) {
 
     private val truckViewModel: TruckViewModel by activityViewModels()
-
+    private val truckMenuViewModel: TruckMenuViewModel by viewModels()
     private val truckMenuAdapter = TruckMenuAdapter(false)
 
     override fun setToolbar() {
@@ -43,6 +42,8 @@ class TruckMenuFragment(private val truckId: Long) : MainBaseFragment<FragmentTr
     }
 
     private fun initView(){
+        truckMenuViewModel.getMenuList(truckId)
+
         binding.rvMenu.apply {
             adapter = truckMenuAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
@@ -75,6 +76,24 @@ class TruckMenuFragment(private val truckId: Long) : MainBaseFragment<FragmentTr
                 if(res.getOrNull()!!.type=="foodtruck"){
                     binding.btnAddMenu.visibility = View.GONE
                 }
+            }
+        }
+        truckMenuViewModel.getMenuListResult.observe(viewLifecycleOwner){ res->
+            if(res.isSuccess){
+                truckMenuAdapter.apply{
+                    submitList(
+                        res.getOrNull()?.map { it.toTruckMenu() }
+                    )
+                    setOnItemClickListener(object : BaseHolder.ItemClickListener{
+                        override fun onClick(position: Int) {
+                            parentFragmentManager.beginTransaction()
+                                .replace(R.id.fcv_container, TruckMenuRegisterFragment(truckId, currentList[position]))
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                    })
+                }
+
             }
         }
     }

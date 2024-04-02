@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".truck.info.TruckMenuFragment"
+    tools:context=".truck.info.menu.TruckMenuFragment"
     android:orientation="vertical"
     android:paddingHorizontal="20dp">
 

@@ -1,5 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.home
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.map.overlay.Marker
 import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
@@ -26,8 +28,8 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
     val authenticatedMarkerList: MutableList<Marker>
         get() = _authenticatedMarkerList
 
-    private val _truckList = mutableListOf<TruckDataWithAddress>()
-    val truckList:MutableList<TruckDataWithAddress>
+    private val _truckList = MutableLiveData<List<TruckDataWithAddress>> ()
+    val truckList: LiveData<List<TruckDataWithAddress>>
         get() = _truckList
 
     fun clearMarkerList(){
@@ -39,12 +41,9 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
         }
         _markerList.clear()
         _authenticatedMarkerList.clear()
-        _truckList.clear()
     }
 
-//    fun getMarkerList(): MutableList<Marker>{
-//        return if(_ownerAuthenticatedToggle)
-//            _authenticatedMarkerList
-//        else _markerList
-//    }
+    fun setTruckList(list: List<TruckDataWithAddress>){
+        _truckList.postValue(list)
+    }
 }

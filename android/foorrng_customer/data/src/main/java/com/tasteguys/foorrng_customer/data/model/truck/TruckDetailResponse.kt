@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
 import com.squareup.moshi.Json
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckReviewResponse
 
 data class TruckDetailResponse(
     @Json(name = "role")

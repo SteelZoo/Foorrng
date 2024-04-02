@@ -7,5 +7,6 @@ class FoorrngException(
 
     companion object{
         const val NOT_EXIST_USER = "U-001"
+        const val ALREADY_DELETED = "D-001"
     }
 }
