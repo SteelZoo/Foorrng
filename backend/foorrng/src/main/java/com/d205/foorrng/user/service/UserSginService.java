@@ -74,7 +74,7 @@ public class UserSginService {
 
         response.put("accessToken", tokenDto.getAccessToken());
         response.put("serveyCheck", serveyCheck(userDto.getUserUid()));
-//        response.put("refreshToken", tokenDto.getRefreshToken());
+        response.put("refreshToken", tokenDto.getRefreshToken());
         response.put("businessNumber", user.getBusinessNumber() ==null ?false:true);
 
         return response;
