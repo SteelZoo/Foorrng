@@ -17,11 +17,8 @@ public class Bigdata {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bigdata_seq")
     private Long id;
-
-    private String city; // 시
-
-    private String distract; // 군, 구
-
-    private String town; // 동
+    private String city;
+    private String food;
+    private Double score;
     
 }

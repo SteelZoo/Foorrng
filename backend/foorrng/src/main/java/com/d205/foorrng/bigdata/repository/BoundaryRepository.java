@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface BoundaryRepository extends JpaRepository<Boundary, String> {
-
-    Optional<List<Boundary>> findAllByAreaName(String areaName);
+    Optional<List<Boundary>> findAllByAreaNameContaining(String areaName);
 }
