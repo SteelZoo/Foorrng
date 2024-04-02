@@ -28,10 +28,12 @@ class ArticleListFragment : MainBaseFragment<FragmentArticleListBinding>(
 
     private fun registerListener(){
         binding.ivSearch.setOnClickListener {
-            articleListViewModel.articleListResult.value?.onSuccess {
-                it.filter {
+            articleListViewModel.articleListResult.value?.onSuccess { list ->
+                list.filter {
                     val string = binding.etSearch.text.toString()
                     it.title.contains(string)||it.address.contains(string)
+                }.let {
+                    articleListAdapter?.submitList(it)
                 }
             }
         }
@@ -59,9 +61,12 @@ class ArticleListFragment : MainBaseFragment<FragmentArticleListBinding>(
             }
 
             override fun afterTextChanged(s: android.text.Editable?) {
-                articleListViewModel.articleListResult.value?.onSuccess {
-                    articleListAdapter?.submitList(it)
+                if (s.isNullOrBlank()){
+                    articleListViewModel.articleListResult.value?.onSuccess {
+                        articleListAdapter?.submitList(it)
+                    }
                 }
+
             }
         })
     }

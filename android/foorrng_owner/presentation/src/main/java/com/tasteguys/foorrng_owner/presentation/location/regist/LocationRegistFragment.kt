@@ -28,7 +28,9 @@ import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 import com.tasteguys.foorrng_owner.presentation.model.run.RunDay
 import com.tasteguys.foorrng_owner.presentation.model.run.RunLocation
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
 import java.time.DayOfWeek
+import java.util.Locale
 import javax.inject.Inject
 
 private const val TAG = "LocationRegistFragment_poorrng"
@@ -149,13 +151,18 @@ class LocationRegistFragment(
     }
 
     private fun showAddRunDayDialog(dayOfWeek: DayOfWeek) {
+        val dateFormat = SimpleDateFormat("HH:mm", Locale.KOREA)
         AddRundayDialog(requireContext(), dayOfWeek)
             .setCancelListener { dialog ->
                 dialog.dismiss()
             }
             .setCreateListener { dialog, runDay ->
-                locationRegistViewModel.addRunDay(runDay)
-                dialog.dismiss()
+                if (runDay.startTime > runDay.endTime) {
+                    showToast("시작 시간이 종료 시간보다 빨라야 합니다.")
+                } else {
+                    locationRegistViewModel.addRunDay(runDay)
+                    dialog.dismiss()
+                }
             }
             .show()
     }

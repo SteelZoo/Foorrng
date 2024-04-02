@@ -19,6 +19,7 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRecommendBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
 import com.tasteguys.foorrng_owner.presentation.location.regist.LocationRegistFragment
+import com.tasteguys.foorrng_owner.presentation.location.showNavDialog
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
@@ -55,6 +56,11 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
             it.onSuccess { list ->
                 setAdapter(list)
                 setCircleOverlay(list)
+                mainViewModel.foodtruckInfo.value?.let { event ->
+                    event.peekContent().onSuccess {
+                        showSnackBar("사장님의 메뉴를 팔기 좋은 곳을 찾았어요")
+                    }
+                }
             }.onFailure {
                 showToast("추천 위치를 불러오는데 실패했습니다.")
             }
@@ -104,7 +110,7 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
         val lng = recommendLocation.area.map { it.longitude }.let {
             it.max()+it.min()/2
         }
-        NavDialog(mainActivity, lat, lng, recommendLocation.address).show()
+        showNavDialog(mainActivity, recommendLocation.address, lat, lng)
     }
 
     private val addClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
@@ -122,7 +128,6 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
         }
         // Polygon 추가
         list.forEachIndexed{ index, recommendLocation ->
-
                 val polygon = PolygonOverlay().apply {
                     coords = recommendLocation.area.also {
                         Log.d("poooo", "setCircleOverlay: $it")
@@ -136,9 +141,12 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
                 recommendPolygonList.forEach {
                     it.map = naverMap
                 }
-
-
         }
+
+        naverMap?.moveCamera(
+            CameraUpdate.fitBounds(LatLngBounds.from(list.flatMap { it.area }))
+                .animate(CameraAnimation.Easing)
+        )
     }
 
     private val mapCallback = OnMapReadyCallback { map ->
@@ -149,6 +157,12 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
             extent = LatLngBounds(LatLng(31.43, 122.37), LatLng(44.35, 132.0))
             uiSettings.apply {
                 isTiltGesturesEnabled = false
+            }
+
+            if (recommendPolygonList.isEmpty()){
+                moveCamera(
+                    CameraUpdate.fitBounds(LatLngBounds(LatLng(31.43, 122.37), LatLng(44.35, 132.0)))
+                )
             }
         }
     }
