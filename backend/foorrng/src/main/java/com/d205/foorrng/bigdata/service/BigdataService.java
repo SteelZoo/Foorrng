@@ -45,7 +45,7 @@ public class BigdataService {
             List<Bigdata> bigdataList = bigdataRepository.findByFoodOrderByScoreDesc(food.getName());
             List<VillageInfoDto> villageInfoDtoList = new ArrayList<>();
             for(Bigdata bigdata: bigdataList){
-                VillageInfoDto villageInfoDto = new VillageInfoDto(bigdata.getCity(), searchRegionBoundaryPoints(bigdata.getCity().substring(0,2)));
+                VillageInfoDto villageInfoDto = new VillageInfoDto(bigdata.getCity(), searchRegionBoundaryPoints(bigdata.getCity()));
                 villageInfoDtoList.add(villageInfoDto);
             }
             RecommendDto recommendDto = new RecommendDto(food.getName(), villageInfoDtoList);
@@ -56,8 +56,9 @@ public class BigdataService {
 
 
     public List<BoundaryDto> searchRegionBoundaryPoints(String areaName) {
-        List<Boundary> boundaryPoints = boundaryRepository.findAllByAreaNameContaining(areaName)
-                .orElseThrow(() -> new Exceptions(ErrorCode.BOUNDARY_NOT_EXIST));
+        List<Boundary> boundaryPoints = boundaryRepository.findAllByAreaName(areaName);
+//                .orElseThrow(() -> new Exceptions(ErrorCode.BOUNDARY_NOT_EXIST));
+
         return boundaryPoints.stream()
                 .map(boundary -> new BoundaryDto(boundary.getLatitude(), boundary.getLongitude()))
                 .collect(Collectors.toList());
