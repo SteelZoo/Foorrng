@@ -32,8 +32,6 @@ public class FoodController {
     @PostMapping("/favorite")
     public ResponseEntity<? extends BaseResponseBody> postFavoriteFoods(@RequestBody @Valid FavoritefoodDto favoritefoodDto) {
 
-        // test용
-        // List<FavoriteFood> favoriteFoodList = foodService.saveFavoriteFood(favoritefoodDto.getFavoriteFoods());
         foodService.saveFavoriteFood(favoritefoodDto);
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, null));
 

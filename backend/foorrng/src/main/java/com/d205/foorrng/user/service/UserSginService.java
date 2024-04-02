@@ -2,9 +2,11 @@ package com.d205.foorrng.user.service;
 
 import com.d205.foorrng.common.exception.ErrorCode;
 import com.d205.foorrng.common.exception.Exceptions;
+import com.d205.foorrng.food.repository.FavoritefoodRepository;
 import com.d205.foorrng.jwt.token.TokenDto;
 import com.d205.foorrng.jwt.token.TokenProvider;
 import com.d205.foorrng.user.dto.UserDto;
+import com.d205.foorrng.user.entity.FavoriteFood;
 import com.d205.foorrng.user.entity.User;
 import com.d205.foorrng.user.repository.UserRepository;
 import com.d205.foorrng.user.repository.UserRole;
@@ -18,7 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,44 +37,7 @@ public class UserSginService {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
-
-//    @Transactional
-//    public Map<Boolean, TokenDto> signUp(UserDto userDto, String role) {
-//
-//        Map<Boolean, TokenDto> response = new HashMap<>();
-//
-//        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDto.getUserUid(), "");
-//
-//        System.out.println("1");
-//        if (userRepository.findByUserUid(userDto.getUserUid()).orElse(null) != null) {
-//            System.out.println("2");
-//            // 로그인
-//            Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//
-//            TokenDto tokenDto = tokenProvider.createToken(authentication);
-//            System.out.println("3");
-//
-//            response.put(true, tokenDto);
-//            return response;
-//
-//        }
-//        System.out.println("4");
-//        User user = User.builder()
-//                .userUid(userDto.getUserUid())
-//                .name(userDto.getName())
-//                .email(userDto.getEmail())
-//                .role(UserRole.valueOf(role))
-//                .build();
-//        Long tmp = userRepository.save(user).getUserUid();
-//        System.out.println(tmp);
-//
-//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-//
-//        TokenDto tokenDto = tokenProvider.createToken(authentication);
-//
-//        response.put(false, tokenDto);
-//        return response;
-//    }
+    private final FavoritefoodRepository favoritefoodRepository;
 
     @Transactional
     public Long signUp(UserDto userDto, String role) {
@@ -101,12 +69,24 @@ public class UserSginService {
 
         TokenDto tokenDto = tokenProvider.createToken(authentication);
 
+
         Map<String, Object> response = new HashMap<>();
 
         response.put("accessToken", tokenDto.getAccessToken());
-        response.put("refreshToken", tokenDto.getRefreshToken());
+        response.put("serveyCheck", serveyCheck(userDto.getUserUid()));
+//        response.put("refreshToken", tokenDto.getRefreshToken());
         response.put("businessNumber", user.getBusinessNumber() ==null ?false:true);
 
         return response;
+    }
+
+    public Boolean serveyCheck(Long userUid) {
+        User user = userRepository.findByUserUid(userUid)
+                .orElseThrow(() -> new Exceptions(ErrorCode.USER_NOT_EXIST));
+       List<FavoriteFood> favoriteFoodList = favoritefoodRepository.findAllByUserAndCreatedTime(user, LocalDate.now(ZoneId.of("Asia/Seoul")).toString()).get();
+        if (favoriteFoodList.size() >= 1) {
+            return true;
+        }
+        return false;
     }
 }
