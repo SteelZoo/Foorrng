@@ -30,10 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.tags.ArgumentTag;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.d205.foorrng.common.exception.ErrorCode.ARTICLE_NOT_EXIST;
@@ -91,11 +90,33 @@ public class ArticleServiceImpl implements ArticleService{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(BaseResponseBody.of(1, "서버 내부 오류: " + e.getMessage()));
         }
     }
-
+    public static int getRandomNumber(){
+        Random random = new Random();
+        int randomIntInRange = random.nextInt(100000);
+        return randomIntInRange;
+    }
+    public static String getMD5Hash(String input) throws NoSuchAlgorithmException{
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : messageDigest) {
+                String hex = Integer.toHexString(0xFF & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
     @Transactional
     @Override
     public ResponseEntity<BaseResponseBody> saveArticle(ArticleReqDto article, MultipartFile mainImage) {
         try {
+            logger.info("ASDF1");
             Optional<String> currentUsername = SecurityUtil.getCurrentUsername();
             if (!currentUsername.isPresent()) {
                 // 현재 사용자 이름을 가져오는 데 실패한 경우
@@ -104,11 +125,17 @@ public class ArticleServiceImpl implements ArticleService{
             Long userId = Long.parseLong(currentUsername.get());
             logger.info(userId.toString()+"WERWERWER");
 
+            int articleNumber = getRandomNumber();
+            String articleImagePath = getMD5Hash(article.getTitle()+articleNumber);
+            String mainImgUrl = "";
+            if (mainImage != null && !mainImage.isEmpty()) {
+                mainImgUrl = imageSave.saveImageS3(mainImage,"image", "/articleIMG")+ articleImagePath + ".png";
+            }
             Optional<User> userOptional = userRepository.findByUserUid(userId);
             if (!userOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(BaseResponseBody.of(1, "사용자를 찾을 수 없음"));
             }
-
+            logger.info("ASDF2");
             User user = userOptional.get();
             Article articleForSave = Article.builder()
                     .user(user)
@@ -122,13 +149,9 @@ public class ArticleServiceImpl implements ArticleService{
                     .organizer(article.getOrganizer())
                     .startDate(article.getStartDate())
                     .endDate(article.getEndDate())
+                    .mainImage(mainImgUrl)
                     .build();
-            String mainImgUrl = "";
-            if (mainImage != null && !mainImage.isEmpty()) {
-                mainImgUrl = imageSave.saveImageS3(mainImage,"images", "/articleIMG")+ articleForSave.getId() + ".png";
-            }
-            articleForSave = Article.builder().mainImage(mainImgUrl).build();
-
+            logger.info("ASDF3");
             articlePostRepository.save(articleForSave);
             return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, "성공적으로 저장"));
         } catch (NumberFormatException e) {
