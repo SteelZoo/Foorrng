@@ -4,6 +4,7 @@ import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckMenuData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import java.io.File
@@ -28,6 +29,8 @@ interface TruckRepository {
         phoneNumber: String,
         category: List<String>
     ): Result<TruckRegisterUpdateData>
+
+    suspend fun reportToDeleteFoodTruck(truckId: Long): Result<String>
 
     suspend fun getTruckList(
         latLeft: Double,
@@ -64,5 +67,28 @@ interface TruckRepository {
         rvIsCheap: Boolean,
         rvIsFast: Boolean
     ): Result<Long>
+
+    suspend fun getMenu(
+        truckId: Long
+    ): Result<List<TruckMenuData>>
+
+    suspend fun registerMenu(
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String>
+
+    suspend fun updateMenu(
+        id: Long,
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String>
+
+    suspend fun deleteMenu(
+        id: Long
+    ): Result<String>
 
 }

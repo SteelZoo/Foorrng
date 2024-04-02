@@ -9,16 +9,37 @@
     android:weightSum="1"
     android:padding="20dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/civ_truck_img"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        tools:src="@drawable/logo_truck"
-        android:src="@drawable/logo_truck"
-        app:civ_circle_background_color="@color/foorrng_orange"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_truck_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            tools:src="@drawable/logo_truck"
+            android:src="@drawable/logo_truck"
+            app:civ_circle_background_color="@color/foorrng_orange"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_report"
+            android:backgroundTint="@color/red"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tbl_truck_info"

@@ -9,6 +9,7 @@ import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
+import com.tasteguys.foorrng_customer.domain.usecase.truck.DeleteTruckUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.GetTruckDetailUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.GetTruckListUseCase
 import com.tasteguys.foorrng_customer.domain.usecase.truck.MarkTruckDetailUseCase
@@ -33,6 +34,7 @@ class TruckViewModel @Inject constructor(
     private val getTruckListUseCase: GetTruckListUseCase,
     private val getTruckDetailUseCase: GetTruckDetailUseCase,
     private val markTruckDetailUseCase: MarkTruckDetailUseCase,
+    private val deleteTruckUseCase: DeleteTruckUseCase
 ) : ViewModel() {
 
     private val _truckListResult = MutableLiveData<Result<List<TruckDataWithAddress>>>()
@@ -42,6 +44,10 @@ class TruckViewModel @Inject constructor(
     private val _truckDetailResult = MutableLiveData<Result<TruckDetailData>>()
     val truckDetailResult: LiveData<Result<TruckDetailData>>
         get() = _truckDetailResult
+
+    private val _deleteTruckResult = MutableLiveData<Result<String>>()
+    val deleteTruckResult: LiveData<Result<String>>
+        get() = _deleteTruckResult
 
     private val _markFavoriteTruckResult = MutableLiveData<Result<String>>()
     val markFavoriteCategory: LiveData<Result<String>>
@@ -73,6 +79,14 @@ class TruckViewModel @Inject constructor(
         viewModelScope.launch {
             getTruckDetailUseCase(truckId).let {
                 _truckDetailResult.postValue(it)
+            }
+        }
+    }
+
+    fun deleteTruck(truckId: Long){
+        viewModelScope.launch {
+            deleteTruckUseCase(truckId).let {
+                _deleteTruckResult.postValue(it)
             }
         }
     }

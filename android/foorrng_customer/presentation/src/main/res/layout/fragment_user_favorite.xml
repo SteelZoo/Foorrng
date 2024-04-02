@@ -11,24 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:text="제보하기"
-            />
-
-<!--        <Button-->
-<!--            android:id="@+id/test2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            />-->
-
     </LinearLayout>
-
-
 
     <TextView
         style="@style/Foorrng.TEXT.EB.14"

@@ -40,7 +40,7 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
     override fun setToolbar() {
         MainToolbarControl(
-            true, resources.getString(R.string.my_favorite_info)
+            true, resources.getString(R.string.my_favorite_info), backIcon = false
         ).also {
             mainViewModel.changeToolbar(it)
         }
@@ -55,14 +55,6 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
     private fun initView(){
         truckViewModel.getFavoriteTruckList()
-        dailyFavoriteViewModel.getCategory()
-
-        binding.test.setOnClickListener{
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment(isNew = true, -1))
-                .addToBackStack(null)
-                .commit()
-        }
 
 //        binding.test2.setOnClickListener {
 ////            truckViewModel.markFavoriteTruck(25)

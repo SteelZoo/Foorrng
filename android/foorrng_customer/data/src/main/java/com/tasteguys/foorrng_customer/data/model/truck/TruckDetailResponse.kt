@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
 import com.squareup.moshi.Json
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckReviewResponse
 
 data class TruckDetailResponse(
     @Json(name = "role")
@@ -10,7 +11,7 @@ data class TruckDetailResponse(
     @Json(name="review")
     val reviews: List<TruckReviewResponse>,
     @Json(name="menus")
-    val menus: List<TruckMenuResponse>,
+    val menus: List<TruckDetailMenuResponse>,
     @Json(name="totalReview")
     val totalReview: Int,
     @Json(name="mark")

@@ -8,6 +8,7 @@ import com.tasteguys.foorrng_customer.domain.model.truck.FavoriteTruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckDetailMarkData
+import com.tasteguys.foorrng_customer.domain.model.truck.TruckMenuData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
 import com.tasteguys.foorrng_customer.domain.model.truck.TruckRegisterUpdateData
 import com.tasteguys.foorrng_customer.domain.repository.TruckRepository
@@ -44,6 +45,10 @@ class TruckRepositoryImpl @Inject constructor(
         return truckRemoteDatasource.updateFoodTruck(
             foodtruckId, name, picture, carNumber, announcement, phoneNumber, category
         ).map { it.toDomain() }
+    }
+
+    override suspend fun reportToDeleteFoodTruck(truckId: Long): Result<String> {
+        return truckRemoteDatasource.reportToDeleteTruck(truckId)
     }
 
     override suspend fun getTruckList(
@@ -97,5 +102,34 @@ class TruckRepositoryImpl @Inject constructor(
         return truckRemoteDatasource.registerReview(
             truckId, rvIsDelicious, rvIsCool, rvIsClean, rvIsKind, rvIsSpecial, rvIsCheap, rvIsFast
         ).map { truckId }
+    }
+
+    override suspend fun getMenu(truckId: Long): Result<List<TruckMenuData>> {
+        return truckRemoteDatasource.getMenu(truckId).map { lst->
+            lst.map { it.toDomain() }
+        }
+    }
+
+    override suspend fun registerMenu(
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String> {
+        return truckRemoteDatasource.registerMenu(name, price, truckId, picture).map{it.name}
+    }
+
+    override suspend fun updateMenu(
+        id: Long,
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<String> {
+        return truckRemoteDatasource.updateMenu(id, name, price, truckId, picture).map{it.name}
+    }
+
+    override suspend fun deleteMenu(id: Long): Result<String> {
+        return truckRemoteDatasource.deleteMenu(id)
     }
 }

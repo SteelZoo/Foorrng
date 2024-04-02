@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.tasteguys.foorrng_customer.domain.model.festival.FestivalData
+import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseAdapter
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.base.toDateString
@@ -22,6 +23,10 @@ class FestivalAdapter: BaseAdapter<FestivalData>() {
                 tvTitle.text = data.title
                 tvAddress.text = data.address
                 tvDate.text = "${data.startDate.toDateString()} ~ ${data.endDate.toDateString()}"
+                Glide.with(root.context)
+                    .load(data.picture)
+                    .fallback(R.drawable.bg_profile_photo)
+                    .into(ivFestivalImg)
                 root.setOnClickListener{
                     clickListener.onClick(layoutPosition)
                 }

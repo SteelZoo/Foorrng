@@ -13,6 +13,7 @@ import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.main.MainViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
+import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "TruckInfoFragment"
@@ -26,21 +27,15 @@ class TruckInfoFragment(
 ) {
     private val truckViewModel: TruckViewModel by activityViewModels()
 
-//    override fun setToolbar() {
-//        Log.d(TAG, "setToolbar: ")
-//        MainToolbarControl(
-//            true, truckName, menuRes = if (type == "Foodtruck") 0 else R.menu.menu_edit
-//        ).also {
-//            mainViewModel.changeToolbar(it)
-//        }.addNavIconClickListener {
-//            parentFragmentManager.popBackStack()
-//        }.addMenuItemClickListener {
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.fcv_container, RegisterTruckFragment(false, truckId))
-//                .addToBackStack(null)
-//                .commit()
-//        }
-//    }
+    override fun setToolbar() {
+        MainToolbarControl(
+            visible = true,
+            title = ""
+        ).also {
+            val data = truckViewModel.truckDetailResult.value?.getOrNull()
+            changeToolbarName(data?.mainData?.name?:"", data?.type?:"" )
+        }
+    }
 
     private fun changeToolbarName(name: String, type: String){
         mainViewModel.changeToolbar(
@@ -90,23 +85,49 @@ class TruckInfoFragment(
                 override fun onTabUnselected(tab: TabLayout.Tab?) {}
             }
         )
+        binding.btnDelete.setOnClickListener {
+            truckViewModel.deleteTruck(truckId)
+        }
     }
 
     private fun registerObserve() {
         truckViewModel.truckDetailResult.observe(viewLifecycleOwner) {
             if (it.isSuccess) {
                 val data = it.getOrNull()!!.mainData
+                val truckType = it.getOrNull()!!.type
                 val picture = data.picture
                 Glide.with(requireContext())
                     .load(picture)
                     .error(R.drawable.bg_profile_photo)
-//                    .fitCenter()
-//                    .centerInside()
                     .centerCrop()
                     .circleCrop()
                     .into(binding.civTruckImg)
-                changeToolbarName(data.name, it.getOrNull()!!.type)
+                changeToolbarName(data.name, truckType)
+                if(truckType == "foodtruck"){
+                    binding.btnDelete.visibility = View.GONE
+                }else{
+                    binding.btnDelete.visibility = View.VISIBLE
+                }
+
             }
+        }
+        truckViewModel.deleteTruckResult.observe(viewLifecycleOwner){
+            if(it.isSuccess){
+                val message = it.getOrNull()!!
+                showToast(message)
+                if(message=="삭제 되었습니다") {
+                    parentFragmentManager.popBackStack()
+                }
+            }else{
+                it.exceptionOrNull()?.let{t->
+                    if(t is FoorrngException && t.code == FoorrngException.ALREADY_DELETED){
+                        showSnackBar(t.message)
+                    }else{
+                        showSnackBar("오류")
+                    }
+                }
+            }
+
         }
 
     }

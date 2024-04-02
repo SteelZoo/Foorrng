@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
@@ -44,7 +45,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         super.onViewCreated(view, savedInstanceState)
         initView()
         initAdapter()
-        registerObserve()
+
     }
 
     private fun initView() {
@@ -71,6 +72,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                     }
                 }
             }
+            registerObserve()
         }
 
 
@@ -132,7 +134,8 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                 for (marker in mList) {
                     marker.map = nMap
                 }
-                truckAdapter.submitList(if (!ownerAuthenticatedToggle) truckList else truckList.filter { it.type == "Foodtruck" })
+                val lst = truckList.value!!
+                truckAdapter.submitList(if (!ownerAuthenticatedToggle) lst else lst.filter { it.type == "Foodtruck" })
             }
         }
     }
@@ -188,17 +191,22 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                             authenticatedMarkerList.add(marker)
                         }
                     }
-                    truckList.addAll(data)
                     val mList =
                         if (!ownerAuthenticatedToggle) markerList else authenticatedMarkerList
                     for (marker in mList) {
                         marker.map = nMap
                     }
-                    truckAdapter.submitList(if (!ownerAuthenticatedToggle) truckList else truckList.filter { it.type == "Foodtruck" })
+                    setTruckList(data)
                 }
-
             }
         }
+
+        with(homeMapViewModel){
+            truckList.observe(viewLifecycleOwner){ lst->
+                truckAdapter.submitList(if(!ownerAuthenticatedToggle) lst else lst.filter { it.type == "Foodtruck" })
+            }
+        }
+
     }
 
 

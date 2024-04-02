@@ -15,7 +15,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FestivalViewModel @Inject constructor(
     private val getFestivalDataUseCase: GetFestivalDataUseCase,
-    private val deleteFestivalUseCase: DeleteFestivalUseCase
 ) : ViewModel(){
 
     private val _address = MutableLiveData("")
@@ -36,6 +35,11 @@ class FestivalViewModel @Inject constructor(
         _tempAddress.postValue(address)
     }
 
+    fun initAddress(){
+        _address.postValue("")
+        latLng = LatLng(0.0, 0.0)
+    }
+
     private val _getListResult = MutableLiveData<Result<List<FestivalData>>>()
     val getListResult: LiveData<Result<List<FestivalData>>>
         get() = _getListResult
@@ -43,10 +47,6 @@ class FestivalViewModel @Inject constructor(
     private val _getDetailResult = MutableLiveData<Result<FestivalData>>()
     val getDetailResult: LiveData<Result<FestivalData>>
         get() = _getDetailResult
-
-    private val _deleteResult = MutableLiveData<Result<String>>()
-    val deleteResult: LiveData<Result<String>>
-        get() = _deleteResult
 
     fun getFestivalList(){
         viewModelScope.launch {
@@ -64,12 +64,6 @@ class FestivalViewModel @Inject constructor(
         }
     }
 
-    fun deleteFestival(id: Long){
-        viewModelScope.launch {
-            deleteFestivalUseCase(id).let{
-                _deleteResult.postValue(it)
-            }
-        }
-    }
+
 
 }

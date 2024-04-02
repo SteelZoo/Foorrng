@@ -43,6 +43,10 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Foorrng.TEXT.B.10" parent="Foorrng.TEXT.B.16">
+        <item name="android:textSize">10sp</item>
+    </style>
+
     <style name="Foorrng.TEXT.SB.14" parent="Foorrng.TEXT.SB.16">
         <item name="android:textSize">14sp</item>
     </style>

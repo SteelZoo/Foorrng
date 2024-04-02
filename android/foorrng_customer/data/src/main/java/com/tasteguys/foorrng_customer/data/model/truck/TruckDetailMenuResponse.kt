@@ -1,8 +1,8 @@
 package com.tasteguys.foorrng_customer.data.model.truck
 
-data class TruckMenuResponse(
-    val id: Long,
+data class TruckDetailMenuResponse(
+    val price:Long,
     val name: String,
-    val price: Long,
+    val id: Long,
     val picture: String
 )

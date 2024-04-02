@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -65,6 +66,17 @@ class FestivalSelectLocationFragment @Inject constructor(
                 )
                 uiSettings.isLocationButtonEnabled = true
                 locationTrackingMode = LocationTrackingMode.Follow
+                with(festivalViewModel){
+                    if(address.value!!.isNotEmpty()){
+                        val data = getDetailResult.value!!.getOrNull()!!
+                        marker.apply {
+                            position = LatLng(data.lat, data.lng)
+                            map = it
+                        }
+                        it.moveCamera(CameraUpdate.scrollTo(LatLng(data.lat, data.lng)))
+                    }
+                }
+
                 setOnMapClickListener { _, coord ->
                     marker.position = LatLng(coord.latitude, coord.longitude)
                     marker.map = this

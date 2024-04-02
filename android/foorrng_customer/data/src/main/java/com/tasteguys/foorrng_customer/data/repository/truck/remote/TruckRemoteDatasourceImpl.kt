@@ -1,22 +1,23 @@
 package com.tasteguys.foorrng_customer.data.repository.truck.remote
 
 import com.tasteguys.foorrng_customer.data.api.FoodTruckService
-import com.tasteguys.foorrng_customer.data.mapper.toData
 import com.tasteguys.foorrng_customer.data.mapper.toNonDefault
 import com.tasteguys.foorrng_customer.data.model.LocationRequest
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkDto
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMarkRequest
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkDto
+import com.tasteguys.foorrng_customer.data.model.truck.mark.TruckMarkRequest
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRequest
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfoDto
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewRequest
-import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterReviewResponse
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewRequest
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckRegisterReviewResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRequest
-import com.tasteguys.foorrng_customer.domain.model.truck.TruckOperationData
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuRegisterUpdateResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -96,6 +97,10 @@ class TruckRemoteDatasourceImpl @Inject constructor(
         return truckService.getTruckDetail(truckId).toNonDefault()
     }
 
+    override suspend fun reportToDeleteTruck(truckId: Long): Result<String> {
+        return truckService.reportToDeleteTruck(truckId).toNonDefault()
+    }
+
     override suspend fun markFavoriteTruck(truckId: Long): Result<String> {
         return truckService.markFavoriteFoodTruck(truckId).toNonDefault()
     }
@@ -134,5 +139,54 @@ class TruckRemoteDatasourceImpl @Inject constructor(
                 rvIsDelicious, rvIsCool, rvIsClean, rvIsKind, rvIsSpecial, rvIsCheap, rvIsFast
             )
         ).toNonDefault()
+    }
+
+    override suspend fun getMenu(truckId: Long): Result<List<TruckMenuResponse>> {
+        return truckService.getMenu(truckId).toNonDefault()
+    }
+
+    override suspend fun registerMenu(
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<TruckMenuRegisterUpdateResponse> {
+        return if(picture!=null){
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            truckService.registerMenu(
+                TruckMenuRequest(name, price, truckId),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+            ).toNonDefault()
+        }else{
+            truckService.registerMenu(
+                TruckMenuRequest(name, price, truckId), null
+            ).toNonDefault()
+        }
+    }
+
+    override suspend fun updateMenu(
+        id: Long,
+        name: String,
+        price: Long,
+        truckId: Long,
+        picture: File?
+    ): Result<TruckMenuRegisterUpdateResponse> {
+        return if(picture!=null){
+            val requestFile = picture.asRequestBody("image/*".toMediaTypeOrNull())
+            truckService.updateMenu(
+                id,
+                TruckMenuRequest(name, price, truckId),
+                MultipartBody.Part.createFormData("picture", picture.name, requestFile),
+            ).toNonDefault()
+        }else{
+            truckService.updateMenu(
+                id,
+                TruckMenuRequest(name, price, truckId), null
+            ).toNonDefault()
+        }
+    }
+
+    override suspend fun deleteMenu(id: Long): Result<String> {
+        return truckService.deleteMenu(id).toNonDefault()
     }
 }

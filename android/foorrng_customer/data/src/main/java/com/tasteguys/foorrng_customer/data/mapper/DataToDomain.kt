@@ -3,15 +3,16 @@ package com.tasteguys.foorrng_customer.data.mapper
 import com.tasteguys.foorrng_customer.data.model.FoodCategoryEntity
 import com.tasteguys.foorrng_customer.data.model.festival.FestivalResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMarkResponse
+import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckDetailResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckFavoriteListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckListResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckMainInfoResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckMenuResponse
+import com.tasteguys.foorrng_customer.data.model.truck.menu.TruckMenuResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckOperationInfo
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterOperationResponse
 import com.tasteguys.foorrng_customer.data.model.truck.TruckRegisterUpdateResponse
-import com.tasteguys.foorrng_customer.data.model.truck.TruckReviewResponse
+import com.tasteguys.foorrng_customer.data.model.truck.review.TruckReviewResponse
 import com.tasteguys.foorrng_customer.data.model.user.LoginResponse
 import com.tasteguys.foorrng_customer.data.model.user.UserResponse
 import com.tasteguys.foorrng_customer.domain.model.festival.FestivalData
@@ -55,7 +56,7 @@ fun TruckDetailResponse.toDomain() = TruckDetailData(
     type,
     mainInfo.toDomain(),
     reviews.map { it.toDomain() },
-    menus.map { it.toDomain() },
+    menus.map { it.toDomain(mainInfo.truckId)},
     totalReview,
     operation.map { it.toDomain() }
 )
@@ -68,8 +69,12 @@ fun TruckReviewResponse.toDomain() = TruckReviewData(
     id, cnt
 )
 
+fun TruckDetailMenuResponse.toDomain(truckId: Long) = TruckMenuData(
+    id, name, price, picture, truckId
+)
+
 fun TruckMenuResponse.toDomain() = TruckMenuData(
-    id, name, price, picture
+    id, name, price, picture, truckId
 )
 
 fun TruckOperationInfo.toDomain() = TruckOperationData(
@@ -98,7 +103,7 @@ fun FoodCategoryEntity.toDomain(): FoodCategoryData{
 
 fun FestivalResponse.toDomain(): FestivalData{
     return FestivalData(
-        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, picture
     )
 }
 
