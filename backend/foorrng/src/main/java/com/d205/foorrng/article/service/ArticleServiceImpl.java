@@ -53,13 +53,16 @@ public class ArticleServiceImpl implements ArticleService{
     @Transactional
     public ResponseEntity<BaseResponseBody> updateArticle(ArticleUpdateReqDto articleDto, MultipartFile image) {
         try {
-            String mainImgUrl = "";
-            if (image != null && !image.isEmpty()) {
-                mainImgUrl = imageSave.saveImageS3(image,"images", "/articleIMG");
-            }
             Article article = articlePostRepository.findById(articleDto.getArticleId())
                     .orElseThrow(() -> new RuntimeException("Article not found with id " + articleDto.getArticleId()));
-
+            String mainImgUrl = "";
+            if (image == null) {
+                //만약 null이면? 기존에 있는 걸로 쓴다.
+                mainImgUrl = article.getMainImage();
+            }else{
+                //널이 아니면 저장한다.
+                mainImgUrl = imageSave.saveImageS3(image,"images", "/articleIMG");
+            }
             article =Article.builder()
                     .id(article.getId())
                     .createdDatetime(article.getCreatedDatetime())

@@ -42,7 +42,7 @@ public class ArticleController {
         return articleService.updateArticle(articleDto, mainImage);
     }
     @GetMapping("/search/{article-id}")
-    @Operation(summary = "게시글 반환", description = "게시글을 수정합니다.")
+    @Operation(summary = "게시글 반환", description = "게시글 하나를 반환합니다.")
     @ApiResponse(responseCode = "200", description = "성공 /n/n Success 반환")
     public ResponseEntity<? extends BaseResponseBody> searchArticle(@PathVariable("article-id") Long articleId) {
         return articleService.searchArticle(articleId);
@@ -55,7 +55,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/delete/{article-id}")
-    @Operation(summary = "게시글 삭제", description = "게시글을 수정합니다.")
+    @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @ApiResponse(responseCode = "204", description = "성공 /n/n Success 반환")
     public ResponseEntity<? extends BaseResponseBody> removeArticle(@PathVariable("article-id") Long articleId) {
         return articleService.removeArticle(articleId);
