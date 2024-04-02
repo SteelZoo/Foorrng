@@ -57,10 +57,10 @@ public class OperationInfoService {
                     .mark(mark)
                     .day(day.get("day").toString())
                     .startTime(LocalTime.ofInstant(
-                            Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("startTime").toString())),
+                            Instant.ofEpochMilli(Long.parseLong(day.get("startTime").toString())),
                             ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm")))
                     .endTime(LocalTime.ofInstant(
-                            Instant.ofEpochMilli(Long.parseLong(operationInfoDto.getOperationInfoList().get(0).get("endTime").toString())),
+                            Instant.ofEpochMilli(Long.parseLong(day.get("endTime").toString())),
                             ZoneId.of("Asia/Seoul")).format(DateTimeFormatter.ofPattern("HH:mm")))
                     .build();
 
