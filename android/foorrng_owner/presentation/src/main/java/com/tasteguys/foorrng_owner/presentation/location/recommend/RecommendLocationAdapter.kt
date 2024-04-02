@@ -7,20 +7,29 @@ import com.tasteguys.foorrng_owner.presentation.databinding.ItemRecommendLocatio
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
 
 class RecommendLocationAdapter(
-    private val recommendLocationList: List<RecommendLocation>
-) : RecyclerView.Adapter<RecommendLocationAdapter.RecommendLocationViewHolder>(){
+    private val recommendLocationList: List<RecommendLocation>,
+    private val itemClicklListener: (RecommendLocation) -> Unit,
+    private val navClickListener: (RecommendLocation) -> Unit,
+    private val addClickListener: (RecommendLocation) -> Unit
+) : RecyclerView.Adapter<RecommendLocationAdapter.RecommendLocationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendLocationViewHolder {
         return RecommendLocationViewHolder(
             ItemRecommendLocationBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false)
+                false
+            )
         )
     }
 
     override fun onBindViewHolder(holder: RecommendLocationViewHolder, position: Int) {
-        holder.bind(recommendLocationList[position])
+        holder.bind(
+            recommendLocationList[position],
+            itemClicklListener,
+            navClickListener,
+            addClickListener
+        )
     }
 
     override fun getItemCount(): Int {
@@ -30,9 +39,23 @@ class RecommendLocationAdapter(
     class RecommendLocationViewHolder(
         private val binding: ItemRecommendLocationBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: RecommendLocation) {
+        fun bind(
+            item: RecommendLocation,
+            itemClicklListener: (RecommendLocation) -> Unit,
+            navClickListener: (RecommendLocation) -> Unit,
+            addClickListener: (RecommendLocation) -> Unit
+        ) {
             binding.tvRecommendLocationAddress.text = item.address
             binding.tvRecommendLocationComment.text = item.comment
+            binding.layoutRecommendLocationItem.setOnClickListener {
+                itemClicklListener(item)
+            }
+            binding.btnRecommendLocationNav.setOnClickListener {
+                navClickListener(item)
+            }
+            binding.btnRecommendLocationAdd.setOnClickListener {
+                addClickListener(item)
+            }
         }
     }
 }

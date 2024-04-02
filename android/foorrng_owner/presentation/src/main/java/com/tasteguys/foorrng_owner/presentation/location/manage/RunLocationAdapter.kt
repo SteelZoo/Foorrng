@@ -21,7 +21,8 @@ private const val TAG = "RunLocationAdapter_poorrng"
 class RunLocationAdapter(
     private val runLocationList: List<RunLocationInfo>,
     private val deleteListener: (RunLocationInfo) -> Unit,
-    private val naviListener: (RunLocationInfo) -> Unit
+    private val naviListener: (RunLocationInfo) -> Unit,
+    private val itemClickListener: (RunLocationInfo) -> Unit
 ) : RecyclerView.Adapter<RunLocationAdapter.RunLocationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RunLocationViewHolder {
@@ -31,7 +32,7 @@ class RunLocationAdapter(
                 parent,
                 false
             ),
-            deleteListener, naviListener
+            deleteListener, naviListener, itemClickListener
         )
     }
 
@@ -46,7 +47,8 @@ class RunLocationAdapter(
     class RunLocationViewHolder(
         private val binding: ItemLocationInfoBinding,
         private val deleteListener: (RunLocationInfo) -> Unit,
-        private val naviListener: (RunLocationInfo) -> Unit
+        private val naviListener: (RunLocationInfo) -> Unit,
+        private val itemClickListener: (RunLocationInfo) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         private var runInfoAdapter: RunInfoAdapter? = null
@@ -67,6 +69,9 @@ class RunLocationAdapter(
             }
             binding.ivLocationDelete.setOnClickListener {
                 deleteListener(item)
+            }
+            binding.cvLocationInfo.setOnClickListener {
+                itemClickListener(item)
             }
         }
 

@@ -7,15 +7,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.CircleOverlay
 import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationRecommendBinding
+import com.tasteguys.foorrng_owner.presentation.location.NavDialog
+import com.tasteguys.foorrng_owner.presentation.location.regist.LocationRegistFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RecommendLocation
+import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,14 +67,41 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
         locationRecommendViewModel.getRecommendLocationList()
     }
 
+
+    // region rv Adapter
     private fun setAdapter(list: List<RecommendLocation>) {
         if (recommendLocationAdapter == null) {
-            recommendLocationAdapter = RecommendLocationAdapter(list)
+            recommendLocationAdapter = RecommendLocationAdapter(
+                list,itemClickListener, navClickListener, addClickListener
+            )
         }
 
         binding.rvRecommendLocation.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.rvRecommendLocation.adapter = recommendLocationAdapter
     }
+
+    private val itemClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
+        naverMap?.let {
+            it.moveCamera(
+                CameraUpdate.scrollTo(recommendLocation.latLng).finishCallback {
+                    it.moveCamera(CameraUpdate.zoomTo(14.0))
+                }
+            )
+        }
+    }
+
+    private val navClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
+        NavDialog(mainActivity, recommendLocation.latLng.latitude, recommendLocation.latLng.longitude, recommendLocation.address).show()
+    }
+
+    private val addClickListener: (RecommendLocation) -> Unit = { recommendLocation ->
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.layout_main_fragment, LocationRegistFragment(recommendLocation))
+            .addToBackStack(null)
+            .commit()
+    }
+
+    // endregion rv Adapter
 
     private fun setCircleOverlay(list: List<RecommendLocation>){
         // 기존 CircleOverlay 제거
@@ -102,6 +133,7 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
             }
         }
     }
+
 
     override fun setToolbar() {
         mainViewModel.changeToolbar(

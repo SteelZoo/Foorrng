@@ -29,4 +29,17 @@ interface FoodtruckRepository {
     ) : Result<Boolean>
 
     suspend fun getMarkList(): Result<List<MarkData>>
+
+    suspend fun registMark(
+        foodtruckId: Long,
+        markData: MarkData
+    ): Result<Boolean>
+
+    suspend fun changeMarkRunState(
+        markId: Long
+    ): Result<Boolean>
+
+    suspend fun deleteMark(
+        markId: Long
+    ): Result<String>
 }

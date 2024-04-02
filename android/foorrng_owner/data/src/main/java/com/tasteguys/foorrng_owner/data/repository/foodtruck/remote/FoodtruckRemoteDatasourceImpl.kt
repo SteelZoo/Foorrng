@@ -6,6 +6,7 @@ import com.tasteguys.foorrng_owner.data.model.DefaultResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckDetailResponse
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckRegistRequest
 import com.tasteguys.foorrng_owner.data.model.foodtruck.FoodtruckUpdateRequest
+import com.tasteguys.foorrng_owner.data.model.mark.MarkRegistRequest
 import com.tasteguys.foorrng_owner.data.model.mark.MarkResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -78,5 +79,26 @@ class FoodtruckRemoteDatasourceImpl @Inject constructor(
 
     override suspend fun getMarkList(): Result<List<MarkResponse>> {
         return  foodtruckService.getMarkList().toNonDefault()
+    }
+
+    override suspend fun registMark(foodtruckId: Long,mark: MarkRegistRequest): Result<Boolean> {
+        return foodtruckService.registMark(foodtruckId,mark)
+            .toNonDefault()
+            .map { response ->
+                response.id >= 0L
+            }
+    }
+
+    override suspend fun changeMarkRunState(markId: Long): Result<Boolean> {
+        return foodtruckService.changeMarkRunState(markId)
+            .toNonDefault()
+            .map { response ->
+                response.id >= 0L
+            }
+    }
+
+    override suspend fun deleteMark(markId: Long): Result<String> {
+        return foodtruckService.deleteMark(markId)
+            .toNonDefault()
     }
 }

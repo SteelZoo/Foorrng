@@ -11,6 +11,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tasteguys.foorrng_owner.presentation.R
+import com.tasteguys.foorrng_owner.presentation.article.ArticleListFragment
 import com.tasteguys.foorrng_owner.presentation.base.PermissionHelper
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentHomeBinding
 import com.tasteguys.foorrng_owner.presentation.foodtruck.info.FoodtruckInfoFragment
@@ -18,6 +19,7 @@ import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.FoodtruckMenuFrag
 import com.tasteguys.foorrng_owner.presentation.foodtruck.menu.MenuEditFragment
 import com.tasteguys.foorrng_owner.presentation.foodtruck.regist.RegistFoodtruckFragment
 import com.tasteguys.foorrng_owner.presentation.location.manage.LocationManageFragment
+import com.tasteguys.foorrng_owner.presentation.location.open.FoodtruckOpenFragment
 import com.tasteguys.foorrng_owner.presentation.location.recommend.LocationRecommendFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.retrofit_adapter.FoorrngException
@@ -95,6 +97,20 @@ class HomeFragment : MainBaseFragment<FragmentHomeBinding>(
         binding.cvRecommendLocation.setOnClickListener {
             parentFragmentManager.beginTransaction()
                 .replace(R.id.layout_main_fragment, LocationRecommendFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvFoodtruckOpen.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, FoodtruckOpenFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.cvArticle.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.layout_main_fragment, ArticleListFragment())
                 .addToBackStack(null)
                 .commit()
         }
