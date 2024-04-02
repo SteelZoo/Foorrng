@@ -45,7 +45,7 @@ public class BigdataService {
             List<Bigdata> bigdataList = bigdataRepository.findByFoodOrderByScoreDesc(food.getName());
             List<VillageInfoDto> villageInfoDtoList = new ArrayList<>();
             for(Bigdata bigdata: bigdataList){
-                VillageInfoDto villageInfoDto = new VillageInfoDto(bigdata.getCity(), searchRegionBoundaryPoints(bigdata.getCity().substring(0,2) + "%"));
+                VillageInfoDto villageInfoDto = new VillageInfoDto(bigdata.getCity(), searchRegionBoundaryPoints(bigdata.getCity()));
                 villageInfoDtoList.add(villageInfoDto);
             }
             RecommendDto recommendDto = new RecommendDto(food.getName(), villageInfoDtoList);
