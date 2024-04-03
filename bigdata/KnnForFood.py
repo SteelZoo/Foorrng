@@ -2,6 +2,12 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 import matplotlib.pyplot as plt
+import random, json
+import mysql.connector
+from dotenv import load_dotenv
+import os 
+
+
 
 #  KNN 이랑 시계열, 시설 데이터 합치고
 # 데이터를 리스트로 뽑는다.
@@ -87,8 +93,8 @@ knn.fit(combined_features)
 ## 2차원 표로 보여주기 위한 시각화를 위한 scatter plot 임
 ## 재밌는건 속성이 여러개이기 때문에 5개 중 2개만 택해서 각각의 축에 매핑시키고 볼 수 있음
 ## knn의 kneighbors를 쓰게 되면, 알아서 비슷한 그룹으로 찾아내줌
-labels = ['Rice Bowl', 'Electric Grilled Whole Chicken', 'Skewer', 'Takoyaki', 'Taco & Kebab',
-          'Korean Street Food', 'Bread', 'Famine Crops', 'Cafe & Dessert', 'Etc'] * 5
+labels = ['덮밥', '전기구이통닭', '꼬치', '타코야끼', '타코 & 케밥',
+          '분식', '빵', '구황작물', '디저트 & 카페', '기타'] * 5
 # # Colors for each food category (repeated for C, H, X datasets)
 colors = ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'orange', 'purple', 'brown'] * 5
 # Plotting salt (3rd feature) vs meat (4th feature)
@@ -103,179 +109,211 @@ colors = ['blue', 'green', 'red', 'cyan', 'magenta', 'yellow', 'black', 'orange'
 # plt.show()
 ### 2차원 표로 보여주기 위한 라이브러링~ 로직~~ 끘
 
+
+csv_df = pd.read_csv(r'flowPeople2.csv', encoding='cp949') # csv 파일을 저장했다.
+
+
+# '동' 컬럼에서 '신천'을 포함하는 행의 인덱스를 가져옵니다.
+shincheon_indices = csv_df[csv_df['동'].str.contains('신천')].index
+shinahm_indices = csv_df[csv_df['동'].str.contains('신암')].index
+
+# 해당 행의 '동' 값을 '신천동'으로 변경합니다.
+csv_df.loc[shincheon_indices, '동'] = '신천동'
+csv_df.loc[shinahm_indices, '동'] = '신암동'
+
+grouped_df = csv_df.groupby('동', as_index=False)['상대값'].sum()
+
+data_array_flow_town = grouped_df[['동', '상대값']].to_numpy()
+
+
+
+
+
 # Input Item
 # 해당 동네에 살고 있는 사용자들의 선호 음식 입력 데이터 값을 입력하고 앙상블에 올리기 위한 데이터를 추가한다.
 # 곡물 치킨, 치킨 에 대해 저장을 해보자.
 #[spicy, sweet, salt, meat, flour]
-user_preference  = np.array([[3, 2, 3, 2, 8]])
-user_preference1 = np.array([[4, 0, 6, 10, 4]])
-user_preference2 = np.array([[4, 2, 7, 8, 7]])
 
-# Find the 이웃
-# 거리는 낮은 데이터로 나올 수록 해당 이웃과의 근접함을 나타낸다.
-# indices 색인 : 어떤 데이터가 가까운지 알려준다.
-# 사용자 3 명의 데이터를 저장한다.
-distances, indices = knn.kneighbors(user_preference)
-distances1, indices1 = knn.kneighbors(user_preference1)
-distances2, indices2 = knn.kneighbors(user_preference2)
-
-# Print User 1,2,3 에 대한 정보..를 함 출력해봄
-print("유저 0에 대한 KNN:")
-for index_array in indices:
-    for index in index_array:
-        print(f"{labels[index]}, ", end="")
-    print("")
-print("유저 1에 대한 KNN:")
-for index_array in indices1:
-    for index in index_array:
-        print(f"{labels[index]}, ", end="")
-    print("")
-print("유저 2에 대한 KNN:")
-for index_array in indices2:
-    for index in index_array:
-        print(f"{labels[index]}, ", end="")
-    print("")
-
-# 각 유저에 대한 거리를 받아오기
-# 0,1,2 번 유저의 k 거리에 따른 값들
-distances_from_user_preference = distances[0]
-distances_from_user_preference1 = distances1[0]
-distances_from_user_preference2 = distances2[0]
-
-# 확률로 만들어 보리깅
-# 0번 유저에 대한 확률
-inverse_distances = 1 / (distances_from_user_preference + 1e-10)
-probabilities = inverse_distances / sum(inverse_distances)
-# 1번 유저에 대한 확률
-inverse_distances1 = 1 / (distances_from_user_preference1 + 1e-10)
-probabilities1 = inverse_distances1 / sum(inverse_distances1)
-# 2번 유저에 대한 확률
-inverse_distances2 = 1 / (distances_from_user_preference2 + 1e-10)
-probabilities2 = inverse_distances2 / sum(inverse_distances2)
-
-# --> A(임시) 동네에 사는 User 0,1,2의 선호 음식에 따라 확률(가산으로 더할 점수)를 계산했다.
-# --> 나중에 A,B,C 동네 다 이런 식으로 임시 데이터를 추가하면 좋을 듯한데,,, ㅇㄴㅁㄹ ㅏㄴ허ㅣㅏㄴㅇ로하ㅣ ㅁ런
-
-# Step 1: KNN 통합.
-# 기본 데이터 셋을 준비
-knn_results = {
-    "Rice Bowl": [],
-    "Famine Crops": [],
-    'Electric Grilled Whole Chicken': [],
-    'Skewer': [],
-    'Takoyaki': [],
-    'Taco & Kebab': [],
-    'Korean Street Food': [],
-    "Bread": [],
-    "Cafe & Dessert": [],
-    'Etc': []
-}
-# 저장된 이름에 따른 아이템의 점수를 knn_result랑 매핑 시킨다.
-# 새롭게 저장된 값을 재계산해준다.
-# 이 코드는 여러 하나의 속성이 여러 개의 값을 추천을 해주는 형태라면 평균 값으로 하나의 값으로 저장한다.
-# 예를 들어 "Bread": [0.36, 0.17, 0.17, 0.17] 이면 -> 다 더하고 4로 나누면 0.22값으로 저장되게
-# combined_scores = {item: sum(probabilities) / len(probabilities) for item, probabilities in knn_results.items()}
-
-# KNN으로 뽑힌 배열과 knn_result랑 매핑 시킨다.
-for i, index_array in enumerate(indices):
-    for j, index in enumerate(index_array):
-        label = labels[index]  # 매핑
-        if label in knn_results:
-            knn_results[label].append(probabilities[j]) # 속성 추가한다.
-for i, index_array in enumerate(indices1):
-    for j, index in enumerate(index_array):
-        label = labels[index]  # 매핑
-        if label in knn_results:
-            knn_results[label].append(probabilities1[j]) # 속성 추가한다.
-for i, index_array in enumerate(indices2):
-    for j, index in enumerate(index_array):
-        label = labels[index]  # 매핑
-        if label in knn_results:
-            knn_results[label].append(probabilities2[j]) # 속성 추가한다.
-
-
-
-# knn에 추가되지 않은 값은 0.01로 바꾼다.
-for key in knn_results:
-    if not knn_results[key]:  # 키 값이 없을 때 0.01로 저장
-        knn_results[key] = [0.01]  # Assign 디폴트 0.01 Assign시킨다.
-
-combined_scores = {item: sum(scores) / len(scores) if scores else 0.01 for item, scores in knn_results.items()}
-
-print("Combined KNN Scores for Each Food Item:")
-for item, score in combined_scores.items():
-    print(f"{item}: {score:.2f}")
-
-# Step 2: 시계열 분석에 대한 각각의 동네 데이터
-# 배열에 동네들 다 담고
-
-# 시계열 계산 클래스에 계산 후에 따로 CSV 파일로 작업하였다. 이 파일에선 계산이 완료된 CSV 파일을 가져온다.
-    # 어뜨케 해서 저장했냐면~
-    # 시계열 분석을 통한 다음 날의 데이터를 가져오고,
-    # 계산된 데이터를 따라, 점수를 계산한다.
-# scv에서 해당 동네에 대한 하차 데이터에 따른 값을 가져온다. 가장 많은 값은 1이고 나머진 그 값에 따른 비율 값이 찍힌다.
-# neighborhood_score = 0.85
-csv_df = pd.read_csv(r'C:\Users\SSAFY\Desktop\bigdata\flowPeople\flowPeople2.csv') # csv 파일을 저장했다.
-
-data_array_flow_town = csv_df[['동', '상대값']].to_numpy()
-
-print(data_array_flow_town)
 
 # 점주가 판매하는 상품이 만약에 Takoyaki라면
 
-food_truck_manager_item = 'Taco & Kebab'
-#10개의 점수를 담는 배열 추가 .
-food_truck_manager_item_scores = {}
+result = {}
 
-for row in data_array_flow_town:
-    same, relative_value = row[0], float(row[1])
-    final_scores = {item: score * relative_value for item, score in combined_scores.items()}
-    # 점주가 파는 음식과 같은 값이 있다면 저장한다.
-    if food_truck_manager_item in final_scores:
-        food_truck_manager_item_scores[same] = final_scores[food_truck_manager_item]
+# 10가지 음식 전부 돌리기
 
-# 동네에 담긴 리스트를 sorted 시켜준다.
-top_10_neighborhoods = sorted(food_truck_manager_item_scores.items(), key=lambda x: x[1], reverse=True)[:10]
+food_truck_manager_items = ["덮밥", "전기구이통닭", "꼬치", "타코야끼", "타코 & 케밥", "분식", "빵", "구황작물", "디저트 & 카페", "기타"]
 
-# 타코야끼 점주의 추천 동네를 띄워준다.
-print(f"\n  {food_truck_manager_item}를 선호하는 10개의 동네를 추천 :")
-for same, score in top_10_neighborhoods:
-    print(f"{same}: {score:.8f}")
-
-# 점주가 판매하는 상품이 만약에 Takoyaki라면 타코야키에 대한 값들 중 가장 높은 score을 가진 10개의 동네를 리스트에 담아서 출력
+for food_truck_manager_item in food_truck_manager_items:
 
 
-##########################TESET
-##########################TESET
-##########################TESET
-# food_truck_manager_item_scores_test = {}
-#
-# food_truck_manager_item = 'Taco & Kebab'
-#
-# for row in data_array_flow_town:
-#     same, relative_value = row[0], float(row[1])  # Extract 'same' and 'relative value' for each row
-#     relative_value = relative_value*0.01
-#     final_scores = {item: score * relative_value for item, score in combined_scores.items()}
-#
-#     # Sort the final scores in descending order
-#     sorted_final_scores = sorted(final_scores.items(), key=lambda item: item[1], reverse=True)
-#     if food_truck_manager_item in final_scores:
-#         # Store the score for the specific item ('Taco & Kebab') for this neighborhood
-#         food_truck_manager_item_scores_test[same] = final_scores[food_truck_manager_item]
-#     # Print the sorted final scores for this 'same'
-#     print(f"\nFinal scores for {same}:")
-#     for item, score in sorted_final_scores:
-#         print(f"{item}: {score:.8f}")
-#
-#     # Assuming food_truck_manager_item_scores_test has been populated as shown in the previous step
-#     print(f"\nScores for {food_truck_manager_item} in each neighborhood:")
-#
-#     # Sort the scores in descending order before printing
-#     sorted_scores = sorted(food_truck_manager_item_scores_test.items(), key=lambda item: item[1], reverse=True)
-#
-#     for same, score in sorted_scores:
-#         print(f"{same}: {score:.8f}")
+    #10개의 점수를 담는 배열 추가 .
+    food_truck_manager_item_scores = {}
 
-##########################TESET
-##########################TESET
-##########################TESET
+
+    cnt = 0
+
+    for row in data_array_flow_town:
+        # same : 동이름, relative_value : 하차인원비율
+        same, relative_value = row[0], float(row[1])
+     
+        
+        user_preferences = []
+
+        if cnt < 10:
+            for i in range(100):
+                tmp = np.array([[random.randint(0, 5), random.randint(3, 6), random.randint(4, 7), random.randint(2, 10), random.randint(4, 7)]])
+                user_preferences.append(tmp)
+        elif 10 <= cnt < 20:
+            for i in range(100):
+                tmp = np.array([[random.randint(2, 8), random.randint(5, 7), random.randint(4, 10), random.randint(5, 6), random.randint(2, 6)]])
+                user_preferences.append(tmp)
+        elif 20 <= cnt < 30:
+            for i in range(100):
+                tmp = np.array([[random.randint(3, 6), random.randint(0, 10), random.randint(2, 8), random.randint(0, 10), random.randint(1, 5)]])
+                user_preferences.append(tmp)
+        elif 30 <= cnt < 40:
+            for i in range(100):
+                tmp = np.array([[random.randint(2, 10), random.randint(4, 6), random.randint(2, 6), random.randint(1, 7), random.randint(0, 10)]])
+                user_preferences.append(tmp)
+        elif 40 <= cnt < 50:
+            for i in range(100):
+                tmp = np.array([[random.randint(5, 8), random.randint(2, 10), random.randint(4, 7), random.randint(2, 10), random.randint(1, 5)]])
+                user_preferences.append(tmp)
+        else:
+            for i in range(100):
+                tmp = np.array([[random.randint(0, 10), random.randint(0, 10), random.randint(0, 10), random.randint(0, 10), random.randint(0, 10)]])
+                user_preferences.append(tmp)
+        cnt += 1
+        
+        distance_indice = []
+        distance_from_user_preferences = []
+
+
+        for user in user_preferences:
+            distance_indice.append(knn.kneighbors(user))
+            distance_from_user_preferences.append(knn.kneighbors(user)[0])
+            
+
+        # for arg in range(len(distance_indice)):
+        #     print(f"유저 {arg + 1}에 대한 KNN:")
+        #     for index_array in distance_indice[arg][1]:
+        #         for index in index_array:
+        #             print(f'{labels[index]}, ', end="")
+        #         print("")
+
+
+
+        # inverse_distance = []
+        probabilitie = []
+        for distance in distance_from_user_preferences:
+            instance = 1 / (distance[0] + 1e-10)
+            # inverse_distance.append(instance)
+            probabilitie.append(instance / sum(instance))
+
+
+        # 동별 combined_scores 를 담을 딕셔너리
+        city_score = {}
+        # Step 1: KNN 통합.
+        # 기본 데이터 셋을 준비
+        knn_results = {
+            "덮밥": [],
+            "전기구이통닭": [],
+            '구황작물': [],
+            '꼬치': [],
+            '타코야끼': [],
+            '타코 & 케밥': [],
+            '분식': [],
+            "빵": [],
+            "디저트 & 카페": [],
+            '기타': []
+        }
+
+        for idx in range(len(distance_indice)):
+            for i, index_array in enumerate(distance_indice[idx][1]):
+                for j, index in enumerate(index_array):
+                    label = labels[index]
+                    if label in knn_results:
+                        knn_results[label].append(probabilitie[idx][j])
+
+
+
+
+        # knn에 추가되지 않은 값은 0.01로 바꾼다.
+        for key in knn_results:
+            if not knn_results[key]:  # 키 값이 없을 때 0.01로 저장
+                knn_results[key] = [0.01]  # Assign 디폴트 0.01 Assign시킨다.
+
+        combined_scores = {item: sum(scores) / len(scores) if scores else 0.01 for item, scores in knn_results.items()}
+        
+   
+        city_score[same] = combined_scores
+        
+        # print("Combined KNN Scores for Each Food Item:")
+        # for item, score in city_score[same].items():
+        #     print(f"{item}: {score:.2f}")
+        
+        # combined_scores 의 메뉴와 해당 메뉴에 대한 점수에 relative_value (하차인원비율) 을 곱한 값으로 갱신
+        # 하차인원 비율에 대한 의존성이 너무 높으면 배율 조정
+        
+        # combined_scores : 특정 동에 대한 유저들의 점수 모음 셋
+        # 앙상블
+        
+        # 여기서 동별 유저에 대한 combined_scores for문 으로 한번 씌우기
+        
+        final_scores = {item: (score * 3.33) + (relative_value * 0.03) for item, score in city_score[same].items()}
+        
+        
+        # 점주가 파는 음식과 같은 값이 있다면 저장한다.
+        if food_truck_manager_item in final_scores:
+            food_truck_manager_item_scores[same] = final_scores[food_truck_manager_item]
+            
+
+    # 동네에 담긴 리스트를 sorted 시켜준다.
+    top_10_neighborhoods = sorted(food_truck_manager_item_scores.items(), key=lambda x: x[1], reverse=True)[:10]
+
+    print(f"\n  {food_truck_manager_item}를 선호하는 10개의 동네를 추천 :")
+    
+    inner = {}
+    for same, score in top_10_neighborhoods:
+        print(f"{same}: {score:.8f}")
+        inner[same] = f'{score:.8f}'
+    result[food_truck_manager_item] = inner
+
+
+
+with open("data.json", 'w', encoding="cp949") as f:    
+    json.dump(result, f, indent='\t', ensure_ascii=False)
+    
+    
+with open('data.json', 'r') as f:
+    data = json.load(f)
+    
+# print(json.dumps(data, indent=4,ensure_ascii = False))
+# 각 음식 종류와 해당 도시, 평가 점수를 데이터베이스에 삽입
+
+# MySQL 연결 설정
+mydb = mysql.connector.connect(
+  host=os.environ.get("MYSQL_HOST"),
+  user=os.environ.get("MYSQL_USER"),
+  password=os.environ.get("MYSQL_PASSWORD"),
+  database=os.environ.get("MYSQL_DATABASE")
+)
+
+# 커서 생성
+mycursor = mydb.cursor()
+
+for food, city_scores in data.items():
+    for city, score in city_scores.items():
+        # SQL 쿼리 작성
+        sql = "INSERT INTO bigdata (food, city, score) VALUES (%s, %s, %s)"
+        # 쿼리 실행
+        mycursor.execute(sql, (food, city, score))
+
+# 변경 사항 저장
+mydb.commit()
+
+# 연결 종료
+mydb.close()
+
+
+
