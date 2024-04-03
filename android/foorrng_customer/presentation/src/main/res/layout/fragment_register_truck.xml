@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/car_number_asterisk"
                     android:inputType="text"
-                    android:maxLength="8" />
+                    android:maxLength="9" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

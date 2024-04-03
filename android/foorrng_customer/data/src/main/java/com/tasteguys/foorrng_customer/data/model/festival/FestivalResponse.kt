@@ -26,5 +26,8 @@ data class FestivalResponse(
     @Json(name="address")
     val address: String,
     @Json(name="mainImage")
-    val picture: String?
+    val picture: String?,
+    @Json(name="content")
+    val content: String?
+
 )

@@ -12,16 +12,20 @@ import com.tasteguys.foorrng_customer.presentation.model.mapper.toReview
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.math.log
 
 
 private const val TAG = "TruckReviewFragment"
 @AndroidEntryPoint
-class TruckReviewFragment(private val truckId: Long, private val truckName: String) : BaseFragment<FragmentTruckReviewBinding>(
+class TruckReviewFragment @Inject constructor(
+    private val truckId: Long,
+    private val truckName: String,
+    private val truckViewModel: TruckViewModel
+) : BaseFragment<FragmentTruckReviewBinding>(
     { FragmentTruckReviewBinding.bind(it)}, R.layout.fragment_truck_review
 ) {
 
-    private val truckViewModel: TruckViewModel by activityViewModels()
     private val truckReviewAdapter = TruckReviewAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

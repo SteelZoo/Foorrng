@@ -77,14 +77,21 @@ class RegisterFestivalFragment @Inject constructor(
         initView()
         galleryLauncher.pictureCallbackListener = object : GalleryLauncher.PictureCallbackListener {
             override fun onGetData(data: Uri) {
-                context!!.contentResolver!!.query(data, null, null, null)?.use {
-                    val nameIdx = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    it.moveToFirst()
-                    val name = it.getString(nameIdx)
-                    inputViewModel.infoString = name
-                    binding.tilFestivalInfo.editText!!.setText(name)
-                }
+//                context!!.contentResolver!!.query(data, null, null, null)?.use {
+//                    val nameIdx = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//                    it.moveToFirst()
+//                    val name = it.getString(nameIdx)
+//                    inputViewModel.infoString = name
+//                    binding.tilFestivalImg.editText!!.setText(name)
+//                }
+                Glide.with(requireContext())
+                    .load(data)
+                    .fallback(R.drawable.bg_profile_photo)
+                    .centerCrop()
+                    .fitCenter()
+                    .into(binding.ivFestivalImg)
                 inputViewModel.infoImg = data
+                inputViewModel.infoString = data.toString()
                 inputViewModel.imageChanged = true
             }
         }
@@ -100,7 +107,7 @@ class RegisterFestivalFragment @Inject constructor(
                     .addToBackStack(null)
                     .commit()
             }
-            tiFestivalInfo.setOnClickListener {
+            tiFestivalImg.setOnClickListener {
                 galleryLauncher.openGallery()
             }
             tiDate.setOnClickListener {
@@ -121,9 +128,10 @@ class RegisterFestivalFragment @Inject constructor(
                 tilCallNumber.editText!!.addTextChangedListener { phoneNumber = it.toString() }
                 tilEmail.editText!!.addTextChangedListener { email = it.toString() }
                 tilKakaoTalk.editText!!.addTextChangedListener { talk = it.toString() }
+                tilFestivalInfo.editText!!.addTextChangedListener { content = it.toString() }
 
-                if(!isNew && !inputState){
-                    with(festivalViewModel){
+                if (!isNew && !inputState) {
+                    with(festivalViewModel) {
                         val data = getDetailResult.value!!.getOrNull()!!
                         title = data.title
                         organizer = data.organizer
@@ -135,9 +143,12 @@ class RegisterFestivalFragment @Inject constructor(
                         setAddress(data.address)
                         startDate = data.startDate
                         endDate = data.endDate
+                        content = data.content ?: ""
+                        infoString = data.picture ?: ""
                     }
                     tilDate.editText!!.setText("${startDate.toDateString()} ~ ${endDate.toDateString()}")
-                    tilFestivalInfo.editText!!.setText(festivalViewModel.getDetailResult.value!!.getOrNull()!!.picture?:"")
+//                    tilFestivalImg.editText!!.setText(festivalViewModel.getDetailResult.value!!.getOrNull()!!.picture?:"")
+
                     inputState = true
                 }
 
@@ -146,6 +157,13 @@ class RegisterFestivalFragment @Inject constructor(
                 tilCallNumber.editText!!.setText(phoneNumber)
                 tilEmail.editText!!.setText(email)
                 tilKakaoTalk.editText!!.setText(talk)
+                tilFestivalInfo.editText!!.setText(content)
+                Glide.with(requireContext())
+                    .load(infoString)
+                    .fallback(R.drawable.bg_profile_photo)
+                    .centerCrop()
+                    .fitCenter()
+                    .into(binding.ivFestivalImg)
 
             }
 
@@ -159,14 +177,15 @@ class RegisterFestivalFragment @Inject constructor(
             inputViewModel.lng = festivalViewModel.latLng.longitude
         }
         with(inputViewModel) {
-            address.observe(viewLifecycleOwner){
+            address.observe(viewLifecycleOwner) {
                 binding.tilLocation.editText!!.setText(it)
             }
 
             registerResult.observe(viewLifecycleOwner) {
                 hideLoading()
                 if (it.isSuccess) {
-                    showToast("등록 완료")
+                    showToast("게시글이 등록되었습니다")
+                    festivalViewModel.initAddress()
                     parentFragmentManager.popBackStack()
                 } else {
                     showToast("오류")
@@ -175,7 +194,7 @@ class RegisterFestivalFragment @Inject constructor(
             updateResult.observe(viewLifecycleOwner) {
                 hideLoading()
                 if (it.isSuccess) {
-                    showToast("등록 완료")
+                    showToast("게시글이 수정되었습니다")
                     festivalViewModel.initAddress()
                     parentFragmentManager.popBackStack()
                 } else {
@@ -190,7 +209,7 @@ class RegisterFestivalFragment @Inject constructor(
             .setTitle("등록을 취소하시겠습니까?")
             .setMessage("작성 중인 내용이 모두 삭제됩니다.")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
-                with(festivalViewModel){
+                with(festivalViewModel) {
                     initAddress()
                 }
                 parentFragmentManager.popBackStack()
@@ -202,12 +221,13 @@ class RegisterFestivalFragment @Inject constructor(
     }
 
     private fun validateInput(): Result<String> {
-        with(binding){
+        with(binding) {
             val nameValidation = tilTitle.editText!!.text.toString().isNotBlank()
             val organizerValidation = tilOrganizer.editText!!.text.toString().isNotBlank()
             val emailValidation = tilEmail.editText!!.text.toString().let {
-                it.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()
+                it.isBlank() || android.util.Patterns.EMAIL_ADDRESS.matcher(it).matches()
             }
+            val dateValidation = tilDate.editText!!.text.toString().isNotBlank()
             val callNumberValidation = tilCallNumber.editText!!.text.toString().isNotBlank()
             val locationValidation = tilLocation.editText!!.text.toString().isNotBlank()
             val infoValidation = tilFestivalInfo.editText!!.text.toString().isNotBlank()
@@ -216,18 +236,17 @@ class RegisterFestivalFragment @Inject constructor(
                 "이름을 입력해주세요"
             } else if (!organizerValidation) {
                 "주최자를 입력해주세요"
+            } else if (!dateValidation) {
+                "날짜를 입력해주세요"
+            } else if (!callNumberValidation) {
+                "전화번호를 입력해주세요"
             } else if (!emailValidation) {
                 "올바른 이메일을 입력해 주세요"
-            }else if (!callNumberValidation) {
-                "전화번호를 입력해주세요"
-            }
-            else if (!locationValidation) {
+            } else if (!infoValidation) {
+                "정보를 입력해주세요"
+            } else if (!locationValidation) {
                 "위치를 지정해주세요"
-            }
-            else if (!infoValidation) {
-                "정보 이미지를 입력해주세요"
-            }
-            else {
+            } else {
                 return Result.success("success")
             }
             return Result.failure(Exception(msg))

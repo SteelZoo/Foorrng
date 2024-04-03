@@ -15,6 +15,7 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.base.LocationManager
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
+import com.tasteguys.foorrng_customer.presentation.festival.FestivalListFragment
 import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
@@ -48,9 +49,14 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
     override fun setToolbar() {
         MainToolbarControl(
-            true, resources.getString(R.string.my_favorite_info), backIcon = false
+            true, resources.getString(R.string.my_favorite_info), backIcon = false, menuRes = R.menu.menu_option_menu
         ).also {
             mainViewModel.changeToolbar(it)
+        }.addMenuItemClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fcv_container, FestivalListFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 

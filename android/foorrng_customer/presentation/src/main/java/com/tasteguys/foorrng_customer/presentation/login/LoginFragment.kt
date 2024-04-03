@@ -119,7 +119,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>({FragmentLoginBinding.b
         val permissionList =
             mutableListOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.CAMERA,
+//                Manifest.permission.CAMERA,
             ).apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     add(Manifest.permission.POST_NOTIFICATIONS)

@@ -1,6 +1,7 @@
 package com.tasteguys.foorrng_customer.presentation.truck.info
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
@@ -13,15 +14,19 @@ import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.info.menu.TruckMenuFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlin.math.min
 
+private const val TAG = "TruckBasicInfoFragment"
 @AndroidEntryPoint
-class TruckBasicInfoFragment(private val truckId: Long) :
+class TruckBasicInfoFragment @Inject constructor(
+    private val truckId: Long,
+    private val truckViewModel: TruckViewModel
+) :
     BaseFragment<FragmentTruckBasicInfoBinding>(
         { FragmentTruckBasicInfoBinding.bind(it) }, R.layout.fragment_truck_basic_info
     ) {
 
-    private val truckViewModel: TruckViewModel by activityViewModels()
     private val truckMenuAdapter = TruckMenuAdapter()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,13 +37,12 @@ class TruckBasicInfoFragment(private val truckId: Long) :
 
     private fun initView() {
         binding.rvMenu.apply {
-            setHasFixedSize(true)
             adapter = truckMenuAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayout.VERTICAL))
         }
         binding.btnMoreMenu.setOnClickListener {
             requireParentFragment().parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, TruckMenuFragment(truckId))
+                .replace(R.id.fcv_container, TruckMenuFragment(truckId, truckViewModel))
                 .addToBackStack(null)
                 .commit()
         }
@@ -58,12 +62,9 @@ class TruckBasicInfoFragment(private val truckId: Long) :
                                 "$res, $it"
                             }
                         }
-
                         tvBusiNumber.text = it.bussiNumber
                     }
-
                 }
-
                 data.menus.let {
                     truckMenuAdapter.submitList(
                         it.subList(0, min(3, it.size)).map { menu -> menu.toTruckMenu() })

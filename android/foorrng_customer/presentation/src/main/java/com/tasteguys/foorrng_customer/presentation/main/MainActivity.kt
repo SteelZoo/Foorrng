@@ -38,14 +38,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     supportFragmentManager.beginTransaction().replace(R.id.fcv_container, HomeMapFragment()).commit()
                     true
                 }
-//                R.id.fragment_register_truck->{
-//                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, RegisterTruckFragment(true, -1)).commit()
+//                R.id.fragment_festival->{
+//                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, FestivalListFragment()).commit()
 //                    true
 //                }
-                R.id.fragment_festival->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fcv_container, FestivalListFragment()).commit()
-                    true
-                }
                 R.id.fragment_favorite->{
                     supportFragmentManager.beginTransaction().replace(R.id.fcv_container, UserFavoriteFragment()).commit()
                     true
@@ -65,6 +61,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     menu.clear()
                     if(controller.menuRes!=0){
                         inflateMenu(controller.menuRes)
+                        for(id in controller.menuList){
+                            inflateMenu(id)
+                        }
                     }
                     setOnMenuItemClickListener {
                         controller.menuItemClickListener(it)
@@ -73,10 +72,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                     setNavigationOnClickListener {
                         controller.navIconClickListener()
                     }
-                    if(!controller.backIcon){
-                        navigationIcon = null
+                    navigationIcon = if(!controller.backIcon){
+                        null
                     }else{
-                        navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back)
+                        resources.getDrawable(R.drawable.ic_arrow_back)
                     }
 
                 }

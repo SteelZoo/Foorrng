@@ -29,6 +29,7 @@
     <string name="car_number">차량 번호</string>
     <string name="food_category">음식 품목</string>
     <string name="call_number">전화 번호</string>
+    <string name="call_number_asterisk">*전화 번호</string>
     <string name="account_number">계좌 번호</string>
     <string name="notice">공지 사항</string>
     <string name="busi_number">사업자 번호</string>
@@ -38,13 +39,17 @@
 
     <string name="register_festival">행사 정보 입력</string>
     <string name="update_festival">행사 정보 수정</string>
-    <string name="festival_name">행사 명</string>
-    <string name="organizer">주최 측</string>
-    <string name="organizer_call">주최 측 연락처</string>
+    <string name="festival_name">*행사 명</string>
+    <string name="organizer">*주최 측</string>
+    <string name="organizer_call">*주최 측 연락처</string>
     <string name="date">날짜</string>
+    <string name="date_asterisk">*날짜</string>
     <string name="email">이메일</string>
-    <string name="kakao_talk">카카오톡</string>
+    <string name="kakao_talk">카카오톡 아이디</string>
     <string name="festival_info">행사 정보</string>
+    <string name="festival_info_asterisk">*행사 정보</string>
+    <string name="festival_img">행사 이미지</string>
+    <string name="image_register">이미지 등록</string>
     <string name="location">위치</string>
     <string name="location_asterisk">*위치</string>
     <string name="select_location">위치 지정</string>

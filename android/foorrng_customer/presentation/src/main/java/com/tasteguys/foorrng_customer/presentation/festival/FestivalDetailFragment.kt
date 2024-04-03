@@ -51,17 +51,22 @@ class FestivalDetailFragment @Inject constructor(
     private fun changeToolbarName(name: String){
         mainViewModel.changeToolbar(
             MainToolbarControl(
-                true, name, R.menu.menu_edit
+                true, name, R.menu.menu_edit, menuList = listOf(R.menu.menu_delete)
             ).also {
                 mainViewModel.changeToolbar(it)
             }.addNavIconClickListener {
                 festivalViewModel.initAddress()
                 parentFragmentManager.popBackStack()
             }.addMenuItemClickListener {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fcv_container, RegisterFestivalFragment(false, id))
-                    .addToBackStack(null)
-                    .commit()
+                if(it.title.toString()=="수정"){
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fcv_container, RegisterFestivalFragment(false, id))
+                        .addToBackStack(null)
+                        .commit()
+                }else{
+                    checkDeleteDialog()
+                }
+
             }
         )
     }
@@ -75,9 +80,6 @@ class FestivalDetailFragment @Inject constructor(
     private fun initView(){
         mapView = binding.mvMap
         festivalViewModel.getFestivalDetail(id)
-        binding.btnDelete.setOnClickListener {
-            checkDeleteDialog()
-        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -92,6 +94,7 @@ class FestivalDetailFragment @Inject constructor(
                     tvKakao.text = data.kakao
                     tvPhoneNumber.text = data.phoneNumber
                     tvDate.text = "${data.startDate.toDateString()} ~ ${data.endDate.toDateString()}"
+                    tvFestivalContent.text = data.content?:""
                     Glide.with(requireContext())
                         .load(data.picture)
                         .fallback(R.drawable.bg_profile_photo)

@@ -15,13 +15,16 @@ import com.tasteguys.foorrng_customer.presentation.model.mapper.toTruckMenu
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckMenuAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class TruckMenuFragment(private val truckId: Long) : MainBaseFragment<FragmentTruckMenuBinding>(
+class TruckMenuFragment @Inject constructor(
+    private val truckId: Long,
+    private val truckViewModel: TruckViewModel
+) : MainBaseFragment<FragmentTruckMenuBinding>(
     { FragmentTruckMenuBinding.bind(it)}, R.layout.fragment_truck_menu
 ) {
 
-    private val truckViewModel: TruckViewModel by activityViewModels()
     private val truckMenuViewModel: TruckMenuViewModel by viewModels()
     private val truckMenuAdapter = TruckMenuAdapter(false)
 

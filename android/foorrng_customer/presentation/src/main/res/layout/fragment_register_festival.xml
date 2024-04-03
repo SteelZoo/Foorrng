@@ -20,13 +20,24 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="*는 필수입력 사항입니다"
+                android:textAppearance="@style/Foorrng.TEXT.SB.12"
+                android:textColor="@color/red"
+                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="30dp" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_title"
                 style="@style/Foorrng.TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +89,7 @@
                     android:id="@+id/ti_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date"
+                    android:hint="@string/date_asterisk"
                     android:inputType="text"
                     android:maxLines="1"
                     android:focusable="false"/>
@@ -99,7 +110,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/call_number"
+                    android:hint="@string/call_number_asterisk"
                     android:inputType="phone"
                     android:maxLength="13" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -160,7 +171,44 @@
                     android:id="@+id/ti_festival_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/festival_info"
+                    android:hint="@string/festival_info_asterisk"
+                    android:inputType="textMultiLine"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/ti_festival_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/image_register"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="30dp"
+                android:textColor="@color/text_gray"/>
+
+            <ImageView
+                android:id="@+id/iv_festival_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_festival_img"
+                style="@style/Foorrng.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/image_register"
                     android:inputType="text"
                     android:maxLines="1"
                     android:focusable="false"/>
@@ -182,7 +230,7 @@
                     android:id="@+id/ti_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/location"
+                    android:hint="@string/location_asterisk"
                     android:inputType="text"
                     android:maxLines="1"
                     android:focusable="false"/>

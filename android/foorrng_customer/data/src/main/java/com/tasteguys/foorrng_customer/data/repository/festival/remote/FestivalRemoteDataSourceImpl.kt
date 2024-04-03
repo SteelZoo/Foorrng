@@ -24,19 +24,20 @@ class FestivalRemoteDataSourceImpl @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String> {
         return if(mainImage!=null){
             val requestFile = mainImage.asRequestBody("image/*".toMediaTypeOrNull())
             festivalService.registerFestival(
                 FestivalRegisterUpdateRequest(
-                    -1, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+                    -1, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, content
                 ), MultipartBody.Part.createFormData("mainImage", mainImage.name, requestFile),
             ).toNonDefault()
         }else{
             festivalService.registerFestival(
                 FestivalRegisterUpdateRequest(
-                    -1, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+                    -1, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, content
                 ), null
             ).toNonDefault()
         }
@@ -54,19 +55,20 @@ class FestivalRemoteDataSourceImpl @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String> {
         return if(mainImage!=null){
             val requestFile = mainImage.asRequestBody("image/*".toMediaTypeOrNull())
             festivalService.updateFestival(
                 FestivalRegisterUpdateRequest(
-                    id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+                    id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, content
                 ), MultipartBody.Part.createFormData("mainImage", mainImage.name, requestFile),
             ).toNonDefault()
         }else{
             festivalService.updateFestival(
                 FestivalRegisterUpdateRequest(
-                    id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address
+                    id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, content
                 ), null
             ).toNonDefault()
         }

@@ -66,10 +66,6 @@ class TruckAdapter(private val findBtn:Boolean = true) : BaseAdapter<TruckDataWi
                     "$res #$it"
                 }
                 tvReviewCnt.text = "${data.numOfReview}개"
-                if (data.distance < 0) {
-                    llDistanceView.visibility = View.GONE
-                }
-                binding.tvDistance.text = "${data.distance}m"
                 if(!truckAdapter.favoriteStatus.contains(data.truckId.toInt())){
                     truckAdapter.favoriteStatus.put(data.truckId.toInt(), data.isFavorite)
                 }

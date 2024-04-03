@@ -18,7 +18,8 @@ class FestivalRegisterUpdateUseCase @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ) = festivalRepository.registerFestival(
         title,
         lat,
@@ -30,7 +31,8 @@ class FestivalRegisterUpdateUseCase @Inject constructor(
         startDate,
         endDate,
         address,
-        mainImage
+        mainImage,
+        content
     )
 
     suspend operator fun invoke(
@@ -45,7 +47,8 @@ class FestivalRegisterUpdateUseCase @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ) = festivalRepository.updateFestival(
         id,
         title,
@@ -58,6 +61,7 @@ class FestivalRegisterUpdateUseCase @Inject constructor(
         startDate,
         endDate,
         address,
-        mainImage
+        mainImage,
+        content
     )
 }

@@ -31,6 +31,7 @@ class FestivalInputViewModel @Inject constructor(
     var lng = 0.0
     var startDate = 0L
     var endDate = 0L
+    var content = ""
 
     var imageChanged = false
     var inputState = false
@@ -69,6 +70,7 @@ class FestivalInputViewModel @Inject constructor(
                 endDate = endDate,
                 address = _address.value!!,
                 mainImage = img,
+                content = content
             ).let {
                 _registerResult.postValue(it)
             }
@@ -90,6 +92,7 @@ class FestivalInputViewModel @Inject constructor(
                 endDate = endDate,
                 address = _address.value!!,
                 mainImage = img,
+                content = content
             ).let {
                 _updateResult.postValue(it)
             }

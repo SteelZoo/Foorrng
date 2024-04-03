@@ -38,12 +38,12 @@ private const val TAG = "RegisterTruckFragment"
 @AndroidEntryPoint
 class RegisterTruckFragment @Inject constructor(
     private val isNew: Boolean,
-    private val truckId: Long
+    private val truckId: Long,
+    private val truckViewModel: TruckViewModel
 ) : MainBaseFragment<FragmentRegisterTruckBinding>(
     { FragmentRegisterTruckBinding.bind(it) }, R.layout.fragment_register_truck
 ) {
 
-    private val truckViewModel: TruckViewModel by activityViewModels()
     private val registerInputViewModel: RegisterInputViewModel by viewModels()
     private val dailyFavoriteViewModel: DailyFavoriteViewModel by activityViewModels()
 
@@ -214,7 +214,7 @@ class RegisterTruckFragment @Inject constructor(
             }
             markFavoriteTruckResult.observe(viewLifecycleOwner) {
                 if (it.isSuccess) {
-                    showToast("등록 성공")
+                    showToast("푸드트럭 성공적으로 제보되었습니다.")
                     hideLoading()
                     parentFragmentManager.popBackStack()
                 }
@@ -296,11 +296,9 @@ class RegisterTruckFragment @Inject constructor(
     private fun validateInput(): Result<String> {
         val nameValidation = binding.tilTruckName.editText!!.text.toString().isNotBlank()
         val carNumValidation = binding.tilCarNumber.editText!!.text.toString().let {
-            it.isNotBlank() && it.matches(Regex("^[0-9]{2,3}[가-힣][0-9]{4}$"))
+            it.isNotBlank() && it.matches(Regex("^[0-9]{2,3}[가-힣]\\s?[0-9]{4}$"))
         }
         val locationValidation = binding.tilLocation.editText!!.text.toString().isNotBlank()
-//        val categoryValidation =
-//            menuCategoryAdapter?.getSelectedCategoryList()?.isNotEmpty() ?: false
 
         val msg = if (!nameValidation) {
             "이름을 입력해 주세요"
@@ -309,9 +307,6 @@ class RegisterTruckFragment @Inject constructor(
         } else if(!locationValidation){
             "위치 정보를 입력해 주세요"
         }
-//        else if (!categoryValidation) {
-//            "카테고리를 선택해주세요"
-//        }
         else {
             return Result.success("success")
         }

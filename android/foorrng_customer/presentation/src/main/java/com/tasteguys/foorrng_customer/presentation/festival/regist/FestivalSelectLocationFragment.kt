@@ -68,12 +68,11 @@ class FestivalSelectLocationFragment @Inject constructor(
                 locationTrackingMode = LocationTrackingMode.Follow
                 with(festivalViewModel){
                     if(address.value!!.isNotEmpty()){
-                        val data = getDetailResult.value!!.getOrNull()!!
                         marker.apply {
-                            position = LatLng(data.lat, data.lng)
+                            position = latLng
                             map = it
                         }
-                        it.moveCamera(CameraUpdate.scrollTo(LatLng(data.lat, data.lng)))
+                        it.moveCamera(CameraUpdate.scrollTo(latLng))
                     }
                 }
 

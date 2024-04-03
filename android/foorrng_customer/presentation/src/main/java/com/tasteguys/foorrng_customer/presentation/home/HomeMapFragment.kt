@@ -27,6 +27,7 @@ import com.tasteguys.foorrng_customer.presentation.truck.NavDialog
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
+import com.tasteguys.foorrng_customer.presentation.truck.showNavDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.max
 import kotlin.math.min
@@ -104,7 +105,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
         binding.btnReport.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment(true, -1))
+                .replace(R.id.fcv_container, RegisterTruckFragment(true, -1, truckVewModel))
                 .addToBackStack(null)
                 .commit()
         }
@@ -183,12 +184,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
                     override fun onButtonClick(position: Int) {
                         val curTruck = currentList[position]
-                        NavDialog(
-                            requireContext(),
-                            curTruck.lat,
-                            curTruck.lng,
-                            curTruck.address
-                        ).show()
+                        showNavDialog(requireContext(), curTruck.address, curTruck.lat, curTruck.lng)
                     }
 
                 })

@@ -24,5 +24,7 @@ data class FestivalRegisterUpdateRequest(
     @Json(name="endDate")
     val endDate: Long,
     @Json(name="address")
-    val address: String
+    val address: String,
+    @Json(name="content")
+    val content: String?
 )

@@ -12,5 +12,6 @@ data class FestivalData(
     val startDate: Long,
     val endDate: Long,
     val address: String,
-    val picture: String?
+    val picture: String?,
+    val content: String?
 )

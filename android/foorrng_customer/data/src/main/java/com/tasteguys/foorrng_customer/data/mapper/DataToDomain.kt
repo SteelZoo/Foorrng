@@ -104,7 +104,7 @@ fun FoodCategoryEntity.toDomain(): FoodCategoryData{
 
 fun FestivalResponse.toDomain(): FestivalData{
     return FestivalData(
-        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, picture
+        id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, picture, content
     )
 }
 

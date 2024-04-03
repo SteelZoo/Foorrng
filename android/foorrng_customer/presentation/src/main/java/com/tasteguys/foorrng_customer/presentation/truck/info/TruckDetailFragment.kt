@@ -22,15 +22,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 private const val TAG = "TruckDetailFragment"
 
 @AndroidEntryPoint
-class TruckDetailFragment(truckId: Long) : BaseFragment<FragmentTruckDetailBinding>(
+class TruckDetailFragment @Inject constructor(
+    truckId: Long,
+    private val truckViewModel: TruckViewModel
+) : BaseFragment<FragmentTruckDetailBinding>(
     { FragmentTruckDetailBinding.bind(it) }, R.layout.fragment_truck_detail
 ) {
-
-    private val truckViewModel: TruckViewModel by activityViewModels()
 
     private lateinit var mapView: MapView
     private lateinit var nMap: NaverMap

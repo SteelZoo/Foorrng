@@ -21,10 +21,11 @@ class FestivalRepositoryImpl @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String> {
         return festivalRemoteDataSource.registerFestival(
-            title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, mainImage
+            title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, mainImage, content
         )
     }
 
@@ -40,10 +41,11 @@ class FestivalRepositoryImpl @Inject constructor(
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String> {
         return festivalRemoteDataSource.updateFestival(
-            id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, mainImage
+            id, title, lat, lng, phoneNumber, email, kakao, organizer, startDate, endDate, address, mainImage, content
         )
     }
 

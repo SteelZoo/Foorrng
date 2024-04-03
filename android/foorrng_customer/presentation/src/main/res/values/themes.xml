@@ -5,6 +5,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:colorBackground">@color/white</item>
+        <item name="actionOverflowButtonStyle">@style/whiteDot</item>
+    </style>
+
+    <style name="whiteDot" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/white</item>
     </style>
 
     <style name="Theme.Foorrng" parent="Base.Theme.Foorrng">

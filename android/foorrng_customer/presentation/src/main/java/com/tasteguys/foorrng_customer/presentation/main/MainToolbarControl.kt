@@ -6,7 +6,8 @@ class MainToolbarControl(
     val visible: Boolean = false,
     val title: String = "",
     val menuRes: Int = 0,
-    val backIcon: Boolean = true
+    val backIcon: Boolean = true,
+    val menuList: List<Int> = listOf()
 ) {
     private var _menuItemClickListener: (MenuItem) -> (Unit) = {}
     val menuItemClickListener: (MenuItem) -> (Unit)

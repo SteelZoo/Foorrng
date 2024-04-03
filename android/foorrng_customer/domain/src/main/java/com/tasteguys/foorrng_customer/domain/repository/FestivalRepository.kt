@@ -16,7 +16,8 @@ interface FestivalRepository {
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String>
 
     suspend fun updateFestival(
@@ -31,7 +32,8 @@ interface FestivalRepository {
         startDate: Long,
         endDate: Long,
         address: String,
-        mainImage: File?
+        mainImage: File?,
+        content: String?
     ): Result<String>
 
     suspend fun getFestivalList(): Result<List<FestivalData>>

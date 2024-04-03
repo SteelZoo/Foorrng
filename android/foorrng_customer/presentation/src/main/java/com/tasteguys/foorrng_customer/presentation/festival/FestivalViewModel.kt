@@ -36,7 +36,8 @@ class FestivalViewModel @Inject constructor(
     }
 
     fun initAddress(){
-        _address.postValue("")
+        _tempAddress.value = ""
+        _address.value = ""
         latLng = LatLng(0.0, 0.0)
     }
 

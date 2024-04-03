@@ -25,7 +25,7 @@ class FestivalListFragment : MainBaseFragment<FragmentFestivalListBinding>(
 
     override fun setToolbar() {
         MainToolbarControl(
-            true, resources.getString(R.string.my_article), backIcon = false
+            true, resources.getString(R.string.my_article)
         ).also {
             mainViewModel.changeToolbar(it)
         }.addNavIconClickListener {
