@@ -12,6 +12,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.tasteguys.foorrng_owner.presentation.R
+import com.tasteguys.foorrng_owner.presentation.base.LocationProviderController
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationManageBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
 import com.tasteguys.foorrng_owner.presentation.location.regist.LocationRegistFragment
@@ -29,12 +30,13 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
 
     private var naverMap: NaverMap? = null
     private var markOverlayList = mutableListOf<Marker>()
+    private lateinit var locationProviderController: LocationProviderController
 
     private var runLocationAdapter: RunLocationAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        locationProviderController = LocationProviderController(mainActivity, this)
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.layout_location_map) as MapFragment?
                 ?: MapFragment.newInstance().also {
@@ -57,15 +59,29 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
             hideLoading()
             result.onSuccess {
                 setAdapter(it)
-                naverMap?.let { naverMap ->
-                    naverMap.moveCamera(
-                        CameraUpdate.fitBounds(
-                            LatLngBounds.from(it.map { runLocationInfo -> runLocationInfo.latLng }),
-                            50
+                if (!it.isEmpty()){
+                    naverMap?.let { naverMap ->
+                        naverMap.moveCamera(
+                            CameraUpdate.fitBounds(
+                                LatLngBounds.from(it.map { runLocationInfo -> runLocationInfo.latLng }),
+                                50
+                            )
                         )
-                    )
+                    }
+                } else {
+                    locationProviderController.getCurrnetLocation { task ->
+                        hideLoading()
+                        task.addOnSuccessListener {
+                            naverMap?.moveCamera(
+                                CameraUpdate.scrollTo(
+                                    LatLng(it.latitude, it.longitude)
+                                )
+                            )
+                        }
+                    }.also {
+                        showLoading()
+                    }
                 }
-
                 it.forEach { info ->
                     val marker = Marker().apply {
                         position = info.latLng
