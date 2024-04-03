@@ -63,7 +63,7 @@
 <br>
 
 ### 💫서비스 아키텍처 
-![alt text](./readmefile/architecture.png)
+![Alt text](%ED%8A%B9%ED%99%94%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
 
 <br>
 
@@ -84,19 +84,18 @@
 ### 👨‍👩‍👧 협업툴
 - Git
 - Jira
-- Gerrit
 - Notion
 - Mattermost
 
 <br>
 
 ### 📝 요구사항 정의서
-...
+https://www.notion.so/5cbcdd7abaaa4695873151918a86e416?pvs=4
 
 <br>
 
 ### 🎨 화면 설계서
-...
+https://www.figma.com/file/DTFOnk2uSyR5CglNlsHfRj/%ED%91%B8%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A6%89?type=design&node-id=0%3A1&mode=design&t=46ymQKmhLUXITk19-1
 
 <br>
 
@@ -229,6 +228,10 @@ Domain
 😛김인호
 
 😀조수현
+- ERD 바탕으로 DB 설계
+- 빅데이터 데이터 수집 및 전처리 작업
+- API 명세서 바탕으로 API 구축
+- UCC 영상 기획, 촬영, 편집
 
 <br>
 
