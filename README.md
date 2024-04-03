@@ -38,18 +38,12 @@
 - MySQL 8.0.36
 - queryDSL 5.0.0
 
-<br>
-
-🌱 프론트
-...
-
-<br>
+🌱 프론트   
+  ...
 
 🌱 외부 API
 - kakao 회원가입/로그인 API
 - 사업자번호 조회 API
-
-<br>
 
 🌱 Infra
 - Docker
@@ -63,12 +57,27 @@
 <br>
 
 ### 💫서비스 아키텍처 
-![Alt text](%ED%8A%B9%ED%99%94%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png)
+![Alt text](./readmefile/architecture.png)
 
 <br>
 
 ### 💫CICD
-포팅 메뉴얼 링크
+[포팅 메뉴얼](https://www.notion.so/eb6332f528224bf39de4dca7baed45d1?pvs=4)
+
+<br>
+
+### 🎨 EC2 포트 정리 
+| To | Action | From |
+| :-----: | :-----: | :-----: |
+| 22 | ALLOW | Anywhere |
+| 8989 | ALLOW | Anywhere |
+| 443 | ALLOW | Anywhere |
+| 8080/tcp | ALLOW | Anywhere |
+| 8081 | ALLOW | Anywhere |
+| 80 | ALLOW | Anywhere |
+| 9090 | ALLOW | Anywhere |
+| 5000 | ALLOW | Anywhere |
+| 50000 | ALLOW | Anywhere |
 
 <br>
 
@@ -90,12 +99,12 @@
 <br>
 
 ### 📝 요구사항 정의서
-https://www.notion.so/5cbcdd7abaaa4695873151918a86e416?pvs=4
+[요구 사항 정의서](https://www.notion.so/5cbcdd7abaaa4695873151918a86e416?pvs=4)
 
 <br>
 
-### 🎨 화면 설계서
-https://www.figma.com/file/DTFOnk2uSyR5CglNlsHfRj/%ED%91%B8%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A5%B4%EB%A6%89?type=design&node-id=0%3A1&mode=design&t=46ymQKmhLUXITk19-1
+### 🎨 ERD
+![alt text](./readmefile/ERD.png)
 
 <br>
 
@@ -151,15 +160,16 @@ Feat : "추가 로그인 함수"
 <br>
 
 ### 🐛 코드 컨벤션
-🐛 프론트 코드 컨밴션
+🐛 프론트 코드 컨밴션    
 ...
 
 <br>
 
 🐛 백앤드 코드 컨밴션
 - JPQL vs **QueryDSL**
-- File 구조
 ```
+// File 구조
+
 Domain
     Entity
     Repository
@@ -171,7 +181,7 @@ Domain
     RequestDto
     ResponseDto
 ```
-- 
+
 
 <br>
 
@@ -191,25 +201,7 @@ Domain
 ### 👨‍👩‍👧 Scrum
 매일 아침 9시에 스크럼 회의를 10분 동안 진행하며, 어제 했던 일과 오늘 진행할 업무, 발생한 이슈를 공유하는 시간을 가졌습니다. 스크럼을 통해 팀원들의 현재 상황을 파악할 수 있고, 프로젝트에 대해 꾸준히 모니터링할 수 있었습니다.
 
-<br>
 
-### 🎨 ERD
-![alt text](./readmefile/ERD.png)
-
-<br>
-
-### 🎨 EC2 포트 정리 
-| To | Action | From |
-| :-----: | :-----: | :-----: |
-| 22 | ALLOW | Anywhere |
-| 8989 | ALLOW | Anywhere |
-| 443 | ALLOW | Anywhere |
-| 8080/tcp | ALLOW | Anywhere |
-| 8081 | ALLOW | Anywhere |
-| 80 | ALLOW | Anywhere |
-| 9090 | ALLOW | Anywhere |
-| 5000 | ALLOW | Anywhere |
-| 50000 | ALLOW | Anywhere |
 
 
 <br>
@@ -225,7 +217,6 @@ Domain
 - ERD 설계 및 DB 구축
 - queryDSL 사용하여 rest API 작업
 - 빅데이터 데이터 수집 및 전처리 작업
-- 빅데이터 EC2 스케줄러 설정
 - 그외 발표자료 작성, 지라 관리, 등 필요한 업무 지원
 
 😛김인호
