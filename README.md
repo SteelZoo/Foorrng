@@ -200,15 +200,18 @@ Domain
 <br>
 
 ### 🎨 EC2 포트 정리 (정환오빠 정리 좀 해주세용)
-| 이름 | 내부 포트 | 외부 포트 |
+| To | Action | From |
 | :-----: | :-----: | :-----: |
-| Vue | 5173 | 5173 |
-| SpringBoot | 8080 | 8080 |
-| Jenkins | 9000 | 9000 |
-| MySQL | 3306 | 3306 |
-| http | 80 | ----- |
-| https | 443 | ----- |
-| openvidu-coturn-1 | 3478 | 3478 |
+| 22 | ALLOW | Anywhere |
+| 8989 | ALLOW | Anywhere |
+| 443 | ALLOW | Anywhere |
+| 8080/tcp | ALLOW | Anywhere |
+| 8081 | ALLOW | Anywhere |
+| 80 | ALLOW | Anywhere |
+| 9090 | ALLOW | Anywhere |
+| 5000 | ALLOW | Anywhere |
+| 50000 | ALLOW | Anywhere |
+
 
 <br>
 
