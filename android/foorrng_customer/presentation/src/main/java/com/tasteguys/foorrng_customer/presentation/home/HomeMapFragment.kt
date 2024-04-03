@@ -252,6 +252,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                     marker.marker.map = nMap
                 }
                 truckAdapter.submitList(lst)
+                bottomSheetBehavior.peekHeight = if(lst.isNotEmpty()) 350 else 100
             }
         }
     }
