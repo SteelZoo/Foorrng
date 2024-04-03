@@ -51,7 +51,12 @@ class LocationRegistViewModel @Inject constructor(
             val foodtruckId = prefManager.foodtruckId
             val runLocation = _runLocation.value
             val runDayList = _runDayList.value
-            if(runLocation != null && runDayList != null && foodtruckId != -1L){
+            if(runDayList.isNullOrEmpty()){
+                _registResult.postValue(
+                    Result.failure(Exception("최소 하나의 운영일을 선택해주세요."))
+                )
+            }
+            else if(runLocation != null && runDayList != null && foodtruckId != -1L){
                 val markData = getMarkDataFromRunLocationRunDay(runDayList, runLocation)
                 locationRegistUseCase(foodtruckId,markData).let {
                     _registResult.postValue(it)

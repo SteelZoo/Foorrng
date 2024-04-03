@@ -15,6 +15,7 @@ import com.tasteguys.foorrng_owner.presentation.R
 import com.tasteguys.foorrng_owner.presentation.databinding.FragmentLocationManageBinding
 import com.tasteguys.foorrng_owner.presentation.location.NavDialog
 import com.tasteguys.foorrng_owner.presentation.location.regist.LocationRegistFragment
+import com.tasteguys.foorrng_owner.presentation.location.showNavDialog
 import com.tasteguys.foorrng_owner.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_owner.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_owner.presentation.model.location.RunLocationInfo
@@ -107,7 +108,12 @@ class LocationManageFragment : MainBaseFragment<FragmentLocationManageBinding>(
     }
 
     private val naviClickListener: (RunLocationInfo) -> Unit = {
-        NavDialog(mainActivity, it.latLng.latitude, it.latLng.longitude, it.address).show()
+        showNavDialog(
+            mainActivity,
+            it.address,
+            it.latLng.latitude,
+            it.latLng.longitude
+        )
     }
 
     private val itemClickListener: (RunLocationInfo) -> Unit = { runLocationInfo ->

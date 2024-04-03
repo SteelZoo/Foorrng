@@ -44,6 +44,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_nav_title" />
 
+
                 <TextView
                     android:id="@+id/tv_nav_naver"
                     style="@style/Foorrng.TEXT.SB.22"

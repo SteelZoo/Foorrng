@@ -64,15 +64,25 @@ class RunLocationAdapter(
             binding.tvLocationDays.text = getSelectedDaySpannableString(
                 item.runInfoList.map { it.day }, binding.tvLocationDays.text.toString()
             )
-            binding.btnNavigation.setOnClickListener {
-                naviListener(item)
-            }
-            binding.ivLocationDelete.setOnClickListener {
-                deleteListener(item)
-            }
             binding.cvLocationInfo.setOnClickListener {
                 itemClickListener(item)
             }
+            if (item.isOpen){
+                binding.ivLocationDelete.visibility = View.GONE
+                binding.cvLocationInfo.backgroundTintList = ContextCompat.getColorStateList(
+                    binding.root.context,
+                    R.color.foorrng_orange_bright
+                )
+                binding.btnNavigation.text="이 위치에서 영업 중 입니다."
+            } else {
+                binding.ivLocationDelete.setOnClickListener {
+                    deleteListener(item)
+                }
+                binding.btnNavigation.setOnClickListener {
+                    naviListener(item)
+                }
+            }
+
         }
 
 
