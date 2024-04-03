@@ -6,20 +6,18 @@
     tools:context=".truck.info.TruckWriteReviewFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:weightSum="1"
     android:paddingHorizontal="20dp"
-    android:paddingTop="20dp">
+    android:paddingTop="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_truck_img"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         tools:src="@drawable/logo_truck"
         android:src="@drawable/logo_truck"
         app:civ_circle_background_color="@color/foorrng_orange"
-        android:layout_weight="0.2"
         android:layout_gravity="center"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -42,8 +40,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_review_btn"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.75"
+        android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -55,7 +52,5 @@
         android:layout_gravity="right"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"/>
-
-
 
 </LinearLayout>

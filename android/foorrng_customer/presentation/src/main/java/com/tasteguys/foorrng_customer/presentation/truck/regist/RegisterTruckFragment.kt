@@ -96,8 +96,11 @@ class RegisterTruckFragment @Inject constructor(
                 Glide.with(requireContext())
                     .load(data)
                     .fallback(R.drawable.logo_truck)
+                    .centerCrop()
+                    .circleCrop()
                     .into(binding.ivTruckPhoto)
                 registerInputViewModel.inputPicture(data)
+                registerInputViewModel.loadedPicture = data.toString()
                 registerInputViewModel.imageChanged = true
 
             }
@@ -165,6 +168,8 @@ class RegisterTruckFragment @Inject constructor(
                     .load(loadedPicture)
                     .error(R.drawable.bg_profile_photo)
                     .fallback(R.drawable.bg_profile_photo)
+                    .centerCrop()
+                    .circleCrop()
                     .into(binding.ivTruckPhoto)
                 favoriteListAdapter.submitList(foodCategory.map { FavoriteCategory(it.key, it.value) })
             }
@@ -272,8 +277,8 @@ class RegisterTruckFragment @Inject constructor(
 
     private fun confirmDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("제보 하시겠습니까?")
-            .setMessage("제보시 3회이상의 신고가 있을 시에만 삭제가 가능합니다.")
+            .setTitle("푸드트럭 제보")
+            .setMessage("푸드트럭을 제보하시겠습니까?")
             .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
                 validateInput().onSuccess {
                     if (isNew) register() else update()

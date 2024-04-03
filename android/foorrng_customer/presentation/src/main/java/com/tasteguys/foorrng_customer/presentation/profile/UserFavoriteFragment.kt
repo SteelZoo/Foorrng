@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
@@ -12,6 +13,7 @@ import com.google.android.flexbox.JustifyContent
 import com.tasteguys.foorrng_customer.presentation.Dummy
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
+import com.tasteguys.foorrng_customer.presentation.base.LocationManager
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentUserFavoriteBinding
 import com.tasteguys.foorrng_customer.presentation.login.DailyFavoriteViewModel
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
@@ -23,6 +25,7 @@ import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 private const val TAG = "UserFavoriteFragment"
 @AndroidEntryPoint
@@ -30,12 +33,17 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
     {FragmentUserFavoriteBinding.bind(it)}, R.layout.fragment_user_favorite
 ) {
 
+    @Inject
+    lateinit var locationManager: LocationManager
+
     private val favoriteAdapter = DailyFavoriteListAdapter()
-    private val truckAdapter = TruckAdapter()
+    private val truckAdapter = TruckAdapter(false)
     private val truckViewModel: TruckViewModel by activityViewModels()
 
     private val userViewModel:UserViewModel by activityViewModels()
     private val dailyFavoriteViewModel: DailyFavoriteViewModel by activityViewModels()
+
+    private val updateViewModel: FavoriteCategoryUpdateViewModel by viewModels()
 
 
     override fun setToolbar() {
@@ -55,15 +63,6 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
 
     private fun initView(){
         truckViewModel.getFavoriteTruckList()
-
-//        binding.test2.setOnClickListener {
-////            truckViewModel.markFavoriteTruck(25)
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.fcv_container, RegisterFestivalFragment())
-//                .addToBackStack(null)
-//                .commit()
-//        }
-
     }
 
     private fun initAdapter(){
@@ -71,9 +70,16 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
             adapter = favoriteAdapter.apply {
                 setOnItemClickListener(object : BaseHolder.ItemClickListener{
                     override fun onClick(position: Int) {
-
+                        val food = currentList[position].name
+                        userViewModel.foodCategory[food] = !userViewModel.foodCategory[food]!!
+                        with(updateViewModel){
+                            if(!selectedList.contains(food)){
+                                selectedList.add(food)
+                            }else{
+                                selectedList.remove(food)
+                            }
+                        }
                     }
-
                 })
             }
             layoutManager = FlexboxLayoutManager(context).apply {
@@ -109,6 +115,12 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
             }
         }
 
+        binding.btnUpdateFavoriteCategory.setOnClickListener {
+            val latLng = locationManager.getCurrentLocation()
+            showLoading()
+            updateViewModel.updateCategory(latLng.latitude, latLng.longitude)
+        }
+
     }
 
     private fun registerObserve(){
@@ -130,8 +142,17 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 val category = res.getOrNull()!!.favoriteCategory
                 for(food in category){
                     userViewModel.foodCategory[food] = true
+                    updateViewModel.selectedList.add(food)
                 }
                 favoriteAdapter.submitList(userViewModel.foodCategory.map { FavoriteCategory(it.key, it.value) })
+            }
+        }
+        updateViewModel.updateResult.observe(viewLifecycleOwner){
+            if(it.isSuccess){
+                hideLoading()
+                showToast("선호 정보 업데이트 완료")
+            }else{
+                showToast("오류")
             }
         }
     }

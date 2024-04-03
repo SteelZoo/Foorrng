@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <!-- 일요일 토글 버튼 -->
     <ToggleButton
@@ -15,6 +15,9 @@
         android:textColor="@color/color_weekday_sunday"
         android:textOff="@string/all_sunday_one"
         android:textOn="@string/all_sunday_one"
+        android:layout_marginVertical="10dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1"
         app:layout_constraintEnd_toStartOf="@id/toggle_monday"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -33,6 +36,7 @@
         android:textOff="@string/all_monday_one"
         android:textOn="@string/all_monday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggle_tuesday"
         app:layout_constraintStart_toEndOf="@id/toggle_sunday"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +53,7 @@
         android:textOff="@string/all_tuesday_one"
         android:textOn="@string/all_tuesday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggle_wednesday"
         app:layout_constraintStart_toEndOf="@id/toggle_monday"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +70,7 @@
         android:textOff="@string/all_wednesday_one"
         android:textOn="@string/all_wednesday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggle_thursday"
         app:layout_constraintStart_toEndOf="@id/toggle_tuesday"
         app:layout_constraintTop_toTopOf="parent" />
@@ -81,6 +87,7 @@
         android:textOff="@string/all_thursday_one"
         android:textOn="@string/all_thursday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggle_friday"
         app:layout_constraintStart_toEndOf="@id/toggle_wednesday"
         app:layout_constraintTop_toTopOf="parent" />
@@ -97,6 +104,7 @@
         android:textOff="@string/all_friday_one"
         android:textOn="@string/all_friday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/toggle_saturday"
         app:layout_constraintStart_toEndOf="@id/toggle_thursday"
         app:layout_constraintTop_toTopOf="parent" />
@@ -113,7 +121,10 @@
         android:textOff="@string/all_saturday_one"
         android:textOn="@string/all_saturday_one"
         app:layout_constraintDimensionRatio="1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/toggle_friday"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginVertical="10dp"
+        android:layout_marginEnd="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

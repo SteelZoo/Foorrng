@@ -13,14 +13,35 @@
         android:orientation="horizontal">
     </LinearLayout>
 
-    <TextView
-        style="@style/Foorrng.TEXT.EB.14"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/today_favorite"
-        android:textColor="@color/foorrng_orange"
+        android:orientation="horizontal"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp">
+
+        <TextView
+            style="@style/Foorrng.TEXT.EB.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/today_favorite"
+            android:textColor="@color/foorrng_orange"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/btn_update_favorite_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_check"
+            android:backgroundTint="@color/foorrng_orange_dark"/>
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_category"

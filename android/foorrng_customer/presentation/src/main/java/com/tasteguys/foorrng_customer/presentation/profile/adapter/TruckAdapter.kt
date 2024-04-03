@@ -16,13 +16,14 @@ import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 
 private const val TAG = "FavoriteTruckAdapter"
 
-class TruckAdapter : BaseAdapter<TruckDataWithAddress>() {
+class TruckAdapter(private val findBtn:Boolean = true) : BaseAdapter<TruckDataWithAddress>() {
 
     private val favoriteStatus = SparseBooleanArray()
 
     class TruckListHolder(
         private val binding: ItemTruckBinding,
-        private val truckAdapter: TruckAdapter
+        private val truckAdapter: TruckAdapter,
+        private val findBtn: Boolean
     ) :
         BaseHolder<TruckDataWithAddress>(binding) {
         interface ButtonClickListener {
@@ -52,6 +53,7 @@ class TruckAdapter : BaseAdapter<TruckDataWithAddress>() {
                     )
                     btnFavorite.isChecked = truckAdapter.favoriteStatus.get(data.truckId.toInt())
                 }
+                btnPathfinder.visibility = if (findBtn) View.VISIBLE else View.GONE
                 btnPathfinder.setOnClickListener {
                     buttonClickListener.onButtonClick(layoutPosition)
                 }
@@ -88,7 +90,7 @@ class TruckAdapter : BaseAdapter<TruckDataWithAddress>() {
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ), this
+            ), this, findBtn
         ).apply {
             setOnItemClickListener(clickListener)
             setOnButtonClickListener(buttonClickListener)

@@ -22,4 +22,14 @@ class FoodCategoryRemoteDataSourceImpl @Inject constructor(
             FavoriteFoodRequest(lat, lng, category)
         ).toNonDefault()
     }
+
+    override suspend fun updateFavoriteCategory(
+        lat: Double,
+        lng: Double,
+        category: List<String>
+    ): Result<List<String>> {
+        return foodService.updateFavoriteCategory(
+            FavoriteFoodRequest(lat, lng, category)
+        ).toNonDefault()
+    }
 }

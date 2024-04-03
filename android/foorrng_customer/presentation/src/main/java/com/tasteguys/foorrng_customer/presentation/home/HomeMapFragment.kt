@@ -1,20 +1,12 @@
 package com.tasteguys.foorrng_customer.presentation.home
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gdd.presentation.base.PermissionHelper
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapView
@@ -25,7 +17,10 @@ import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentHomeMapBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
+import com.tasteguys.foorrng_customer.presentation.model.MarkerWithData
+import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.TruckAdapter
+import com.tasteguys.foorrng_customer.presentation.truck.NavDialog
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.TruckInfoFragment
 import com.tasteguys.foorrng_customer.presentation.truck.regist.RegisterTruckFragment
@@ -57,7 +52,6 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
     }
 
 
-
     private fun initView() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
         bottomSheetBehavior.maxHeight = 1200
@@ -72,14 +66,6 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
                 addOnCameraIdleListener {
                     binding.btnCurrentSearch.visibility = View.VISIBLE
-                }
-
-                with(homeMapViewModel){
-                    val mList =
-                        if (!ownerAuthenticatedToggle) markerList else authenticatedMarkerList
-                    for (marker in mList) {
-                        marker.map = it
-                    }
                 }
             }
             registerObserve()
@@ -142,18 +128,15 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         )
 
         binding.btnToggleVerified.setOnClickListener {
-            with(homeMapViewModel) {
-                toggleOwnerAuthenticate()
-                for (marker in markerList) {
-                    marker.map = null
-                }
-                val mList = if (!ownerAuthenticatedToggle) markerList else authenticatedMarkerList
-                for (marker in mList) {
-                    marker.map = nMap
-                }
-                val lst = truckList.value!!
-                truckAdapter.submitList(if (!ownerAuthenticatedToggle) lst else lst.filter { it.type == "Foodtruck" })
-            }
+            it.isSelected = !it.isSelected
+            homeMapViewModel.toggleOwnerAuthenticate()
+            truckVewModel.ownerAuthenticated = !truckVewModel.ownerAuthenticated
+        }
+
+        binding.btnToggleIsOperating.setOnClickListener {
+            it.isSelected = !it.isSelected
+            homeMapViewModel.toggleOperating()
+            truckVewModel.isOperating = !truckVewModel.isOperating
         }
     }
 
@@ -179,6 +162,13 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                     }
 
                     override fun onButtonClick(position: Int) {
+                        val curTruck = currentList[position]
+                        NavDialog(
+                            requireContext(),
+                            curTruck.lat,
+                            curTruck.lng,
+                            curTruck.address
+                        ).show()
                     }
 
                 })
@@ -193,8 +183,14 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
     private fun registerObserve() {
         truckVewModel.truckListResult.observe(viewLifecycleOwner) { res ->
             if (res.isSuccess) {
+                with(binding){
+                    btnToggleVerified.isSelected = truckVewModel.ownerAuthenticated
+                    btnToggleIsOperating.isSelected = truckVewModel.isOperating
+                }
                 with(homeMapViewModel) {
-                    clearMarkerList()
+                    ownerAuthenticatedToggle = truckVewModel.ownerAuthenticated
+                    operatingToggle = truckVewModel.isOperating
+                    originList.clear()
                     val data = res.getOrNull()!!
                     for (truck in data) {
                         val marker = Marker(LatLng(truck.lat, truck.lng)).apply {
@@ -203,27 +199,23 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                                 true
                             }
                         }
-                        markerList.add(marker)
-                        if (truck.type == "Foodtruck") {
-                            authenticatedMarkerList.add(marker)
-                        }
+                        originList.add(MarkerWithData(marker, truck))
                     }
-                    val mList =
-                        if (!ownerAuthenticatedToggle) markerList else authenticatedMarkerList
-                    for (marker in mList) {
-                        marker.map = nMap
-                    }
-                    setTruckList(data)
+                    setTruckList()
                 }
             }
         }
 
-        with(homeMapViewModel){
-            truckList.observe(viewLifecycleOwner){ lst->
-                truckAdapter.submitList(if(!ownerAuthenticatedToggle) lst else lst.filter { it.type == "Foodtruck" })
+        with(homeMapViewModel) {
+            truckList.observe(viewLifecycleOwner) { it ->
+                val lst = mutableListOf<TruckDataWithAddress>()
+                for(marker in it){
+                    lst.add(marker.data)
+                    marker.marker.map = nMap
+                }
+                truckAdapter.submitList(lst)
             }
         }
-
     }
 
 }

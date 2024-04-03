@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckInfoBinding
@@ -86,7 +87,7 @@ class TruckInfoFragment(
             }
         )
         binding.btnDelete.setOnClickListener {
-            truckViewModel.deleteTruck(truckId)
+            checkDeleteDialog()
         }
     }
 
@@ -130,6 +131,19 @@ class TruckInfoFragment(
 
         }
 
+    }
+
+    private fun checkDeleteDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("삭제 요청")
+            .setMessage("삭제를 요청하시겠습니까?")
+            .setPositiveButton(resources.getString(R.string.btn_confirm)) { _, _ ->
+                truckViewModel.deleteTruck(truckId)
+            }
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
 }

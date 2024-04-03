@@ -11,4 +11,8 @@ interface FoodCategoryRepository {
         lat: Double, lng: Double, category: List<String>
     ): Result<Long?>
 
+    suspend fun updateFavoriteCategory(
+        lat: Double, lng: Double, category: List<String>
+    ): Result<List<String>>
+
 }

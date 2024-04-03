@@ -16,11 +16,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_truck_photo"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
@@ -115,82 +115,6 @@
                     tools:listitem="@layout/item_runday" />
 
             </LinearLayout>
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:textSize="8sp"-->
-<!--                android:text="운영 정보"-->
-<!--                android:layout_marginVertical="10dp"-->
-<!--                android:layout_marginHorizontal="30dp"-->
-<!--                android:layout_gravity="left" />-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginHorizontal="30dp"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
-<!--                    app:spanCount="7"-->
-<!--                    tools:itemCount="7"-->
-<!--                    tools:listitem="@layout/item_day_of_week"-->
-<!--                    >-->
-
-<!--                </androidx.recyclerview.widget.RecyclerView>-->
-
-<!--                <View-->
-<!--                    android:id="@+id/divider3"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="1dp"-->
-<!--                    android:background="?android:attr/listDivider"-->
-<!--                    android:layout_marginVertical="8dp"/>-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:gravity="center"-->
-<!--                    android:paddingHorizontal="40dp">-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_start"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="시작 시간"/>-->
-
-<!--                    <View-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"/>-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:textAlignment="center"-->
-<!--                        android:text=" ~ " />-->
-
-<!--                    <View-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"/>-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_end"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:text="종료 시간 "/>-->
-<!--                </LinearLayout>-->
-<!--                -->
-<!--            </LinearLayout>-->
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_call_number"

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.map.overlay.Marker
+import com.tasteguys.foorrng_customer.presentation.model.MarkerWithData
 import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -11,12 +12,17 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeMapViewModel @Inject constructor() : ViewModel(){
 
-    private var _ownerAuthenticatedToggle = false
-    val ownerAuthenticatedToggle: Boolean
-        get() = _ownerAuthenticatedToggle
+    var ownerAuthenticatedToggle = false
 
     fun toggleOwnerAuthenticate(){
-        _ownerAuthenticatedToggle = !_ownerAuthenticatedToggle
+        ownerAuthenticatedToggle = !ownerAuthenticatedToggle
+        setTruckList()
+    }
+
+    var operatingToggle = false
+    fun toggleOperating(){
+        operatingToggle = !operatingToggle
+        setTruckList()
     }
 
     private val _markerList = mutableListOf<Marker>()
@@ -24,26 +30,40 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
     val markerList: MutableList<Marker>
         get() = _markerList
 
-    private val _authenticatedMarkerList = mutableListOf<Marker>()
-    val authenticatedMarkerList: MutableList<Marker>
-        get() = _authenticatedMarkerList
+//    private val _authenticatedMarkerList = mutableListOf<Marker>()
+//    val authenticatedMarkerList: MutableList<Marker>
+//        get() = _authenticatedMarkerList
 
-    private val _truckList = MutableLiveData<List<TruckDataWithAddress>> ()
-    val truckList: LiveData<List<TruckDataWithAddress>>
+    var originList = mutableListOf<MarkerWithData>()
+
+    private val _truckList = MutableLiveData<List<MarkerWithData>>(listOf())
+    val truckList: LiveData<List<MarkerWithData>>
         get() = _truckList
 
-    fun clearMarkerList(){
-        for (marker in _markerList) {
-            marker.map = null
+    fun setTruckList(){
+        clearMarkerList()
+        val lst = originList.toMutableList()
+        if(ownerAuthenticatedToggle){
+            lst.retainAll{it.data.type=="Foodtruck"}
         }
-        for (marker in _authenticatedMarkerList) {
-            marker.map = null
+        if(operatingToggle){
+            lst.retainAll{it.data.isOperating}
         }
-        _markerList.clear()
-        _authenticatedMarkerList.clear()
+        _truckList.postValue(lst.toList())
     }
 
-    fun setTruckList(list: List<TruckDataWithAddress>){
-        _truckList.postValue(list)
+    private fun clearMarkerList(){
+        for (marker in _truckList.value!!) {
+            marker.marker.map = null
+        }
+//        for (marker in _authenticatedMarkerList) {
+//            marker.map = null
+//        }
+//        _markerList.clear()
+//        _authenticatedMarkerList.clear()
     }
+
+//    fun setTruckList(list: List<TruckDataWithAddress>){
+//        _truckList.postValue(list)
+//    }
 }

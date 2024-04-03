@@ -91,6 +91,11 @@
         <item name="android:textSize">24sp</item>
     </style>
 
+
+    <style name="Foorrng.TEXT.B.22" parent="Foorrng.TEXT.B.16">
+        <item name="android:textSize">22sp</item>
+    </style>
+
     <!-- View Style -->
     <style name="Foorrng.TextInputLayout" parent="Theme.Foorrng">
         <item name="android:textAppearance">@style/Foorrng.TEXT.SB.16</item>

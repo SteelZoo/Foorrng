@@ -3,14 +3,18 @@ package com.tasteguys.foorrng_customer.presentation.truck.info
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentTruckWriteReviewBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.main.MainToolbarControl
 import com.tasteguys.foorrng_customer.presentation.model.mapper.ReviewMap
+import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewBtnAdapter
+import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.AndroidEntryPoint
 
 private const val TAG = "TruckWriteReviewFragmen"
@@ -21,6 +25,7 @@ class TruckWriteReviewFragment(private val truckId: Long, private val truckName:
 )  {
 
     private val reviewViewModel: TruckReviewViewModel by viewModels()
+    private val truckViewModel: TruckViewModel by activityViewModels()
 
     override fun setToolbar() {
         MainToolbarControl(
@@ -59,6 +64,14 @@ class TruckWriteReviewFragment(private val truckId: Long, private val truckName:
             }
         }
 
+        Glide.with(requireContext())
+            .load(truckViewModel.truckDetailResult.value!!.getOrNull()!!.mainData.picture)
+            .fallback(R.drawable.bg_profile_photo)
+            .error(R.drawable.bg_profile_photo)
+            .centerCrop()
+            .circleCrop()
+            .into(binding.civTruckImg)
+
         binding.btnRegister.setOnClickListener {
             reviewViewModel.registerReview(truckId)
         }
@@ -67,7 +80,16 @@ class TruckWriteReviewFragment(private val truckId: Long, private val truckName:
     private fun registerObserve(){
         reviewViewModel.registerReviewResult.observe(viewLifecycleOwner){
             if(it.isSuccess){
+                showToast("성공적으로 등록됐습니다")
                 parentFragmentManager.popBackStack()
+            }else{
+                it.exceptionOrNull()?.let{t->
+                    if(t is FoorrngException && t.code == FoorrngException.ALREADY_REVIEW){
+                        showSnackBar(t.message)
+                    }else{
+                        showSnackBar("오류")
+                    }
+                }
             }
         }
     }

@@ -32,4 +32,14 @@ class FoodCategoryRepositoryImpl @Inject constructor(
     ): Result<Long?> {
         return foodCategoryRemoteDataSource.selectFavoriteCategory(lat, lng, category)
     }
+
+    override suspend fun updateFavoriteCategory(
+        lat: Double,
+        lng: Double,
+        category: List<String>
+    ): Result<List<String>> {
+        return foodCategoryRemoteDataSource.updateFavoriteCategory(lat, lng, category)
+    }
+
+
 }

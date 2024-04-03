@@ -70,8 +70,12 @@ class TruckBasicInfoFragment(private val truckId: Long) :
                 }
                 if(data.type == "foodtruck"){
                     binding.tvWarning.visibility = View.GONE
+                    binding.tvBusiNumber.visibility = View.VISIBLE
+                    binding.tvBusiNumberTitle.visibility = View.VISIBLE
                 }else{
                     binding.tvWarning.visibility = View.VISIBLE
+                    binding.tvBusiNumber.visibility = View.GONE
+                    binding.tvBusiNumberTitle.visibility = View.GONE
                 }
 
             }

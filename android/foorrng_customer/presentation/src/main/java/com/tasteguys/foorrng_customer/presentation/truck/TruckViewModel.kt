@@ -57,6 +57,9 @@ class TruckViewModel @Inject constructor(
     val favoriteTruckListResult: LiveData<Result<List<TruckDataWithAddress>>>
         get() = _favoriteTruckListResult
 
+    var ownerAuthenticated = false
+    var isOperating = false
+
     fun getTruckList(
         latLeft: Double, lngLeft: Double, latRight: Double, lngRight: Double
     ) {
