@@ -74,8 +74,10 @@ class LocationRecommendFragment : MainBaseFragment<FragmentLocationRecommendBind
         bottomSheetSetting()
 
         registerObserve()
-        locationRecommendViewModel.getRecommendLocationList().also {
-            showLoading()
+        if (recommendPolygonList.isEmpty()){
+            locationRecommendViewModel.getRecommendLocationList().also {
+                showLoading()
+            }
         }
     }
 

@@ -45,8 +45,10 @@ class RecommendLocationAdapter(
             navClickListener: (RecommendLocation) -> Unit,
             addClickListener: (RecommendLocation) -> Unit
         ) {
+            var menuString = item.foodList.joinToString(", ") + "을(를) 팔면 좋을거 같아요 :)"
+            if (menuString.contains("기타")) menuString = "여기서 팔면 좋을거 같아요 :)"
+            binding.tvRecommendLocationComment.text = menuString
             binding.tvRecommendLocationAddress.text = "대구광역시 "+item.address
-            binding.tvRecommendLocationComment.text = item.foodList.joinToString(", ") + "을(를) 팔면 좋을거 같아요 :)"
             binding.layoutRecommendLocationItem.setOnClickListener {
                 itemClicklListener(item)
             }
