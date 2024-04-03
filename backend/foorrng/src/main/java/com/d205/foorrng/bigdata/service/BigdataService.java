@@ -16,14 +16,22 @@ import com.d205.foorrng.foodtruck.repository.FoodtrucksRepository;
 import com.d205.foorrng.user.entity.User;
 import com.d205.foorrng.user.repository.UserRepository;
 import com.d205.foorrng.util.SecurityUtil;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 @Service
+@Getter @Setter
 @RequiredArgsConstructor
 public class BigdataService {
 
@@ -32,6 +40,9 @@ public class BigdataService {
     private final FoodRepository foodRepository;
     private final BoundaryRepository boundaryRepository;
     private final BigdataRepository bigdataRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
 
     public List<RecommendDto> recommendPosition(){
@@ -63,4 +74,33 @@ public class BigdataService {
                 .map(boundary -> new BoundaryDto(boundary.getLatitude(), boundary.getLongitude()))
                 .collect(Collectors.toList());
     }
+
+
+
+
+
+    public void saveDataToCsv() {
+
+        String query = "SELECT menu, latitude, longitude FROM favorite_food";
+
+        List<Map<String, Object>> dataList = jdbcTemplate.queryForList(query);
+
+        String csvFileName = "userSurvey.csv"; // 저장할 CSV 파일 이름
+
+        try (FileWriter writer = new FileWriter(csvFileName)) {
+            for (Map<String, Object> data : dataList) {
+                // CSV 파일에 데이터 씁니다. 각 필드는 쉼표로 구분됩니다.
+                for (Object value : data.values()) {
+                    writer.append(value.toString()).append(",");
+                }
+                writer.append("\n");
+            }
+            writer.flush();
+            System.out.println("Data saved to CSV file: " + csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
