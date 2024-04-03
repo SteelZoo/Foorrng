@@ -47,4 +47,10 @@ public class FoodController {
 
         return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, response));
     }
+
+    @PatchMapping("/favorite")
+    public ResponseEntity<? extends BaseResponseBody> patchFavoriteFoodList(@RequestBody @Valid FavoritefoodDto favoritefoodDto) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(BaseResponseBody.of(0, foodService.updateFavoriteFood(favoritefoodDto)));
+    }
 }

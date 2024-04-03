@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -47,6 +48,30 @@ public class FoodService {
                     .build();
             favoritefoodRepository.save(favoriteFood);
         }
+    }
+
+    @Transactional
+    public List<String> updateFavoriteFood(FavoritefoodDto favoritefoodDto) {
+        User user = userRepository.findByUserUid(Long.parseLong(SecurityUtil.getCurrentUsername().get())).get();
+
+        String todayDate = LocalDate.now(ZoneId.of("Asia/Seoul")).toString();
+
+        favoritefoodRepository.deleteAllByUserAndCreatedTime(user, todayDate);
+
+        List<String> FavoriteFoodList = favoritefoodDto.getFavoriteFoods();
+
+        for (String food: FavoriteFoodList) {
+            FavoriteFood favoriteFood = FavoriteFood.builder()
+                    .user(user)
+                    .menu(food)
+                    .latitude(favoritefoodDto.getLatitude())
+                    .longitude(favoritefoodDto.getLongitude())
+                    .createdTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString())
+                    .build();
+            favoritefoodRepository.save(favoriteFood);
+        }
+
+        return FavoriteFoodList;
     }
 
     public void saveFoodtruckFood(Long Id, List<String> FoodtruckFoodList){

@@ -16,4 +16,6 @@ public interface FavoritefoodRepository extends JpaRepository<FavoriteFood, Long
     Optional<List<FavoriteFood>> findAllByUser(User user);
 
     Optional<List<FavoriteFood>> findAllByUserAndCreatedTime(User user, String createdTime);
+
+    Integer deleteAllByUserAndCreatedTime(User user, String createdTime);
 }
