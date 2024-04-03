@@ -25,14 +25,15 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
         setTruckList()
     }
 
-    private val _markerList = mutableListOf<Marker>()
+    var categoryList = mutableListOf<String>()
+    var categoryToggle = false
 
-    val markerList: MutableList<Marker>
-        get() = _markerList
+    fun toggleCategory(){
+        categoryToggle = !categoryToggle
+        setTruckList()
+    }
 
-//    private val _authenticatedMarkerList = mutableListOf<Marker>()
-//    val authenticatedMarkerList: MutableList<Marker>
-//        get() = _authenticatedMarkerList
+    var selectedMarker: Marker? = null
 
     var originList = mutableListOf<MarkerWithData>()
 
@@ -49,6 +50,9 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
         if(operatingToggle){
             lst.retainAll{it.data.isOperating}
         }
+        if(categoryToggle){
+            lst.retainAll{ it.data.category.toSet().intersect(categoryList.toSet()).isNotEmpty() }
+        }
         _truckList.postValue(lst.toList())
     }
 
@@ -56,14 +60,6 @@ class HomeMapViewModel @Inject constructor() : ViewModel(){
         for (marker in _truckList.value!!) {
             marker.marker.map = null
         }
-//        for (marker in _authenticatedMarkerList) {
-//            marker.map = null
-//        }
-//        _markerList.clear()
-//        _authenticatedMarkerList.clear()
-    }
 
-//    fun setTruckList(list: List<TruckDataWithAddress>){
-//        _truckList.postValue(list)
-//    }
+    }
 }

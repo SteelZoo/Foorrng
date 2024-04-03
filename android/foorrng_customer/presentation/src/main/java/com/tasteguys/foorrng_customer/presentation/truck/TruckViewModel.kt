@@ -59,6 +59,7 @@ class TruckViewModel @Inject constructor(
 
     var ownerAuthenticated = false
     var isOperating = false
+    var isFavorite = false
 
     fun getTruckList(
         latLeft: Double, lngLeft: Double, latRight: Double, lngRight: Double

@@ -298,13 +298,16 @@ class RegisterTruckFragment @Inject constructor(
         val carNumValidation = binding.tilCarNumber.editText!!.text.toString().let {
             it.isNotBlank() && it.matches(Regex("^[0-9]{2,3}[가-힣][0-9]{4}$"))
         }
+        val locationValidation = binding.tilLocation.editText!!.text.toString().isNotBlank()
 //        val categoryValidation =
 //            menuCategoryAdapter?.getSelectedCategoryList()?.isNotEmpty() ?: false
 
         val msg = if (!nameValidation) {
-            "이름을 입력해주세요"
+            "이름을 입력해 주세요"
         } else if (!carNumValidation) {
-            "차량 번호를 올바르게 입력해주세요"
+            "차량 번호를 올바르게 입력해 주세요"
+        } else if(!locationValidation){
+            "위치 정보를 입력해 주세요"
         }
 //        else if (!categoryValidation) {
 //            "카테고리를 선택해주세요"

@@ -1,5 +1,6 @@
 package com.tasteguys.foorrng_customer.presentation.home
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -13,12 +14,14 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import com.naver.maps.map.util.MarkerIcons
 import com.tasteguys.foorrng_customer.presentation.R
 import com.tasteguys.foorrng_customer.presentation.base.BaseHolder
 import com.tasteguys.foorrng_customer.presentation.databinding.FragmentHomeMapBinding
 import com.tasteguys.foorrng_customer.presentation.main.MainBaseFragment
 import com.tasteguys.foorrng_customer.presentation.model.MarkerWithData
 import com.tasteguys.foorrng_customer.presentation.model.TruckDataWithAddress
+import com.tasteguys.foorrng_customer.presentation.profile.UserViewModel
 import com.tasteguys.foorrng_customer.presentation.profile.adapter.TruckAdapter
 import com.tasteguys.foorrng_customer.presentation.truck.NavDialog
 import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
@@ -39,6 +42,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
     private lateinit var nMap: NaverMap
     private val truckVewModel: TruckViewModel by activityViewModels()
     private val homeMapViewModel: HomeMapViewModel by viewModels()
+    private val userViewModel: UserViewModel by viewModels()
 
     private val truckAdapter = TruckAdapter()
 
@@ -66,6 +70,16 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
                 addOnCameraIdleListener {
                     binding.btnCurrentSearch.visibility = View.VISIBLE
+                }
+
+                setOnMapClickListener{ _, _ ->
+                    with(homeMapViewModel){
+                        if(selectedMarker!=null){
+                            selectedMarker!!.icon = MarkerIcons.GREEN
+                            selectedMarker!!.iconTintColor = Color.TRANSPARENT
+                            selectedMarker = null
+                        }
+                    }
                 }
             }
             registerObserve()
@@ -138,6 +152,12 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
             homeMapViewModel.toggleOperating()
             truckVewModel.isOperating = !truckVewModel.isOperating
         }
+
+        binding.btnToggleCategory.setOnClickListener {
+            it.isSelected = !it.isSelected
+            homeMapViewModel.toggleCategory()
+            truckVewModel.isFavorite = !truckVewModel.isFavorite
+        }
     }
 
     private fun initAdapter() {
@@ -186,22 +206,44 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                 with(binding){
                     btnToggleVerified.isSelected = truckVewModel.ownerAuthenticated
                     btnToggleIsOperating.isSelected = truckVewModel.isOperating
+                    btnToggleCategory.isSelected = truckVewModel.isFavorite
                 }
                 with(homeMapViewModel) {
                     ownerAuthenticatedToggle = truckVewModel.ownerAuthenticated
                     operatingToggle = truckVewModel.isOperating
+                    categoryToggle = truckVewModel.isFavorite
+                    categoryList.clear()
                     originList.clear()
                     val data = res.getOrNull()!!
                     for (truck in data) {
                         val marker = Marker(LatLng(truck.lat, truck.lng)).apply {
                             setOnClickListener {
                                 truckAdapter.submitList(listOf(truck))
+                                if(selectedMarker!=null){
+                                    selectedMarker!!.icon = MarkerIcons.GREEN
+                                    selectedMarker!!.iconTintColor = Color.TRANSPARENT
+                                }
+                                selectedMarker = this
+                                icon = MarkerIcons.BLACK
+                                iconTintColor = resources.getColor(R.color.foorrng_orange)
                                 true
                             }
                         }
                         originList.add(MarkerWithData(marker, truck))
                     }
-                    setTruckList()
+                    userViewModel.getUserData()
+//                    setTruckList()
+                }
+            }
+        }
+
+        with(userViewModel){
+            getUserResult.observe(viewLifecycleOwner){
+                if(it.isSuccess){
+                    with(homeMapViewModel){
+                        categoryList.addAll(it.getOrNull()!!.favoriteCategory)
+                        setTruckList()
+                    }
                 }
             }
         }
