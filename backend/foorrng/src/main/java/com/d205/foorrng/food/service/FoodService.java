@@ -16,8 +16,10 @@ import com.d205.foorrng.util.SecurityUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -27,10 +29,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import software.amazon.awssdk.thirdparty.jackson.core.JsonParser;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Getter @Setter //?
@@ -42,6 +51,43 @@ public class FoodService {
     private final FavoritefoodRepository favoritefoodRepository;
     private final FoodtrucksRepository foodtrucksRepository;
     private final FoodRepository foodRepository;
+    @Value("${externalService.geoApiKey}")
+    private String apikey;
+    @Transactional
+    public String getCityNameByPoint(Double latitude, Double longitude) {
+
+        String searchType = "road";
+        String searchPoint = longitude.toString() + "," + latitude.toString();
+        String epsg = "epsg:4326";
+
+        StringBuilder sb = new StringBuilder("https://api.vworld.kr/req/address");
+        sb.append("?service=address");
+        sb.append("&request=getaddress");
+        sb.append("&format=json");
+        sb.append("&crs=" + epsg);
+        sb.append("&key=" + apikey);
+        sb.append("&type=" + searchType);
+        sb.append("&point=" + searchPoint);
+
+        try{
+            JSONParser jspa = new JSONParser();
+            JSONObject jsob = (JSONObject) jspa.parse(new BufferedReader(new InputStreamReader(new URL(sb.toString()).openStream(), StandardCharsets.UTF_8)));
+            JSONObject jsrs = (JSONObject) jsob.get("response");
+            JSONArray jsonArray = (JSONArray) jsrs.get("result");
+            JSONObject jsonfor = new JSONObject();
+
+            for (int i = 0; i< jsonArray.size(); i++){
+                jsonfor = (JSONObject) jsonArray.get(i);
+                System.out.println(jsonfor.get("text"));
+
+            }
+            return jsonfor.get("text").toString().substring(jsonfor.get("text").toString().indexOf("(") + 1, jsonfor.get("text").toString().indexOf(","));
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
 
     public void saveFavoriteFood(FavoritefoodDto favoritefoodDto) {
 
@@ -55,6 +101,8 @@ public class FoodService {
                     .latitude(favoritefoodDto.getLatitude())
                     .longitude(favoritefoodDto.getLongitude())
                     .createdTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString())
+                    .city(getCityNameByPoint(favoritefoodDto.getLatitude(),
+                            favoritefoodDto.getLongitude()))
                     .build();
             favoritefoodRepository.save(favoriteFood);
         }

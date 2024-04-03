@@ -33,4 +33,6 @@ public class FavoriteFood {
     private Double longitude;
 
     private String createdTime;
+
+    private String city;
 }
