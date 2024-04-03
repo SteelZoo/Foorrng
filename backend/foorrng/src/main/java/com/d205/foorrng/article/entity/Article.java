@@ -37,6 +37,8 @@ public class Article {
 
     private String title;
 
+    private String content;
+
     @CreatedDate
     @Column(name = "created_datetime")
     private LocalDateTime createdDatetime;

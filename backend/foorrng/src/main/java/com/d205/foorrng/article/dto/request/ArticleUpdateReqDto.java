@@ -13,6 +13,8 @@ public class ArticleUpdateReqDto {
     private Long articleId;
     @NotBlank
     private String title;
+    @NotBlank
+    private String content;
     @NotNull
     private Double latitude;
     @NotNull

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class ArticleReqDto {
     private String title;
+    private String content;
     private double latitude;
     private double longitude;
     private String phone;

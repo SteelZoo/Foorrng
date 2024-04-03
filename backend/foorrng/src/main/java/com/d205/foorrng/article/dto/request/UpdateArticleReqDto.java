@@ -13,7 +13,9 @@ public class UpdateArticleReqDto {
 
 
     private String title;
+
     private String content;
+
     private Long create_datetime;
 
     private Long updated_datetime;
