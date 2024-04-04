@@ -101,8 +101,8 @@ public class FoodService {
                     .latitude(favoritefoodDto.getLatitude())
                     .longitude(favoritefoodDto.getLongitude())
                     .createdTime(LocalDate.now(ZoneId.of("Asia/Seoul")).toString())
-                    .city(getCityNameByPoint(favoritefoodDto.getLatitude(),
-                            favoritefoodDto.getLongitude()))
+//                    .city(getCityNameByPoint(favoritefoodDto.getLatitude(),
+//                            favoritefoodDto.getLongitude()))
                     .build();
             favoritefoodRepository.save(favoriteFood);
         }
