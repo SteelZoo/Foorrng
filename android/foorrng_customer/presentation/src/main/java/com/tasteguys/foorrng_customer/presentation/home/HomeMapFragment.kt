@@ -41,7 +41,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
     private lateinit var mapView: MapView
     private lateinit var nMap: NaverMap
-    private val truckVewModel: TruckViewModel by activityViewModels()
+    private val truckViewModel: TruckViewModel by activityViewModels()
     private val homeMapViewModel: HomeMapViewModel by viewModels()
     private val userViewModel: UserViewModel by viewModels()
 
@@ -53,7 +53,6 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         super.onViewCreated(view, savedInstanceState)
         initView()
         initAdapter()
-
     }
 
 
@@ -98,14 +97,14 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
             val lngMin = min(nw.longitude, se.longitude)
             val lngMax = max(nw.longitude, se.longitude)
 
-            truckVewModel.getTruckList(latMin, lngMin, latMax, lngMax)
+            truckViewModel.getTruckList(latMin, lngMin, latMax, lngMax)
 
             binding.btnCurrentSearch.visibility = View.GONE
         }
 
         binding.btnReport.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcv_container, RegisterTruckFragment(true, -1, truckVewModel))
+                .replace(R.id.fcv_container, RegisterTruckFragment(true, -1, truckViewModel))
                 .addToBackStack(null)
                 .commit()
         }
@@ -145,19 +144,19 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
         binding.btnToggleVerified.setOnClickListener {
             it.isSelected = !it.isSelected
             homeMapViewModel.toggleOwnerAuthenticate()
-            truckVewModel.ownerAuthenticated = !truckVewModel.ownerAuthenticated
+            truckViewModel.ownerAuthenticated = !truckViewModel.ownerAuthenticated
         }
 
         binding.btnToggleIsOperating.setOnClickListener {
             it.isSelected = !it.isSelected
             homeMapViewModel.toggleOperating()
-            truckVewModel.isOperating = !truckVewModel.isOperating
+            truckViewModel.isOperating = !truckViewModel.isOperating
         }
 
         binding.btnToggleCategory.setOnClickListener {
             it.isSelected = !it.isSelected
             homeMapViewModel.toggleCategory()
-            truckVewModel.isFavorite = !truckVewModel.isFavorite
+            truckViewModel.isFavorite = !truckViewModel.isFavorite
         }
     }
 
@@ -179,7 +178,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                 setOnButtonClickListener(object : TruckAdapter.TruckListHolder.ButtonClickListener {
                     override fun onToggleClick(position: Int) {
                         val curTruck = currentList[position]
-                        truckVewModel.markFavoriteTruck(curTruck.truckId)
+                        truckViewModel.markFavoriteTruck(curTruck.truckId)
                     }
 
                     override fun onButtonClick(position: Int) {
@@ -197,17 +196,17 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
 
     private fun registerObserve() {
-        truckVewModel.truckListResult.observe(viewLifecycleOwner) { res ->
+        truckViewModel.truckListResult.observe(viewLifecycleOwner) { res ->
             if (res.isSuccess) {
                 with(binding){
-                    btnToggleVerified.isSelected = truckVewModel.ownerAuthenticated
-                    btnToggleIsOperating.isSelected = truckVewModel.isOperating
-                    btnToggleCategory.isSelected = truckVewModel.isFavorite
+                    btnToggleVerified.isSelected = truckViewModel.ownerAuthenticated
+                    btnToggleIsOperating.isSelected = truckViewModel.isOperating
+                    btnToggleCategory.isSelected = truckViewModel.isFavorite
                 }
                 with(homeMapViewModel) {
-                    ownerAuthenticatedToggle = truckVewModel.ownerAuthenticated
-                    operatingToggle = truckVewModel.isOperating
-                    categoryToggle = truckVewModel.isFavorite
+                    ownerAuthenticatedToggle = truckViewModel.ownerAuthenticated
+                    operatingToggle = truckViewModel.isOperating
+                    categoryToggle = truckViewModel.isFavorite
                     categoryList.clear()
                     originList.clear()
                     val data = res.getOrNull()!!

@@ -108,7 +108,8 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 })
                 setOnButtonClickListener(object: TruckAdapter.TruckListHolder.ButtonClickListener{
                     override fun onToggleClick(position:Int) {
-
+                        val curTruck = currentList[position]
+                        truckViewModel.markFavoriteTruck(curTruck.truckId)
                     }
 
                     override fun onButtonClick(position:Int) {
@@ -137,6 +138,13 @@ class UserFavoriteFragment : MainBaseFragment<FragmentUserFavoriteBinding>(
                 }
             }
         }
+
+        truckViewModel.markFavoriteTruckResult.observe(viewLifecycleOwner){
+            if(it.isSuccess){
+                truckViewModel.getFavoriteTruckList()
+            }
+        }
+
         dailyFavoriteViewModel.getCategoryResult.observe(viewLifecycleOwner){res->
             if(res.isSuccess){
                 userViewModel.foodCategory.putAll(res.getOrNull()!!.associateWith { false })
