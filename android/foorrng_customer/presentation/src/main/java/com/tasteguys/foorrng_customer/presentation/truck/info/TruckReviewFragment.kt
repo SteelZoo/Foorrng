@@ -41,7 +41,7 @@ class TruckReviewFragment @Inject constructor(
             }
             btnWriteReview.setOnClickListener {
                 requireParentFragment().parentFragmentManager.beginTransaction()
-                    .replace(R.id.fcv_container, TruckWriteReviewFragment(truckId, truckName))
+                    .replace(R.id.fcv_container, TruckWriteReviewFragment(truckId, truckName, truckViewModel))
                     .addToBackStack(null)
                     .commit()
             }

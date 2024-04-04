@@ -16,16 +16,20 @@ import com.tasteguys.foorrng_customer.presentation.truck.TruckViewModel
 import com.tasteguys.foorrng_customer.presentation.truck.info.adapter.TruckReviewBtnAdapter
 import com.tasteguys.retrofit_adapter.FoorrngException
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 private const val TAG = "TruckWriteReviewFragmen"
 
 @AndroidEntryPoint
-class TruckWriteReviewFragment(private val truckId: Long, private val truckName: String) : MainBaseFragment<FragmentTruckWriteReviewBinding>(
+class TruckWriteReviewFragment @Inject constructor(
+    private val truckId: Long,
+    private val truckName: String,
+    private val truckViewModel: TruckViewModel
+) : MainBaseFragment<FragmentTruckWriteReviewBinding>(
     { FragmentTruckWriteReviewBinding.bind(it)}, R.layout.fragment_truck_write_review
 )  {
 
     private val reviewViewModel: TruckReviewViewModel by viewModels()
-    private val truckViewModel: TruckViewModel by activityViewModels()
 
     override fun setToolbar() {
         MainToolbarControl(
