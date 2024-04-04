@@ -119,7 +119,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                     }
 
                     BottomSheetBehavior.STATE_COLLAPSED -> {
-                        nMap.setContentPadding(0, 0, 0, 0, true)
+                        nMap.setContentPadding(0, 0, 0, bottomSheetBehavior.peekHeight, true)
                     }
 
                     BottomSheetBehavior.STATE_DRAGGING -> {}
@@ -252,6 +252,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
                 }
                 truckAdapter.submitList(lst)
                 bottomSheetBehavior.peekHeight = if(lst.isNotEmpty()) 350 else 100
+                nMap.setContentPadding(0,0,0, bottomSheetBehavior.peekHeight)
             }
         }
     }
