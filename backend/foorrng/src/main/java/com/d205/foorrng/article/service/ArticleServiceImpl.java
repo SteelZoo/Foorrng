@@ -145,6 +145,7 @@ public class ArticleServiceImpl implements ArticleService{
                     .address(article.getAddress())
                     .phone(article.getPhone())
                     .title(article.getTitle())
+                    .content(article.getContent())
                     .latitude(article.getLatitude())
                     .longitude(article.getLongitude())
                     .email(article.getEmail())
