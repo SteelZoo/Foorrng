@@ -82,8 +82,10 @@
 <br>
 
 ### 💥기술 특이점
+
 💥 빅데이터
 > 
+
 
 🍲 KNN 음식 분류화
 ![Alt text](./readmefile/3Dfood_Characterisitics.png)
@@ -97,8 +99,10 @@
 ![Alt text](./readmefile/BtotalScore.png)
 서로 상이한 모형들의 예측, 분류 결과를 종합하여 최종적인 의사결정 진행
 
+
 💥 보안성
 > 
+
 
 🔒 CBC 암호화 사용
 ![Alt text](./readmefile/CBC.png)
