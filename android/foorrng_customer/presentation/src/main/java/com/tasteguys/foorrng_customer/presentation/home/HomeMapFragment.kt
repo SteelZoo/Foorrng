@@ -183,7 +183,7 @@ class HomeMapFragment : MainBaseFragment<FragmentHomeMapBinding>(
 
                     override fun onButtonClick(position: Int) {
                         val curTruck = currentList[position]
-                        showNavDialog(requireContext(), curTruck.address, curTruck.lat, curTruck.lng)
+                        showNavDialog(requireContext(), curTruck.name, curTruck.lat, curTruck.lng)
                     }
 
                 })
