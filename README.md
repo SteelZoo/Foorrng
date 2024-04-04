@@ -235,6 +235,12 @@ Domain
 😊김건우
 
 😘박정환
+- Jenkins 와 Docker 활용한 AWS EC2 서버 프로젝트 CI/CD 구성
+- NGINX 를 통환 무중단배포
+- ERD & DB
+- Spring Boot, Jpa, queryDSL 을 활용한 백엔드 API 작업
+- 빅데이터 / DB / 백엔드 서버간 연결 및 자동업데이트
+- Spring Security, Jwt 를 활용한 인증 / 인가 적용
 
 😝이지연
 - ERD 설계 및 DB 구축
