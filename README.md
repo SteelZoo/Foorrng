@@ -88,7 +88,7 @@
 
 
 **🍲 KNN 음식 분류화** <br>
-![Alt text](./readmefile/3Dfood_Characterisitics.png)
+![Alt text](./readmefile/3Dfood_Characterisitics.png) <br>
 비슷한 음식끼리 같은 음식으로 분류하여 동네에 A를 선호하는 소비자에게 A와 유사한 A,B,C를 판매하는 점주에게 해당 지역에 대한 추천 가산값 부여
 
 **📊 시계열 분석을 활용한 다음날 인구 유동 예측** <br>
@@ -96,7 +96,7 @@
 2024.01~2024.03 대구 대중교통 승하차 정보를 바탕으로 다음 날 인구 수 예측
 
 **🧩 앙상블의 특성 이용** <br>
-![Alt text](./readmefile/BtotalScore.png)
+![Alt text](./readmefile/BtotalScore.png) <br>
 서로 상이한 모형들의 예측, 분류 결과를 종합하여 최종적인 의사결정 진행
 
 
@@ -105,15 +105,15 @@
 <br>
 
 **🔒 CBC 암호화** <br>
-![Alt text](./readmefile/CBC.PNG)
+![Alt text](./readmefile/CBC.PNG) <br>
 같은 값이라도 다르게 저장하며 양방향의 특성으로 유저에게 복호화 후 프론트에 전달
 
 **🗝️ yml 암호화** <br>
-![Alt text](./readmefile/UDocker.png)
+![Alt text](./readmefile/UDocker.png) <br>
 jasypt를 활용하여 yml을 보안 조치하였고, 환경변수는 Docker-Compose, yml파일은 jenkins Credential에 저장
 
 **🔍 SonaQube 정적 코드 분석** <br>
-![Alt text](./readmefile/SonaQube.png)
+![Alt text](./readmefile/SonaQube.png) <br>
 정적 코드 분석을 통해 보안 위협, codeSmell, 기술 부채 등을 확인하고 신속 조치
 
 
