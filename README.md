@@ -102,13 +102,13 @@
 
 💥 보안성
 > 
+<br>
 
-
-🔒 CBC 암호화 사용
+🔒 CBC 암호화
 ![Alt text](./readmefile/CBC.png)
 같은 값이라도 다르게 저장하며 양방향의 특성으로 유저에게 복호화 후 프론트에 전달
 
-🗝️ yml 암호화
+🗝️ yml 암호화 <br>
 ![Alt text](./readmefile/UDocker.png)
 jasypt를 활용하여 yml을 보안 조치하였고, 환경변수는 Docker-Compose, yml파일은 jenkins Credential에 저장
 
