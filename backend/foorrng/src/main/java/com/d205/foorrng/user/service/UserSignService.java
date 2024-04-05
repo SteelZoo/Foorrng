@@ -25,13 +25,12 @@ import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class UserSginService {
+public class UserSignService {
 
     private final UserRepository userRepository;
     private final TokenProvider tokenProvider;

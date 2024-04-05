@@ -5,27 +5,21 @@ import com.d205.foorrng.common.exception.ErrorCode;
 import com.d205.foorrng.common.exception.Exceptions;
 import com.d205.foorrng.common.model.BaseResponseBody;
 import com.d205.foorrng.food.repository.FavoritefoodRepository;
-import com.d205.foorrng.foodtruck.entity.FoodtruckLike;
 import com.d205.foorrng.foodtruck.repository.FoodtruckLikeRepository;
-import com.d205.foorrng.jwt.token.TokenDto;
 import com.d205.foorrng.user.dto.RegistDto;
 import com.d205.foorrng.user.entity.User;
 import com.d205.foorrng.user.repository.UserRepository;
 import com.d205.foorrng.user.repository.UserRole;
 import com.d205.foorrng.user.service.UserRegistService;
-import com.d205.foorrng.user.service.UserSginService;
+import com.d205.foorrng.user.service.UserSignService;
 import com.d205.foorrng.user.dto.UserDto;
 import com.d205.foorrng.util.SecurityUtil;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -41,7 +35,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final UserSginService userSginService;
+    private final UserSignService userSignService;
     private final FavoritefoodRepository favoritefoodRepository;
     private final FoodtruckLikeRepository foodtruckLikeRepository;
     private final UserRegistService userRegistService;
@@ -49,7 +43,7 @@ public class UserController {
     @PostMapping("/regist/owner")
     public ResponseEntity<? extends BaseResponseBody> signUpOwner(@RequestBody @Valid UserDto userDto) {
 
-        Long userUid = userSginService.signUp(userDto, "OWNER");
+        Long userUid = userSignService.signUp(userDto, "OWNER");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, userUid));
     }
@@ -57,7 +51,7 @@ public class UserController {
     @PostMapping("/regist/user")
     public ResponseEntity<? extends BaseResponseBody> signUpUser(@RequestBody @Valid UserDto userDto) {
 
-        Long userUid = userSginService.signUp(userDto, "USER");
+        Long userUid = userSignService.signUp(userDto, "USER");
 
         return ResponseEntity.status(HttpStatus.CREATED).body(BaseResponseBody.of(0, userUid));
     }
@@ -66,7 +60,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<? extends BaseResponseBody> signIn(@RequestBody @Valid UserDto userDto) {
 
-        Map<String, Object> response = userSginService.signIn(userDto);
+        Map<String, Object> response = userSignService.signIn(userDto);
 //        Map<String, String> response = new HashMap<>();
 //        response.put("accessToken", tokenDto.getAccessToken());
 //        response.put("refreshToken", tokenDto.getRefreshToken());
