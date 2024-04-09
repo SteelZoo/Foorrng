@@ -5,5 +5,3 @@ spring:
 jasypt:
   encryptor:
     bean: jasyptConfigScript
-
-# git ignore test
